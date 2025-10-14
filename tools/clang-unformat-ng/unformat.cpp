@@ -249,10 +249,9 @@ cl::OptionCategory ToolOptions("options");
 
 bool applyReplacements(clang::tooling::RefactoringTool &Tool) {
     LangOptions DefaultLangOptions;
-    IntrusiveRefCntPtr<DiagnosticOptions> DiagOpts = new DiagnosticOptions();
-    clang::TextDiagnosticPrinter DiagnosticPrinter(errs(), &*DiagOpts);
-    DiagnosticsEngine Diagnostics(IntrusiveRefCntPtr<DiagnosticIDs>(new DiagnosticIDs()), &*DiagOpts,
-                                  &DiagnosticPrinter, false);
+    DiagnosticOptions DiagOpts;
+    clang::TextDiagnosticPrinter DiagnosticPrinter(errs(), DiagOpts);
+    DiagnosticsEngine Diagnostics(DiagnosticIDs::create(), DiagOpts, &DiagnosticPrinter, false);
     auto &FileMgr = Tool.getFiles();
     SourceManager Sources(Diagnostics, FileMgr);
 
