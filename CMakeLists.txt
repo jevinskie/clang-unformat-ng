@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 4.1)
 
-project(clang-unformat-ng CXX)
+project(clang-unformat-ng C CXX)
 
 option(FORCE_COLORED_OUTPUT "Always produce ANSI-colored output (GNU/Clang only)." ON)
 
