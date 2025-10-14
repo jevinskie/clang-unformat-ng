@@ -17,8 +17,7 @@ include(AddClang)
 add_executable(clang-unformat-ng unformat.cpp)
 target_compile_options(clang-unformat-ng PRIVATE ${JEV_COLOR_DIAGS} -fno-rtti)
 target_include_directories(clang-unformat-ng PRIVATE ${CLANG_INCLUDE_DIRS})
-# target_link_libraries(clang-unformat-ng PRIVATE fmt::fmt LLVMSupport clangASTMatchers clangAST clangAnalysis clangDynamicASTMatchers clangBasic clangFrontend clangFrontendTool clangFormat clangHandleCXX clangRewrite clangRewriteFrontend clangSerialization clangSupport clangTooling clangToolingCore clangToolingRefactoring clangToolingSyntax clangTransformer)
-target_link_libraries(clang-unformat-ng PRIVATE fmt::fmt LLVMSupport clangAST clangASTMatchers clangBasic clangFrontend clangRewrite clangSerialization clangTooling clangToolingCore clangTransformer)
+target_link_libraries(clang-unformat-ng PRIVATE fmt::fmt LLVMSupport clangAST clangASTMatchers clangBasic clangFrontend clangFormat clangHandleCXX clangRewrite clangSerialization  clangTooling clangToolingCore clangTransformer)
 
 set_target_properties(clang-unformat-ng PROPERTIES
     CXX_STANDARD 23
