@@ -339,8 +339,8 @@ static bool format(StringRef FileName, bool ErrorOnIncompleteFormat = false) {
         return true;
     }
 
-    Expected<FormatStyle> FormatStyle = getStyle(Style, AssumedFileName, FallbackStyle, Code->getBuffer(), nullptr,
-                                                 WNoErrorList.isSet(WNoError::Unknown));
+    Expected<clang::format::FormatStyle> FormatStyle = getStyle(
+        Style, AssumedFileName, FallbackStyle, Code->getBuffer(), nullptr, WNoErrorList.isSet(WNoError::Unknown));
     if (!FormatStyle) {
         llvm::errs() << toString(FormatStyle.takeError()) << "\n";
         return true;
@@ -366,7 +366,7 @@ static bool format(StringRef FileName, bool ErrorOnIncompleteFormat = false) {
         FormatStyle->QualifierOrder = {Qualifiers.begin(), Qualifiers.end()};
     }
 
-    if (SortIncludes.getNumOccurrences() != 0) {
+    if (clang::format::SortIncludes.getNumOccurrences() != 0) {
         FormatStyle->SortIncludes = {};
         if (SortIncludes)
             FormatStyle->SortIncludes.Enabled = true;
