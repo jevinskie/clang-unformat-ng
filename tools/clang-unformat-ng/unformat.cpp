@@ -6,19 +6,19 @@
 #include <type_traits>
 #include <vector>
 
-#include <clang/AST/Decl.h>
-#include <clang/ASTMatchers/ASTMatchFinder.h>
-#include <clang/ASTMatchers/ASTMatchers.h>
-#include <clang/Basic/TargetOptions.h>
-#include <clang/Frontend/TextDiagnosticPrinter.h>
+// #include <clang/AST/Decl.h>
+// #include <clang/ASTMatchers/ASTMatchFinder.h>
+// #include <clang/ASTMatchers/ASTMatchers.h>
+// #include <clang/Basic/TargetOptions.h>
+// #include <clang/Frontend/TextDiagnosticPrinter.h>
 #include <clang/Rewrite/Core/Rewriter.h>
-#include <clang/Tooling/CommonOptionsParser.h>
+// #include <clang/Tooling/CommonOptionsParser.h>
 #include <clang/Tooling/Core/Replacement.h>
 #include <clang/Tooling/Refactoring.h>
 #include <clang/Tooling/Tooling.h>
-#include <clang/Tooling/Transformer/MatchConsumer.h>
-#include <clang/Tooling/Transformer/RewriteRule.h>
-#include <clang/Tooling/Transformer/Stencil.h>
+// #include <clang/Tooling/Transformer/MatchConsumer.h>
+// #include <clang/Tooling/Transformer/RewriteRule.h>
+// #include <clang/Tooling/Transformer/Stencil.h>
 #include <llvm/Support/CommandLine.h>
 #include <llvm/Support/InitLLVM.h>
 #include <llvm/Support/raw_ostream.h>
@@ -30,8 +30,8 @@
 
 using namespace llvm;
 using namespace clang;
-using namespace ast_matchers;
-using namespace transformer;
+// using namespace ast_matchers;
+// using namespace transformer;
 using clang::tooling::Replacements;
 
 static_assert(std::ranges::range<clang::tooling::Replacements>);
@@ -450,6 +450,10 @@ int main(int argc, const char **argv) {
 
     cl::HideUnrelatedOptions(unformat::priv::UnformatOptionsCategory);
     cl::ParseCommandLineOptions(argc, argv, "A tool to calculate \"optimal\" format styles from existing source.\n\n");
+
+    for (const auto FName : unformat::priv::FileNames) {
+        fmt::print("Fname: {}\n", FName);
+    }
 
 #if 0
     auto ExpectedParser = clang::tooling::CommonOptionsParser::create(argc, argv, UnformatOptionsCategory);
