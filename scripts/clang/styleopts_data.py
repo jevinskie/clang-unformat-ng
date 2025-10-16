@@ -7488,3 +7488,5 @@ opts = {
         nested_struct=None,
     ),
 }
+
+__all__ = ["opts"]
