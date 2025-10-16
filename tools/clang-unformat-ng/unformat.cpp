@@ -20,6 +20,7 @@
 #include <clang/Tooling/Transformer/RewriteRule.h>
 #include <clang/Tooling/Transformer/Stencil.h>
 #include <llvm/Support/CommandLine.h>
+#include <llvm/Support/InitLLVM.h>
 #include <llvm/Support/raw_ostream.h>
 
 #include <fmt/format.h>
@@ -27,6 +28,7 @@
 #include <fmt/ranges.h>
 #include <fmt/std.h>
 
+using namespace llvm;
 using namespace clang;
 using namespace ast_matchers;
 using namespace transformer;
@@ -59,6 +61,7 @@ template <> struct fmt::formatter<clang::tooling::Replacements> : fmt::formatter
 };
 #endif
 
+#if 0
 // https://github.com/shao-hua-li/UBGen
 
 namespace ruleactioncallback {
@@ -246,7 +249,7 @@ using namespace llvm;
 
 namespace {
 
-cl::OptionCategory ToolOptions("options");
+cl::OptionCategory UnformatOptionsCategory("unformat");
 
 bool applyReplacements(clang::tooling::RefactoringTool &Tool) {
     LangOptions DefaultLangOptions;
@@ -297,11 +300,12 @@ template <typename InstrTool> int runToolOnCode(clang::tooling::RefactoringTool 
 }
 
 } // namespace
+#endif
 
 #if 0
 namespace {
 // Returns true on error.
-static bool format(StringRef FileName, bool ErrorOnIncompleteFormat = false) {
+static bool format(StringRef FileName) {
     using namespace clang::format;
     using namespace clang::tooling;
     const bool IsSTDIN = FileName == "-";
@@ -428,13 +432,27 @@ static bool format(StringRef FileName, bool ErrorOnIncompleteFormat = false) {
             Rewrite.getEditBuffer(ID).write(outs());
         }
     }
-    return ErrorOnIncompleteFormat && !Status.FormatComplete;
+    return !Status.FormatComplete;
 }
 } // namespace
 #endif
 
+namespace unformat {
+namespace priv {
+static cl::OptionCategory UnformatOptionsCategory("unformat");
+static cl::list<std::string> FileNames(cl::Positional, cl::desc("[@<file>] [<file> ...]"),
+                                       cl::cat(UnformatOptionsCategory));
+}; // namespace priv
+}; // namespace unformat
+
 int main(int argc, const char **argv) {
-    auto ExpectedParser = clang::tooling::CommonOptionsParser::create(argc, argv, ToolOptions);
+    InitLLVM X(argc, argv);
+
+    cl::HideUnrelatedOptions(unformat::priv::UnformatOptionsCategory);
+    cl::ParseCommandLineOptions(argc, argv, "A tool to calculate \"optimal\" format styles from existing source.\n\n");
+
+#if 0
+    auto ExpectedParser = clang::tooling::CommonOptionsParser::create(argc, argv, UnformatOptionsCategory);
     if (!ExpectedParser) {
         llvm::errs() << ExpectedParser.takeError();
         return 1;
@@ -452,6 +470,7 @@ int main(int argc, const char **argv) {
         llvm::errs() << "Something went wrong...\n";
         return Result;
     }
+#endif
 
     return 0;
 }
