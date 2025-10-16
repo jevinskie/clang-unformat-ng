@@ -1,5 +1,6 @@
 from attrs import Factory, define, field
 
+
 @define(auto_attribs=True, frozen=True)
 class Type:
     cxx_name: str
@@ -36,6 +37,7 @@ class Enum:
     type: Type
     comment: str = field(converter=str.strip, repr=False)
     values: list[EnumValue] = Factory(list)
+
 
 @define(auto_attribs=True, frozen=True)
 class NestedEnum:

@@ -1,0 +1,54 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools>=80.9.0", "setuptools-scm>=9.2.1"]
+
+[project]
+authors = [
+  {name = "Jevin Sweval", email = "jevinsweval@gmail.com"}
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.12"
+]
+dependencies = [
+  "attrs>=25.4.0",
+  "path>=17.1.1",
+  "rich>=14.2.0"
+]
+description = "Python bindings and utilities for applespi library"
+dynamic = ["version"]
+keywords = ["clang-unformat", "clang-format"]
+license = {text = "BSD-2-Clause"}
+name = "clang-unformat-ng"
+readme = {file = 'README.md', content-type = 'text/markdown'}
+requires-python = ">=3.12"
+
+[project.optional-dependencies]
+dev = [
+  "mypy>=1.18.2",
+  "pre-commit>=4.3.0",
+  "ruff>=0.14.1"
+]
+
+[project.scripts]
+clang-unformat-ng-py-util = "clang_unformat_ng.tools.unformat_util:main"
+
+[project.urls]
+repository = "https://github.com/jevinskie/clang-unformat-ng"
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+extend-select = ["I"]
+
+[tool.setuptools]
+package-dir = {"" = "python/src"}
+
+[tool.setuptools.dynamic]
+version = {attr = "clang_unformat_ng._version.__version__"}
+
+[tool.setuptools_scm]
+version_file = "python/src/clang_unformat_ng/_version.py"

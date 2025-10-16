@@ -1,2 +1,39 @@
-# build
+# cmake build folders
 /build*/
+
+# junk
+/tmp/
+
+# vscode
+**/.vscode/
+**/.vscode-ctags
+
+# GDB
+**/.gdb_history
+
+# various build artifacts
+*.asm
+*.s
+*.s
+*.i
+*.ii
+*.ll
+*.bc
+*.a
+*.dylib
+*.so
+
+# Apple DWARF
+**/*.dSYM/
+
+# Python
+/python/src/clang_unformat/_version.py
+/python/src/clang_unformat.egg-info/
+
+**/.mypy_cache/
+**/.ruff_cache/
+**/__pycache__/
+**/*.egg-info/
+**/*.pyc
+**/.pytest_cache
+**/.benchmarks
