@@ -37,10 +37,7 @@ using clang::tooling::Replacements;
 
 static_assert(std::ranges::range<clang::tooling::Replacements>);
 
-template <> struct fmt::formatter<clang::tooling::Replacement> {
-    constexpr auto parse(fmt::format_parse_context &ctx) -> decltype(ctx.begin()) {
-        return ctx.begin();
-    }
+template <> struct fmt::formatter<clang::tooling::Replacement> : fmt::formatter<fmt::string_view> {
     constexpr auto format(const clang::tooling::Replacement &r, fmt::format_context &ctx) const
         -> fmt::format_context::iterator {
         fmt::format_to(ctx.out(), "R1 {{ ");
@@ -50,7 +47,6 @@ template <> struct fmt::formatter<clang::tooling::Replacement> {
     }
 };
 
-#if 1
 template <> struct fmt::formatter<clang::tooling::Replacements> : fmt::formatter<fmt::string_view> {
     constexpr auto format(const clang::tooling::Replacements &rs, fmt::format_context &ctx) const
         -> fmt::format_context::iterator {
@@ -60,7 +56,6 @@ template <> struct fmt::formatter<clang::tooling::Replacements> : fmt::formatter
         return ctx.out();
     }
 };
-#endif
 
 #if 0
 namespace {
