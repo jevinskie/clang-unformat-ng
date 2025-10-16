@@ -1,6 +1,6 @@
 add_executable(unformat unformat.cpp)
 target_compile_options(unformat PRIVATE ${JEV_COLOR_DIAGS} -fno-rtti)
-target_include_directories(unformat PRIVATE ${CLANG_INCLUDE_DIRS})
+# target_include_directories(unformat PRIVATE ${CLANG_INCLUDE_DIRS})
 target_link_libraries(unformat PRIVATE
     fmt::fmt
     LLVMSupport
@@ -15,6 +15,7 @@ target_link_libraries(unformat PRIVATE
     clangTooling
     clangToolingCore
     clangTransformer
+    clang-unformat-ng
 )
 
 set_target_properties(unformat PROPERTIES
