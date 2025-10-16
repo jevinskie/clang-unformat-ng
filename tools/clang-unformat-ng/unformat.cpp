@@ -30,6 +30,7 @@
 using namespace clang;
 using namespace ast_matchers;
 using namespace transformer;
+using clang::tooling::Replacements;
 
 static_assert(std::ranges::range<clang::tooling::Replacements>);
 
@@ -297,9 +298,12 @@ template <typename InstrTool> int runToolOnCode(clang::tooling::RefactoringTool 
 
 } // namespace
 
+#if 0
 namespace {
 // Returns true on error.
 static bool format(StringRef FileName, bool ErrorOnIncompleteFormat = false) {
+    using namespace clang::format;
+    using namespace clang::tooling;
     const bool IsSTDIN = FileName == "-";
     if (!OutputXML && Inplace && IsSTDIN) {
         errs() << "error: cannot use -i when reading from stdin.\n";
@@ -427,6 +431,7 @@ static bool format(StringRef FileName, bool ErrorOnIncompleteFormat = false) {
     return ErrorOnIncompleteFormat && !Status.FormatComplete;
 }
 } // namespace
+#endif
 
 int main(int argc, const char **argv) {
     auto ExpectedParser = clang::tooling::CommonOptionsParser::create(argc, argv, ToolOptions);
