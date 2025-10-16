@@ -1,6 +1,16 @@
+# find_package(LLVM REQUIRED CONFIG)
+# message(STATUS "Tool: Found LLVM ${LLVM_PACKAGE_VERSION}")
+# message(STATUS "Tool: Using LLVMConfig.cmake in ${LLVM_DIR}")
+# list(APPEND CMAKE_MODULE_PATH ${LLVM_CMAKE_DIR})
+
+# find_package(Clang REQUIRED CONFIG)
+# message(STATUS "Tool: Found Clang ${Clang_PACKAGE_VERSION}")
+# message(STATUS "Tool: Using ClangConfig.cmake in ${Clang_DIR}")
+
+
 add_executable(unformat unformat.cpp)
 target_compile_options(unformat PRIVATE ${JEV_COLOR_DIAGS} -fno-rtti)
-# target_include_directories(unformat PRIVATE ${CLANG_INCLUDE_DIRS})
+target_include_directories(unformat PRIVATE ${CLANG_INCLUDE_DIRS})
 target_link_libraries(unformat PRIVATE
     fmt::fmt
     LLVMSupport

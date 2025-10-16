@@ -66,7 +66,7 @@ PRIVATE
 
 target_include_directories(clang-unformat-ng
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../../include
-    PRIVATE ${CMAKE_CURRENT_BINARY_DIR}
+    PRIVATE ${CMAKE_CURRENT_BINARY_DIR} ${CLANG_INCLUDE_DIRS}
 )
 
 set_target_properties(clang-unformat-ng PROPERTIES
