@@ -11,16 +11,16 @@ class NestedStruct: ...
 class NestedField: ...
 # fmt: on
 
-Option(
-    name="AccessModifierOffset",
+opts = {
+"AccessModifierOffset": Option(
+   name="AccessModifierOffset",
     type=Type(cxx_name="int", yaml_name="Integer", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=3),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="AlignAfterOpenBracket",
+),
+"AlignAfterOpenBracket": Option(
+   name="AlignAfterOpenBracket",
     type=Type(
         cxx_name="BracketAlignmentStyle",
         yaml_name="BracketAlignmentStyle",
@@ -46,10 +46,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="AlignArrayOfStructures",
+),
+"AlignArrayOfStructures": Option(
+   name="AlignArrayOfStructures",
     type=Type(
         cxx_name="ArrayInitializerAlignmentStyle",
         yaml_name="ArrayInitializerAlignmentStyle",
@@ -74,10 +73,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="AlignConsecutiveAssignments",
+),
+"AlignConsecutiveAssignments": Option(
+   name="AlignConsecutiveAssignments",
     type=Type(
         cxx_name="AlignConsecutiveStyle",
         yaml_name="AlignConsecutiveStyle",
@@ -134,10 +132,9 @@ Option(
             ),
         ],
     ),
-)
-
-Option(
-    name="AlignConsecutiveBitFields",
+),
+"AlignConsecutiveBitFields": Option(
+   name="AlignConsecutiveBitFields",
     type=Type(
         cxx_name="AlignConsecutiveStyle",
         yaml_name="AlignConsecutiveStyle",
@@ -194,10 +191,9 @@ Option(
             ),
         ],
     ),
-)
-
-Option(
-    name="AlignConsecutiveDeclarations",
+),
+"AlignConsecutiveDeclarations": Option(
+   name="AlignConsecutiveDeclarations",
     type=Type(
         cxx_name="AlignConsecutiveStyle",
         yaml_name="AlignConsecutiveStyle",
@@ -254,10 +250,9 @@ Option(
             ),
         ],
     ),
-)
-
-Option(
-    name="AlignConsecutiveMacros",
+),
+"AlignConsecutiveMacros": Option(
+   name="AlignConsecutiveMacros",
     type=Type(
         cxx_name="AlignConsecutiveStyle",
         yaml_name="AlignConsecutiveStyle",
@@ -314,10 +309,9 @@ Option(
             ),
         ],
     ),
-)
-
-Option(
-    name="AlignConsecutiveShortCaseStatements",
+),
+"AlignConsecutiveShortCaseStatements": Option(
+   name="AlignConsecutiveShortCaseStatements",
     type=Type(
         cxx_name="ShortCaseStatementsAlignmentStyle",
         yaml_name="ShortCaseStatementsAlignmentStyle",
@@ -364,10 +358,9 @@ Option(
             ),
         ],
     ),
-)
-
-Option(
-    name="AlignConsecutiveTableGenBreakingDAGArgColons",
+),
+"AlignConsecutiveTableGenBreakingDAGArgColons": Option(
+   name="AlignConsecutiveTableGenBreakingDAGArgColons",
     type=Type(
         cxx_name="AlignConsecutiveStyle",
         yaml_name="AlignConsecutiveStyle",
@@ -424,10 +417,9 @@ Option(
             ),
         ],
     ),
-)
-
-Option(
-    name="AlignConsecutiveTableGenCondOperatorColons",
+),
+"AlignConsecutiveTableGenCondOperatorColons": Option(
+   name="AlignConsecutiveTableGenCondOperatorColons",
     type=Type(
         cxx_name="AlignConsecutiveStyle",
         yaml_name="AlignConsecutiveStyle",
@@ -484,10 +476,9 @@ Option(
             ),
         ],
     ),
-)
-
-Option(
-    name="AlignConsecutiveTableGenDefinitionColons",
+),
+"AlignConsecutiveTableGenDefinitionColons": Option(
+   name="AlignConsecutiveTableGenDefinitionColons",
     type=Type(
         cxx_name="AlignConsecutiveStyle",
         yaml_name="AlignConsecutiveStyle",
@@ -544,10 +535,9 @@ Option(
             ),
         ],
     ),
-)
-
-Option(
-    name="AlignEscapedNewlines",
+),
+"AlignEscapedNewlines": Option(
+   name="AlignEscapedNewlines",
     type=Type(
         cxx_name="EscapedNewlineAlignmentStyle",
         yaml_name="EscapedNewlineAlignmentStyle",
@@ -573,10 +563,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="AlignOperands",
+),
+"AlignOperands": Option(
+   name="AlignOperands",
     type=Type(
         cxx_name="OperandAlignmentStyle",
         yaml_name="OperandAlignmentStyle",
@@ -601,10 +590,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="AlignTrailingComments",
+),
+"AlignTrailingComments": Option(
+   name="AlignTrailingComments",
     type=Type(
         cxx_name="TrailingCommentsAlignmentStyle",
         yaml_name="TrailingCommentsAlignmentStyle",
@@ -649,34 +637,30 @@ Option(
             ),
         ],
     ),
-)
-
-Option(
-    name="AllowAllArgumentsOnNextLine",
+),
+"AllowAllArgumentsOnNextLine": Option(
+   name="AllowAllArgumentsOnNextLine",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=9, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="AllowAllConstructorInitializersOnNextLine",
+),
+"AllowAllConstructorInitializersOnNextLine": Option(
+   name="AllowAllConstructorInitializersOnNextLine",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=9, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="AllowAllParametersOfDeclarationOnNextLine",
+),
+"AllowAllParametersOfDeclarationOnNextLine": Option(
+   name="AllowAllParametersOfDeclarationOnNextLine",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=3),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="AllowBreakBeforeNoexceptSpecifier",
+),
+"AllowBreakBeforeNoexceptSpecifier": Option(
+   name="AllowBreakBeforeNoexceptSpecifier",
     type=Type(
         cxx_name="BreakBeforeNoexceptSpecifierStyle",
         yaml_name="BreakBeforeNoexceptSpecifierStyle",
@@ -701,18 +685,16 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="AllowBreakBeforeQtProperty",
+),
+"AllowBreakBeforeQtProperty": Option(
+   name="AllowBreakBeforeQtProperty",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=22, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="AllowShortBlocksOnASingleLine",
+),
+"AllowShortBlocksOnASingleLine": Option(
+   name="AllowShortBlocksOnASingleLine",
     type=Type(
         cxx_name="ShortBlockStyle", yaml_name="ShortBlockStyle", is_list=False, is_optional=False, is_deprecated=False
     ),
@@ -733,42 +715,37 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="AllowShortCaseExpressionOnASingleLine",
+),
+"AllowShortCaseExpressionOnASingleLine": Option(
+   name="AllowShortCaseExpressionOnASingleLine",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=19, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="AllowShortCaseLabelsOnASingleLine",
+),
+"AllowShortCaseLabelsOnASingleLine": Option(
+   name="AllowShortCaseLabelsOnASingleLine",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=6),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="AllowShortCompoundRequirementOnASingleLine",
+),
+"AllowShortCompoundRequirementOnASingleLine": Option(
+   name="AllowShortCompoundRequirementOnASingleLine",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=18, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="AllowShortEnumsOnASingleLine",
+),
+"AllowShortEnumsOnASingleLine": Option(
+   name="AllowShortEnumsOnASingleLine",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=11, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="AllowShortFunctionsOnASingleLine",
+),
+"AllowShortFunctionsOnASingleLine": Option(
+   name="AllowShortFunctionsOnASingleLine",
     type=Type(
         cxx_name="ShortFunctionStyle",
         yaml_name="ShortFunctionStyle",
@@ -795,10 +772,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="AllowShortIfStatementsOnASingleLine",
+),
+"AllowShortIfStatementsOnASingleLine": Option(
+   name="AllowShortIfStatementsOnASingleLine",
     type=Type(cxx_name="ShortIfStyle", yaml_name="ShortIfStyle", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=3),
     enum=Enum(
@@ -814,10 +790,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="AllowShortLambdasOnASingleLine",
+),
+"AllowShortLambdasOnASingleLine": Option(
+   name="AllowShortLambdasOnASingleLine",
     type=Type(
         cxx_name="ShortLambdaStyle", yaml_name="ShortLambdaStyle", is_list=False, is_optional=False, is_deprecated=False
     ),
@@ -839,26 +814,23 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="AllowShortLoopsOnASingleLine",
+),
+"AllowShortLoopsOnASingleLine": Option(
+   name="AllowShortLoopsOnASingleLine",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="AllowShortNamespacesOnASingleLine",
+),
+"AllowShortNamespacesOnASingleLine": Option(
+   name="AllowShortNamespacesOnASingleLine",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=20, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="AlwaysBreakAfterDefinitionReturnType",
+),
+"AlwaysBreakAfterDefinitionReturnType": Option(
+   name="AlwaysBreakAfterDefinitionReturnType",
     type=Type(
         cxx_name="DefinitionReturnTypeBreakingStyle",
         yaml_name="DefinitionReturnTypeBreakingStyle",
@@ -883,10 +855,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="AlwaysBreakAfterReturnType",
+),
+"AlwaysBreakAfterReturnType": Option(
+   name="AlwaysBreakAfterReturnType",
     type=Type(
         cxx_name="ReturnTypeBreakingStyle",
         yaml_name="ReturnTypeBreakingStyle",
@@ -915,18 +886,16 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="AlwaysBreakBeforeMultilineStrings",
+),
+"AlwaysBreakBeforeMultilineStrings": Option(
+   name="AlwaysBreakBeforeMultilineStrings",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=4),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="AlwaysBreakTemplateDeclarations",
+),
+"AlwaysBreakTemplateDeclarations": Option(
+   name="AlwaysBreakTemplateDeclarations",
     type=Type(
         cxx_name="BreakTemplateDeclarationsStyle",
         yaml_name="BreakTemplateDeclarationsStyle",
@@ -952,10 +921,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="AttributeMacros",
+),
+"AttributeMacros": Option(
+   name="AttributeMacros",
     type=Type(
         cxx_name="std::vector<std::string>",
         yaml_name="List of Strings",
@@ -966,26 +934,23 @@ Option(
     version=Version(major=12, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="BinPackArguments",
+),
+"BinPackArguments": Option(
+   name="BinPackArguments",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="BinPackLongBracedList",
+),
+"BinPackLongBracedList": Option(
+   name="BinPackLongBracedList",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=21, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="BinPackParameters",
+),
+"BinPackParameters": Option(
+   name="BinPackParameters",
     type=Type(
         cxx_name="BinPackParametersStyle",
         yaml_name="BinPackParametersStyle",
@@ -1010,10 +975,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="BitFieldColonSpacing",
+),
+"BitFieldColonSpacing": Option(
+   name="BitFieldColonSpacing",
     type=Type(
         cxx_name="BitFieldColonSpacingStyle",
         yaml_name="BitFieldColonSpacingStyle",
@@ -1039,10 +1003,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="BraceWrapping",
+),
+"BraceWrapping": Option(
+   name="BraceWrapping",
     type=Type(
         cxx_name="BraceWrappingFlags",
         yaml_name="BraceWrappingFlags",
@@ -1165,26 +1128,23 @@ Option(
             ),
         ],
     ),
-)
-
-Option(
-    name="BracedInitializerIndentWidth",
+),
+"BracedInitializerIndentWidth": Option(
+   name="BracedInitializerIndentWidth",
     type=Type(cxx_name="int", yaml_name="Integer", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=17, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="BreakAdjacentStringLiterals",
+),
+"BreakAdjacentStringLiterals": Option(
+   name="BreakAdjacentStringLiterals",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=18, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="BreakAfterAttributes",
+),
+"BreakAfterAttributes": Option(
+   name="BreakAfterAttributes",
     type=Type(
         cxx_name="AttributeBreakingStyle",
         yaml_name="AttributeBreakingStyle",
@@ -1209,18 +1169,16 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="BreakAfterJavaFieldAnnotations",
+),
+"BreakAfterJavaFieldAnnotations": Option(
+   name="BreakAfterJavaFieldAnnotations",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=8),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="BreakAfterReturnType",
+),
+"BreakAfterReturnType": Option(
+   name="BreakAfterReturnType",
     type=Type(
         cxx_name="ReturnTypeBreakingStyle",
         yaml_name="ReturnTypeBreakingStyle",
@@ -1249,18 +1207,16 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="BreakArrays",
+),
+"BreakArrays": Option(
+   name="BreakArrays",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=16, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="BreakBeforeBinaryOperators",
+),
+"BreakBeforeBinaryOperators": Option(
+   name="BreakBeforeBinaryOperators",
     type=Type(
         cxx_name="BinaryOperatorStyle",
         yaml_name="BinaryOperatorStyle",
@@ -1285,10 +1241,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="BreakBeforeBraces",
+),
+"BreakBeforeBraces": Option(
+   name="BreakBeforeBraces",
     type=Type(
         cxx_name="BraceBreakingStyle",
         yaml_name="BraceBreakingStyle",
@@ -1319,10 +1274,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="BreakBeforeConceptDeclarations",
+),
+"BreakBeforeConceptDeclarations": Option(
+   name="BreakBeforeConceptDeclarations",
     type=Type(
         cxx_name="BreakBeforeConceptDeclarationsStyle",
         yaml_name="BreakBeforeConceptDeclarationsStyle",
@@ -1347,10 +1301,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="BreakBeforeInlineASMColon",
+),
+"BreakBeforeInlineASMColon": Option(
+   name="BreakBeforeInlineASMColon",
     type=Type(
         cxx_name="BreakBeforeInlineASMColonStyle",
         yaml_name="BreakBeforeInlineASMColonStyle",
@@ -1375,26 +1328,23 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="BreakBeforeTemplateCloser",
+),
+"BreakBeforeTemplateCloser": Option(
+   name="BreakBeforeTemplateCloser",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=21, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="BreakBeforeTernaryOperators",
+),
+"BreakBeforeTernaryOperators": Option(
+   name="BreakBeforeTernaryOperators",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="BreakBinaryOperations",
+),
+"BreakBinaryOperations": Option(
+   name="BreakBinaryOperations",
     type=Type(
         cxx_name="BreakBinaryOperationsStyle",
         yaml_name="BreakBinaryOperationsStyle",
@@ -1419,10 +1369,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="BreakConstructorInitializers",
+),
+"BreakConstructorInitializers": Option(
+   name="BreakConstructorInitializers",
     type=Type(
         cxx_name="BreakConstructorInitializersStyle",
         yaml_name="BreakConstructorInitializersStyle",
@@ -1447,18 +1396,16 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="BreakFunctionDefinitionParameters",
+),
+"BreakFunctionDefinitionParameters": Option(
+   name="BreakFunctionDefinitionParameters",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=19, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="BreakInheritanceList",
+),
+"BreakInheritanceList": Option(
+   name="BreakInheritanceList",
     type=Type(
         cxx_name="BreakInheritanceListStyle",
         yaml_name="BreakInheritanceListStyle",
@@ -1484,18 +1431,16 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="BreakStringLiterals",
+),
+"BreakStringLiterals": Option(
+   name="BreakStringLiterals",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=9),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="BreakTemplateDeclarations",
+),
+"BreakTemplateDeclarations": Option(
+   name="BreakTemplateDeclarations",
     type=Type(
         cxx_name="BreakTemplateDeclarationsStyle",
         yaml_name="BreakTemplateDeclarationsStyle",
@@ -1521,90 +1466,79 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="ColumnLimit",
+),
+"ColumnLimit": Option(
+   name="ColumnLimit",
     type=Type(cxx_name="unsigned", yaml_name="Unsigned", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="CommentPragmas",
+),
+"CommentPragmas": Option(
+   name="CommentPragmas",
     type=Type(cxx_name="std::string", yaml_name="String", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="CompactNamespaces",
+),
+"CompactNamespaces": Option(
+   name="CompactNamespaces",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=5, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="ConstructorInitializerAllOnOneLineOrOnePerLine",
+),
+"ConstructorInitializerAllOnOneLineOrOnePerLine": Option(
+   name="ConstructorInitializerAllOnOneLineOrOnePerLine",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="ConstructorInitializerIndentWidth",
+),
+"ConstructorInitializerIndentWidth": Option(
+   name="ConstructorInitializerIndentWidth",
     type=Type(cxx_name="unsigned", yaml_name="Unsigned", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="ContinuationIndentWidth",
+),
+"ContinuationIndentWidth": Option(
+   name="ContinuationIndentWidth",
     type=Type(cxx_name="unsigned", yaml_name="Unsigned", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="Cpp11BracedListStyle",
+),
+"Cpp11BracedListStyle": Option(
+   name="Cpp11BracedListStyle",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=4),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="DeriveLineEnding",
+),
+"DeriveLineEnding": Option(
+   name="DeriveLineEnding",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=10, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="DerivePointerAlignment",
+),
+"DerivePointerAlignment": Option(
+   name="DerivePointerAlignment",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="DisableFormat",
+),
+"DisableFormat": Option(
+   name="DisableFormat",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="EmptyLineAfterAccessModifier",
+),
+"EmptyLineAfterAccessModifier": Option(
+   name="EmptyLineAfterAccessModifier",
     type=Type(
         cxx_name="EmptyLineAfterAccessModifierStyle",
         yaml_name="EmptyLineAfterAccessModifierStyle",
@@ -1629,10 +1563,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="EmptyLineBeforeAccessModifier",
+),
+"EmptyLineBeforeAccessModifier": Option(
+   name="EmptyLineBeforeAccessModifier",
     type=Type(
         cxx_name="EmptyLineBeforeAccessModifierStyle",
         yaml_name="EmptyLineBeforeAccessModifierStyle",
@@ -1658,10 +1591,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="EnumTrailingComma",
+),
+"EnumTrailingComma": Option(
+   name="EnumTrailingComma",
     type=Type(
         cxx_name="EnumTrailingCommaStyle",
         yaml_name="EnumTrailingCommaStyle",
@@ -1686,26 +1618,23 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="ExperimentalAutoDetectBinPacking",
+),
+"ExperimentalAutoDetectBinPacking": Option(
+   name="ExperimentalAutoDetectBinPacking",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="FixNamespaceComments",
+),
+"FixNamespaceComments": Option(
+   name="FixNamespaceComments",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=5, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="ForEachMacros",
+),
+"ForEachMacros": Option(
+   name="ForEachMacros",
     type=Type(
         cxx_name="std::vector<std::string>",
         yaml_name="List of Strings",
@@ -1716,10 +1645,9 @@ Option(
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="IfMacros",
+),
+"IfMacros": Option(
+   name="IfMacros",
     type=Type(
         cxx_name="std::vector<std::string>",
         yaml_name="List of Strings",
@@ -1730,10 +1658,9 @@ Option(
     version=Version(major=13, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="IncludeBlocks",
+),
+"IncludeBlocks": Option(
+   name="IncludeBlocks",
     type=Type(
         cxx_name="IncludeBlocksStyle",
         yaml_name="IncludeBlocksStyle",
@@ -1758,10 +1685,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="IncludeCategories",
+),
+"IncludeCategories": Option(
+   name="IncludeCategories",
     type=Type(
         cxx_name="std::vector<IncludeCategory>",
         yaml_name="List of IncludeCategories",
@@ -1772,58 +1698,51 @@ Option(
     version=Version(major=3, minor=8),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="IncludeIsMainRegex",
+),
+"IncludeIsMainRegex": Option(
+   name="IncludeIsMainRegex",
     type=Type(cxx_name="std::string", yaml_name="String", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=9),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="IncludeIsMainSourceRegex",
+),
+"IncludeIsMainSourceRegex": Option(
+   name="IncludeIsMainSourceRegex",
     type=Type(cxx_name="std::string", yaml_name="String", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=10, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="IndentAccessModifiers",
+),
+"IndentAccessModifiers": Option(
+   name="IndentAccessModifiers",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=13, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="IndentCaseBlocks",
+),
+"IndentCaseBlocks": Option(
+   name="IndentCaseBlocks",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=11, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="IndentCaseLabels",
+),
+"IndentCaseLabels": Option(
+   name="IndentCaseLabels",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=3),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="IndentExportBlock",
+),
+"IndentExportBlock": Option(
+   name="IndentExportBlock",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=20, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="IndentExternBlock",
+),
+"IndentExternBlock": Option(
+   name="IndentExternBlock",
     type=Type(
         cxx_name="IndentExternBlockStyle",
         yaml_name="IndentExternBlockStyle",
@@ -1848,18 +1767,16 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="IndentGotoLabels",
+),
+"IndentGotoLabels": Option(
+   name="IndentGotoLabels",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=10, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="IndentPPDirectives",
+),
+"IndentPPDirectives": Option(
+   name="IndentPPDirectives",
     type=Type(
         cxx_name="PPDirectiveIndentStyle",
         yaml_name="PPDirectiveIndentStyle",
@@ -1885,50 +1802,44 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="IndentRequiresClause",
+),
+"IndentRequiresClause": Option(
+   name="IndentRequiresClause",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=15, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="IndentWidth",
+),
+"IndentWidth": Option(
+   name="IndentWidth",
     type=Type(cxx_name="unsigned", yaml_name="Unsigned", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="IndentWrappedFunctionNames",
+),
+"IndentWrappedFunctionNames": Option(
+   name="IndentWrappedFunctionNames",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="InsertBraces",
+),
+"InsertBraces": Option(
+   name="InsertBraces",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=15, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="InsertNewlineAtEOF",
+),
+"InsertNewlineAtEOF": Option(
+   name="InsertNewlineAtEOF",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=16, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="InsertTrailingCommas",
+),
+"InsertTrailingCommas": Option(
+   name="InsertTrailingCommas",
     type=Type(
         cxx_name="TrailingCommaStyle",
         yaml_name="TrailingCommaStyle",
@@ -1949,10 +1860,9 @@ Option(
         values=[EnumValue(name="TCS_None", config="TCS_None"), EnumValue(name="TCS_Wrapped", config="TCS_Wrapped")],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="IntegerLiteralSeparator",
+),
+"IntegerLiteralSeparator": Option(
+   name="IntegerLiteralSeparator",
     type=Type(
         cxx_name="IntegerLiteralSeparatorStyle",
         yaml_name="IntegerLiteralSeparatorStyle",
@@ -2004,10 +1914,9 @@ Option(
             ),
         ],
     ),
-)
-
-Option(
-    name="JavaImportGroups",
+),
+"JavaImportGroups": Option(
+   name="JavaImportGroups",
     type=Type(
         cxx_name="std::vector<std::string>",
         yaml_name="List of Strings",
@@ -2018,10 +1927,9 @@ Option(
     version=Version(major=8, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="JavaScriptQuotes",
+),
+"JavaScriptQuotes": Option(
+   name="JavaScriptQuotes",
     type=Type(
         cxx_name="JavaScriptQuoteStyle",
         yaml_name="JavaScriptQuoteStyle",
@@ -2046,18 +1954,16 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="JavaScriptWrapImports",
+),
+"JavaScriptWrapImports": Option(
+   name="JavaScriptWrapImports",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=9),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="KeepEmptyLines",
+),
+"KeepEmptyLines": Option(
+   name="KeepEmptyLines",
     type=Type(
         cxx_name="KeepEmptyLinesStyle",
         yaml_name="KeepEmptyLinesStyle",
@@ -2094,34 +2000,30 @@ Option(
             ),
         ],
     ),
-)
-
-Option(
-    name="KeepEmptyLinesAtEOF",
+),
+"KeepEmptyLinesAtEOF": Option(
+   name="KeepEmptyLinesAtEOF",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=17, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="KeepEmptyLinesAtTheStartOfBlocks",
+),
+"KeepEmptyLinesAtTheStartOfBlocks": Option(
+   name="KeepEmptyLinesAtTheStartOfBlocks",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="KeepFormFeed",
+),
+"KeepFormFeed": Option(
+   name="KeepFormFeed",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=20, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="LambdaBodyIndentation",
+),
+"LambdaBodyIndentation": Option(
+   name="LambdaBodyIndentation",
     type=Type(
         cxx_name="LambdaBodyIndentationKind",
         yaml_name="LambdaBodyIndentationKind",
@@ -2145,10 +2047,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="Language",
+),
+"Language": Option(
+   name="Language",
     type=Type(cxx_name="LanguageKind", yaml_name="LanguageKind", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=5),
     enum=Enum(
@@ -2172,10 +2073,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="LineEnding",
+),
+"LineEnding": Option(
+   name="LineEnding",
     type=Type(
         cxx_name="LineEndingStyle", yaml_name="LineEndingStyle", is_list=False, is_optional=False, is_deprecated=False
     ),
@@ -2197,26 +2097,23 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="MacroBlockBegin",
+),
+"MacroBlockBegin": Option(
+   name="MacroBlockBegin",
     type=Type(cxx_name="std::string", yaml_name="String", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="MacroBlockEnd",
+),
+"MacroBlockEnd": Option(
+   name="MacroBlockEnd",
     type=Type(cxx_name="std::string", yaml_name="String", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="Macros",
+),
+"Macros": Option(
+   name="Macros",
     type=Type(
         cxx_name="std::vector<std::string>",
         yaml_name="List of Strings",
@@ -2227,10 +2124,9 @@ Option(
     version=Version(major=17, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="MacrosSkippedByRemoveParentheses",
+),
+"MacrosSkippedByRemoveParentheses": Option(
+   name="MacrosSkippedByRemoveParentheses",
     type=Type(
         cxx_name="std::vector<std::string>",
         yaml_name="List of Strings",
@@ -2241,10 +2137,9 @@ Option(
     version=Version(major=21, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="MainIncludeChar",
+),
+"MainIncludeChar": Option(
+   name="MainIncludeChar",
     type=Type(
         cxx_name="MainIncludeCharDiscriminator",
         yaml_name="MainIncludeCharDiscriminator",
@@ -2269,18 +2164,16 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="MaxEmptyLinesToKeep",
+),
+"MaxEmptyLinesToKeep": Option(
+   name="MaxEmptyLinesToKeep",
     type=Type(cxx_name="unsigned", yaml_name="Unsigned", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="NamespaceIndentation",
+),
+"NamespaceIndentation": Option(
+   name="NamespaceIndentation",
     type=Type(
         cxx_name="NamespaceIndentationKind",
         yaml_name="NamespaceIndentationKind",
@@ -2305,10 +2198,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="NamespaceMacros",
+),
+"NamespaceMacros": Option(
+   name="NamespaceMacros",
     type=Type(
         cxx_name="std::vector<std::string>",
         yaml_name="List of Strings",
@@ -2319,10 +2211,9 @@ Option(
     version=Version(major=9, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="NumericLiteralCase",
+),
+"NumericLiteralCase": Option(
+   name="NumericLiteralCase",
     type=Type(
         cxx_name="NumericLiteralCaseStyle",
         yaml_name="NumericLiteralCaseStyle",
@@ -2408,10 +2299,9 @@ Option(
             ),
         ],
     ),
-)
-
-Option(
-    name="ObjCBinPackProtocolList",
+),
+"ObjCBinPackProtocolList": Option(
+   name="ObjCBinPackProtocolList",
     type=Type(cxx_name="BinPackStyle", yaml_name="BinPackStyle", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=7, minor=None),
     enum=Enum(
@@ -2426,26 +2316,23 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="ObjCBlockIndentWidth",
+),
+"ObjCBlockIndentWidth": Option(
+   name="ObjCBlockIndentWidth",
     type=Type(cxx_name="unsigned", yaml_name="Unsigned", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="ObjCBreakBeforeNestedBlockParam",
+),
+"ObjCBreakBeforeNestedBlockParam": Option(
+   name="ObjCBreakBeforeNestedBlockParam",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=11, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="ObjCPropertyAttributeOrder",
+),
+"ObjCPropertyAttributeOrder": Option(
+   name="ObjCPropertyAttributeOrder",
     type=Type(
         cxx_name="std::vector<std::string>",
         yaml_name="List of Strings",
@@ -2456,42 +2343,37 @@ Option(
     version=Version(major=18, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="ObjCSpaceAfterProperty",
+),
+"ObjCSpaceAfterProperty": Option(
+   name="ObjCSpaceAfterProperty",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="ObjCSpaceBeforeProtocolList",
+),
+"ObjCSpaceBeforeProtocolList": Option(
+   name="ObjCSpaceBeforeProtocolList",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="OneLineFormatOffRegex",
+),
+"OneLineFormatOffRegex": Option(
+   name="OneLineFormatOffRegex",
     type=Type(cxx_name="std::string", yaml_name="String", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=21, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="PPIndentWidth",
+),
+"PPIndentWidth": Option(
+   name="PPIndentWidth",
     type=Type(cxx_name="int", yaml_name="Integer", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=13, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="PackConstructorInitializers",
+),
+"PackConstructorInitializers": Option(
+   name="PackConstructorInitializers",
     type=Type(
         cxx_name="PackConstructorInitializersStyle",
         yaml_name="PackConstructorInitializersStyle",
@@ -2518,106 +2400,93 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="PenaltyBreakAssignment",
+),
+"PenaltyBreakAssignment": Option(
+   name="PenaltyBreakAssignment",
     type=Type(cxx_name="unsigned", yaml_name="Unsigned", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=5, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="PenaltyBreakBeforeFirstCallParameter",
+),
+"PenaltyBreakBeforeFirstCallParameter": Option(
+   name="PenaltyBreakBeforeFirstCallParameter",
     type=Type(cxx_name="unsigned", yaml_name="Unsigned", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="PenaltyBreakBeforeMemberAccess",
+),
+"PenaltyBreakBeforeMemberAccess": Option(
+   name="PenaltyBreakBeforeMemberAccess",
     type=Type(cxx_name="unsigned", yaml_name="Unsigned", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=20, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="PenaltyBreakComment",
+),
+"PenaltyBreakComment": Option(
+   name="PenaltyBreakComment",
     type=Type(cxx_name="unsigned", yaml_name="Unsigned", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="PenaltyBreakFirstLessLess",
+),
+"PenaltyBreakFirstLessLess": Option(
+   name="PenaltyBreakFirstLessLess",
     type=Type(cxx_name="unsigned", yaml_name="Unsigned", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="PenaltyBreakOpenParenthesis",
+),
+"PenaltyBreakOpenParenthesis": Option(
+   name="PenaltyBreakOpenParenthesis",
     type=Type(cxx_name="unsigned", yaml_name="Unsigned", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=14, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="PenaltyBreakScopeResolution",
+),
+"PenaltyBreakScopeResolution": Option(
+   name="PenaltyBreakScopeResolution",
     type=Type(cxx_name="unsigned", yaml_name="Unsigned", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=18, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="PenaltyBreakString",
+),
+"PenaltyBreakString": Option(
+   name="PenaltyBreakString",
     type=Type(cxx_name="unsigned", yaml_name="Unsigned", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="PenaltyBreakTemplateDeclaration",
+),
+"PenaltyBreakTemplateDeclaration": Option(
+   name="PenaltyBreakTemplateDeclaration",
     type=Type(cxx_name="unsigned", yaml_name="Unsigned", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=7, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="PenaltyExcessCharacter",
+),
+"PenaltyExcessCharacter": Option(
+   name="PenaltyExcessCharacter",
     type=Type(cxx_name="unsigned", yaml_name="Unsigned", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="PenaltyIndentedWhitespace",
+),
+"PenaltyIndentedWhitespace": Option(
+   name="PenaltyIndentedWhitespace",
     type=Type(cxx_name="unsigned", yaml_name="Unsigned", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=12, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="PenaltyReturnTypeOnItsOwnLine",
+),
+"PenaltyReturnTypeOnItsOwnLine": Option(
+   name="PenaltyReturnTypeOnItsOwnLine",
     type=Type(cxx_name="unsigned", yaml_name="Unsigned", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="PointerAlignment",
+),
+"PointerAlignment": Option(
+   name="PointerAlignment",
     type=Type(
         cxx_name="PointerAlignmentStyle",
         yaml_name="PointerAlignmentStyle",
@@ -2642,10 +2511,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="QualifierAlignment",
+),
+"QualifierAlignment": Option(
+   name="QualifierAlignment",
     type=Type(
         cxx_name="QualifierAlignmentStyle",
         yaml_name="QualifierAlignmentStyle",
@@ -2671,10 +2539,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="QualifierOrder",
+),
+"QualifierOrder": Option(
+   name="QualifierOrder",
     type=Type(
         cxx_name="std::vector<std::string>",
         yaml_name="List of Strings",
@@ -2685,10 +2552,9 @@ Option(
     version=Version(major=14, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="RawStringFormats",
+),
+"RawStringFormats": Option(
+   name="RawStringFormats",
     type=Type(
         cxx_name="std::vector<RawStringFormat>",
         yaml_name="List of RawStringFormats",
@@ -2699,10 +2565,9 @@ Option(
     version=Version(major=6, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="ReferenceAlignment",
+),
+"ReferenceAlignment": Option(
+   name="ReferenceAlignment",
     type=Type(
         cxx_name="ReferenceAlignmentStyle",
         yaml_name="ReferenceAlignmentStyle",
@@ -2728,10 +2593,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="ReflowComments",
+),
+"ReflowComments": Option(
+   name="ReflowComments",
     type=Type(
         cxx_name="ReflowCommentsStyle",
         yaml_name="ReflowCommentsStyle",
@@ -2756,26 +2620,23 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="RemoveBracesLLVM",
+),
+"RemoveBracesLLVM": Option(
+   name="RemoveBracesLLVM",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=14, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="RemoveEmptyLinesInUnwrappedLines",
+),
+"RemoveEmptyLinesInUnwrappedLines": Option(
+   name="RemoveEmptyLinesInUnwrappedLines",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=20, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="RemoveParentheses",
+),
+"RemoveParentheses": Option(
+   name="RemoveParentheses",
     type=Type(
         cxx_name="RemoveParenthesesStyle",
         yaml_name="RemoveParenthesesStyle",
@@ -2800,18 +2661,16 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="RemoveSemicolon",
+),
+"RemoveSemicolon": Option(
+   name="RemoveSemicolon",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=16, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="RequiresClausePosition",
+),
+"RequiresClausePosition": Option(
+   name="RequiresClausePosition",
     type=Type(
         cxx_name="RequiresClausePositionStyle",
         yaml_name="RequiresClausePositionStyle",
@@ -2838,10 +2697,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="RequiresExpressionIndentation",
+),
+"RequiresExpressionIndentation": Option(
+   name="RequiresExpressionIndentation",
     type=Type(
         cxx_name="RequiresExpressionIndentationKind",
         yaml_name="RequiresExpressionIndentationKind",
@@ -2865,10 +2723,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="SeparateDefinitionBlocks",
+),
+"SeparateDefinitionBlocks": Option(
+   name="SeparateDefinitionBlocks",
     type=Type(
         cxx_name="SeparateDefinitionStyle",
         yaml_name="SeparateDefinitionStyle",
@@ -2893,26 +2750,23 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="ShortNamespaceLines",
+),
+"ShortNamespaceLines": Option(
+   name="ShortNamespaceLines",
     type=Type(cxx_name="unsigned", yaml_name="Unsigned", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=13, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="SkipMacroDefinitionBody",
+),
+"SkipMacroDefinitionBody": Option(
+   name="SkipMacroDefinitionBody",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=18, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="SortIncludes",
+),
+"SortIncludes": Option(
+   name="SortIncludes",
     type=Type(
         cxx_name="SortIncludesOptions",
         yaml_name="SortIncludesOptions",
@@ -2949,10 +2803,9 @@ Option(
             ),
         ],
     ),
-)
-
-Option(
-    name="SortJavaStaticImport",
+),
+"SortJavaStaticImport": Option(
+   name="SortJavaStaticImport",
     type=Type(
         cxx_name="SortJavaStaticImportOptions",
         yaml_name="SortJavaStaticImportOptions",
@@ -2976,10 +2829,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="SortUsingDeclarations",
+),
+"SortUsingDeclarations": Option(
+   name="SortUsingDeclarations",
     type=Type(
         cxx_name="SortUsingDeclarationsOptions",
         yaml_name="SortUsingDeclarationsOptions",
@@ -3004,42 +2856,37 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="SpaceAfterCStyleCast",
+),
+"SpaceAfterCStyleCast": Option(
+   name="SpaceAfterCStyleCast",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=5),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="SpaceAfterLogicalNot",
+),
+"SpaceAfterLogicalNot": Option(
+   name="SpaceAfterLogicalNot",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=9, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="SpaceAfterOperatorKeyword",
+),
+"SpaceAfterOperatorKeyword": Option(
+   name="SpaceAfterOperatorKeyword",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=21, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="SpaceAfterTemplateKeyword",
+),
+"SpaceAfterTemplateKeyword": Option(
+   name="SpaceAfterTemplateKeyword",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=4, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="SpaceAroundPointerQualifiers",
+),
+"SpaceAroundPointerQualifiers": Option(
+   name="SpaceAroundPointerQualifiers",
     type=Type(
         cxx_name="SpaceAroundPointerQualifiersStyle",
         yaml_name="SpaceAroundPointerQualifiersStyle",
@@ -3065,58 +2912,51 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="SpaceBeforeAssignmentOperators",
+),
+"SpaceBeforeAssignmentOperators": Option(
+   name="SpaceBeforeAssignmentOperators",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="SpaceBeforeCaseColon",
+),
+"SpaceBeforeCaseColon": Option(
+   name="SpaceBeforeCaseColon",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=12, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="SpaceBeforeCpp11BracedList",
+),
+"SpaceBeforeCpp11BracedList": Option(
+   name="SpaceBeforeCpp11BracedList",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=7, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="SpaceBeforeCtorInitializerColon",
+),
+"SpaceBeforeCtorInitializerColon": Option(
+   name="SpaceBeforeCtorInitializerColon",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=7, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="SpaceBeforeInheritanceColon",
+),
+"SpaceBeforeInheritanceColon": Option(
+   name="SpaceBeforeInheritanceColon",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=7, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="SpaceBeforeJsonColon",
+),
+"SpaceBeforeJsonColon": Option(
+   name="SpaceBeforeJsonColon",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=17, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="SpaceBeforeParens",
+),
+"SpaceBeforeParens": Option(
+   name="SpaceBeforeParens",
     type=Type(
         cxx_name="SpaceBeforeParensStyle",
         yaml_name="SpaceBeforeParensStyle",
@@ -3146,10 +2986,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="SpaceBeforeParensOptions",
+),
+"SpaceBeforeParensOptions": Option(
+   name="SpaceBeforeParensOptions",
     type=Type(
         cxx_name="SpaceBeforeParensCustom",
         yaml_name="SpaceBeforeParensCustom",
@@ -3226,34 +3065,30 @@ Option(
             ),
         ],
     ),
-)
-
-Option(
-    name="SpaceBeforeRangeBasedForLoopColon",
+),
+"SpaceBeforeRangeBasedForLoopColon": Option(
+   name="SpaceBeforeRangeBasedForLoopColon",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=7, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="SpaceBeforeSquareBrackets",
+),
+"SpaceBeforeSquareBrackets": Option(
+   name="SpaceBeforeSquareBrackets",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=10, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="SpaceInEmptyBlock",
+),
+"SpaceInEmptyBlock": Option(
+   name="SpaceInEmptyBlock",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=10, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="SpaceInEmptyBraces",
+),
+"SpaceInEmptyBraces": Option(
+   name="SpaceInEmptyBraces",
     type=Type(
         cxx_name="SpaceInEmptyBracesStyle",
         yaml_name="SpaceInEmptyBracesStyle",
@@ -3278,26 +3113,23 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="SpaceInEmptyParentheses",
+),
+"SpaceInEmptyParentheses": Option(
+   name="SpaceInEmptyParentheses",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="SpacesBeforeTrailingComments",
+),
+"SpacesBeforeTrailingComments": Option(
+   name="SpacesBeforeTrailingComments",
     type=Type(cxx_name="unsigned", yaml_name="Unsigned", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="SpacesInAngles",
+),
+"SpacesInAngles": Option(
+   name="SpacesInAngles",
     type=Type(
         cxx_name="SpacesInAnglesStyle",
         yaml_name="SpacesInAnglesStyle",
@@ -3322,34 +3154,30 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="SpacesInCStyleCastParentheses",
+),
+"SpacesInCStyleCastParentheses": Option(
+   name="SpacesInCStyleCastParentheses",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="SpacesInConditionalStatement",
+),
+"SpacesInConditionalStatement": Option(
+   name="SpacesInConditionalStatement",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=10, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="SpacesInContainerLiterals",
+),
+"SpacesInContainerLiterals": Option(
+   name="SpacesInContainerLiterals",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="SpacesInLineCommentPrefix",
+),
+"SpacesInLineCommentPrefix": Option(
+   name="SpacesInLineCommentPrefix",
     type=Type(
         cxx_name="SpacesInLineComment",
         yaml_name="SpacesInLineComment",
@@ -3385,10 +3213,9 @@ Option(
             ),
         ],
     ),
-)
-
-Option(
-    name="SpacesInParens",
+),
+"SpacesInParens": Option(
+   name="SpacesInParens",
     type=Type(
         cxx_name="SpacesInParensStyle",
         yaml_name="SpacesInParensStyle",
@@ -3409,10 +3236,9 @@ Option(
         values=[EnumValue(name="SIPO_Never", config="SIPO_Never"), EnumValue(name="SIPO_Custom", config="SIPO_Custom")],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="SpacesInParensOptions",
+),
+"SpacesInParensOptions": Option(
+   name="SpacesInParensOptions",
     type=Type(
         cxx_name="SpacesInParensCustom",
         yaml_name="SpacesInParensCustom",
@@ -3459,26 +3285,23 @@ Option(
             ),
         ],
     ),
-)
-
-Option(
-    name="SpacesInParentheses",
+),
+"SpacesInParentheses": Option(
+   name="SpacesInParentheses",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="SpacesInSquareBrackets",
+),
+"SpacesInSquareBrackets": Option(
+   name="SpacesInSquareBrackets",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="Standard",
+),
+"Standard": Option(
+   name="Standard",
     type=Type(
         cxx_name="LanguageStandard", yaml_name="LanguageStandard", is_list=False, is_optional=False, is_deprecated=False
     ),
@@ -3503,10 +3326,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="StatementAttributeLikeMacros",
+),
+"StatementAttributeLikeMacros": Option(
+   name="StatementAttributeLikeMacros",
     type=Type(
         cxx_name="std::vector<std::string>",
         yaml_name="List of Strings",
@@ -3517,10 +3339,9 @@ Option(
     version=Version(major=12, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="StatementMacros",
+),
+"StatementMacros": Option(
+   name="StatementMacros",
     type=Type(
         cxx_name="std::vector<std::string>",
         yaml_name="List of Strings",
@@ -3531,18 +3352,16 @@ Option(
     version=Version(major=8, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="TabWidth",
+),
+"TabWidth": Option(
+   name="TabWidth",
     type=Type(cxx_name="unsigned", yaml_name="Unsigned", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="TableGenBreakInsideDAGArg",
+),
+"TableGenBreakInsideDAGArg": Option(
+   name="TableGenBreakInsideDAGArg",
     type=Type(cxx_name="DAGArgStyle", yaml_name="DAGArgStyle", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=19, minor=None),
     enum=Enum(
@@ -3557,10 +3376,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="TableGenBreakingDAGArgOperators",
+),
+"TableGenBreakingDAGArgOperators": Option(
+   name="TableGenBreakingDAGArgOperators",
     type=Type(
         cxx_name="std::vector<std::string>",
         yaml_name="List of Strings",
@@ -3571,10 +3389,9 @@ Option(
     version=Version(major=19, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="TemplateNames",
+),
+"TemplateNames": Option(
+   name="TemplateNames",
     type=Type(
         cxx_name="std::vector<std::string>",
         yaml_name="List of Strings",
@@ -3585,10 +3402,9 @@ Option(
     version=Version(major=20, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="TypeNames",
+),
+"TypeNames": Option(
+   name="TypeNames",
     type=Type(
         cxx_name="std::vector<std::string>",
         yaml_name="List of Strings",
@@ -3599,10 +3415,9 @@ Option(
     version=Version(major=17, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="TypenameMacros",
+),
+"TypenameMacros": Option(
+   name="TypenameMacros",
     type=Type(
         cxx_name="std::vector<std::string>",
         yaml_name="List of Strings",
@@ -3613,18 +3428,16 @@ Option(
     version=Version(major=9, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="UseCRLF",
+),
+"UseCRLF": Option(
+   name="UseCRLF",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=10, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="UseTab",
+),
+"UseTab": Option(
+   name="UseTab",
     type=Type(cxx_name="UseTabStyle", yaml_name="UseTabStyle", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=3, minor=7),
     enum=Enum(
@@ -3641,10 +3454,9 @@ Option(
         ],
     ),
     nested_struct=None,
-)
-
-Option(
-    name="VariableTemplates",
+),
+"VariableTemplates": Option(
+   name="VariableTemplates",
     type=Type(
         cxx_name="std::vector<std::string>",
         yaml_name="List of Strings",
@@ -3655,18 +3467,16 @@ Option(
     version=Version(major=20, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="VerilogBreakBetweenInstancePorts",
+),
+"VerilogBreakBetweenInstancePorts": Option(
+   name="VerilogBreakBetweenInstancePorts",
     type=Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False),
     version=Version(major=17, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="WhitespaceSensitiveMacros",
+),
+"WhitespaceSensitiveMacros": Option(
+   name="WhitespaceSensitiveMacros",
     type=Type(
         cxx_name="std::vector<std::string>",
         yaml_name="List of Strings",
@@ -3677,10 +3487,9 @@ Option(
     version=Version(major=11, minor=None),
     enum=None,
     nested_struct=None,
-)
-
-Option(
-    name="WrapNamespaceBodyWithEmptyLines",
+),
+"WrapNamespaceBodyWithEmptyLines": Option(
+   name="WrapNamespaceBodyWithEmptyLines",
     type=Type(
         cxx_name="WrapNamespaceBodyWithEmptyLinesStyle",
         yaml_name="WrapNamespaceBodyWithEmptyLinesStyle",
@@ -3705,4 +3514,5 @@ Option(
         ],
     ),
     nested_struct=None,
-)
+),
+}
