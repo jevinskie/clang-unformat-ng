@@ -21,7 +21,8 @@ int priv_main() {
     for (const auto &f : fnames) {
         fmt::print("file: {}\n", f);
     }
-    auto vfs  = construct_vfs(fnames);
+    auto vfs = construct_vfs(fnames);
+    fmt::print("vfs:\n{}\n", vfs);
     auto reps = reformat_vfs(vfs);
     fmt::print("reps.size(): {}\n", reps.size());
     fmt::print("reps:\n{}\n", fmt::join(reps, ", "));
