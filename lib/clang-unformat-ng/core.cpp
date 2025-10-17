@@ -39,4 +39,8 @@ IntrusiveRefCntPtr<vfs::InMemoryFileSystem> construct_memfs(const std::vector<st
     return imvfs;
 }
 
+clang::tooling::Replacements reformat_vfs(vfs::FileSystem &fs) {
+    return {};
+}
+
 }; // namespace unformat
