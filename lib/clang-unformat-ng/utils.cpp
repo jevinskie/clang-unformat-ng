@@ -2,4 +2,4 @@
 
 #include "common-internal.hpp"
 
-int dummy;
+[[gnu::visibility("default")]] int dummy_utils;

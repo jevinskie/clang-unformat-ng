@@ -48,10 +48,11 @@ endforeach()
 
 set(LIBUNFMTNG_PUBLIC_LIBS
     fmt::fmt
+    rfl
+    reflect-cpp
 )
 
 set(LIBUNFMTNG_PRIVATE_LIBS
-    reflect-cpp
     LLVMSupport
     clangAST
     clangASTMatchers
