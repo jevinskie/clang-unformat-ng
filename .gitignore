@@ -27,8 +27,8 @@
 **/*.dSYM/
 
 # Python
-/python/src/clang_unformat/_version.py
-/python/src/clang_unformat.egg-info/
+/python/src/clang_unformat_ng/_version.py
+/python/src/clang_unformat_ng.egg-info/
 
 **/.mypy_cache/
 **/.ruff_cache/

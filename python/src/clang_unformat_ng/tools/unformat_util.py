@@ -4,7 +4,7 @@ import argparse
 
 
 def get_arg_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="applespi-py-util")
+    parser = argparse.ArgumentParser(prog="clang-unformat-ng-py-util")
     return parser
 
 

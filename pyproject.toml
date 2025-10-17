@@ -16,7 +16,7 @@ dependencies = [
   "path>=17.1.1",
   "rich>=14.2.0"
 ]
-description = "Python bindings and utilities for applespi library"
+description = "Generate clang format rules w/o forking and with hyperparameter tuning and custom objectives"
 dynamic = ["version"]
 keywords = ["clang-unformat", "clang-format"]
 license = {text = "BSD-2-Clause"}
