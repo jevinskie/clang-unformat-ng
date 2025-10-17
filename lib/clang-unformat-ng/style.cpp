@@ -1,12 +1,16 @@
 #include "clang-unformat-ng/style.hpp"
 
 #include "common-internal.hpp"
+#include "clang/Format/Format.h"
 
 #include <array>
 #include <rfl.hpp>
 #include <rfl/json.hpp>
 
 #include <effolkronium/random.hpp>
+
+using clang::format::FormatStyle;
+using clang::format::FormattingAttemptStatus;
 
 // fmt: off
 /// Returns a format style complying with the LLVM coding standards:
@@ -47,24 +51,8 @@ FormatStyle getNoStyle();
 
 namespace unformat {
 
-enum class builtin_style_t {
-    llvm,
-    google,
-    chromium,
-    mozilla,
-    webkit,
-    gnu,
-    microsoft,
-    clang_format,
-    none,
-};
-
-clang::format::FormatStyle random_style() {
-    static std::array < clang::format::FormatStyle >> builtin = {
-
-    };
-
-    return;
+builtin_style_t random_style_enum() {
+    return builtin_style_t::llvm;
 }
 
 }; // namespace unformat

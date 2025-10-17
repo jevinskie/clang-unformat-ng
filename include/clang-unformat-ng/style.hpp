@@ -17,6 +17,18 @@ struct Type {
 };
 }; // namespace style
 
-clang::format::FormatStyle random_style();
+enum class builtin_style_t {
+    llvm,
+    google,
+    chromium,
+    mozilla,
+    webkit,
+    gnu,
+    microsoft,
+    clang_format,
+    none,
+};
+
+builtin_style_t random_style_enum();
 
 }; // namespace unformat
