@@ -26,7 +26,7 @@ int priv_main() {
         fmt::print("vfs is null\n");
         return 1;
     }
-    auto reps = reformat_vfs(vfs);
+    auto reps = reformat_vfs(std::move(vfs));
     fmt::print("reps.size(): {}\n", reps.size());
 
     return 0;

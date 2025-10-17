@@ -12,6 +12,7 @@
 #include <llvm/Support/FileSystem.h>
 
 #include "clang-unformat-ng/utils.hpp"
+#include "llvm/Support/VirtualFileSystem.h"
 
 namespace unformat {
 
@@ -27,7 +28,7 @@ static FileID createInMemoryFile(StringRef FileName, MemoryBufferRef Source, Sou
 }
 
 // IntrusiveRefCntPtr<vfs::InMemoryFileSystem> construct_memfs(const std::vector<std::string> &fnames) {
-std::unique_ptr<vfs::InMemoryFileSystem> construct_memfs(const std::vector<std::string> &fnames) {
+std::unique_ptr<vfs::FileSystem> construct_memfs(const std::vector<std::string> &fnames) {
     // auto imvfs = makeIntrusiveRefCnt<vfs::InMemoryFileSystem>();
     // vfs::InMemoryFileSystem imvfs;
     auto imvfs = std::make_unique<vfs::InMemoryFileSystem>();
