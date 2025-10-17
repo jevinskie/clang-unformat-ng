@@ -28,6 +28,11 @@ int priv_main() {
     // fmt::print("vreps:\n{}\n", fmt::join(vreps, ", "));
     for (const auto &[path, vrep] : vreps) {
         fmt::print("\n[!] path: {}\n", path);
+        const auto &freps = vrep.replacements;
+        size_t i          = 0;
+        for (const auto &r : freps) {
+            fmt::print("[{:4d}]: {}\n", i, r);
+        }
     }
 
     return 0;

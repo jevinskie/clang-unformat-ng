@@ -4,6 +4,8 @@
 
 #include <string>
 
+#include <clang/Format/Format.h>
+
 namespace unformat {
 namespace style {
 struct Type {
@@ -14,4 +16,7 @@ struct Type {
     bool is_deprecated;
 };
 }; // namespace style
+
+clang::format::FormatStyle random_style();
+
 }; // namespace unformat

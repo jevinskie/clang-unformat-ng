@@ -68,6 +68,7 @@ set(LIBUNFMTNG_PRIVATE_LIBS
     clangTransformer
     # etc
     reflectcpp
+    effolkronium_random
 )
 
 # LIBUNFMTNG_HDR added for IDE project generation

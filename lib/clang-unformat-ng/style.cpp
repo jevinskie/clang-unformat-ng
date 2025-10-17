@@ -2,5 +2,69 @@
 
 #include "common-internal.hpp"
 
+#include <array>
 #include <rfl.hpp>
 #include <rfl/json.hpp>
+
+#include <effolkronium/random.hpp>
+
+// fmt: off
+/// Returns a format style complying with the LLVM coding standards:
+/// http://llvm.org/docs/CodingStandards.html.
+FormatStyle getLLVMStyle(FormatStyle::LanguageKind Language = FormatStyle::LK_Cpp);
+
+/// Returns a format style complying with one of Google's style guides:
+/// http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml.
+/// http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml.
+/// https://developers.google.com/protocol-buffers/docs/style.
+FormatStyle getGoogleStyle(FormatStyle::LanguageKind Language);
+
+/// Returns a format style complying with Chromium's style guide:
+/// http://www.chromium.org/developers/coding-style.
+FormatStyle getChromiumStyle(FormatStyle::LanguageKind Language);
+
+/// Returns a format style complying with Mozilla's style guide:
+/// https://firefox-source-docs.mozilla.org/code-quality/coding-style/index.html.
+FormatStyle getMozillaStyle();
+
+/// Returns a format style complying with Webkit's style guide:
+/// http://www.webkit.org/coding/coding-style.html
+FormatStyle getWebKitStyle();
+
+/// Returns a format style complying with GNU Coding Standards:
+/// http://www.gnu.org/prep/standards/standards.html
+FormatStyle getGNUStyle();
+
+/// Returns a format style complying with Microsoft style guide:
+/// https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference?view=vs-2017
+FormatStyle getMicrosoftStyle(FormatStyle::LanguageKind Language);
+
+FormatStyle getClangFormatStyle();
+
+/// Returns style indicating formatting should be not applied at all.
+FormatStyle getNoStyle();
+// fmt: on
+
+namespace unformat {
+
+enum class builtin_style_t {
+    llvm,
+    google,
+    chromium,
+    mozilla,
+    webkit,
+    gnu,
+    microsoft,
+    clang_format,
+    none,
+};
+
+clang::format::FormatStyle random_style() {
+    static std::array < clang::format::FormatStyle >> builtin = {
+
+    };
+
+    return;
+}
+
+}; // namespace unformat
