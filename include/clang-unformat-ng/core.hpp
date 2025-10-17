@@ -8,5 +8,5 @@
 #include <llvm/Support/VirtualFileSystem.h>
 
 namespace unformat {
-llvm::vfs::InMemoryFileSystem construct_memfs(const std::vector<std::string> &fnames);
+llvm::IntrusiveRefCntPtr<llvm::vfs::InMemoryFileSystem> construct_memfs(const std::vector<std::string> &fnames);
 };
