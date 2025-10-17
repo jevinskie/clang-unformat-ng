@@ -34,8 +34,9 @@ PRIVATE
 )
 
 target_include_directories(unformat
-    PRIVATE ${CMAKE_CURRENT_BINARY_DIR} ${CLANG_INCLUDE_DIRS}
+    PRIVATE ${CMAKE_CURRENT_BINARY_DIR} ${CLANG_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/../../include
 )
+message(WARNING "fuck ${CLANG_INCLUDE_DIRS}")
 
 set_target_properties(unformat PROPERTIES
     CXX_STANDARD 23
