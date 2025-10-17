@@ -10,7 +10,8 @@
 
 using namespace llvm;
 
-namespace {
+namespace unformat {
+namespace priv {
 
 static cl::OptionCategory UnformatOptionsCategory("unformat");
 static cl::list<std::string> FileNames(cl::Positional, cl::desc("[<file> ...]"), cl::cat(UnformatOptionsCategory));
@@ -20,16 +21,17 @@ int priv_main() {
     for (const auto &f : fnames) {
         fmt::print("file: {}\n", f);
     }
+    auto vfs = construct_memfs(fnames);
 
     return 0;
 }
-
-}; // namespace
+}; // namespace priv
+}; // namespace unformat
 
 int main(int argc, const char **argv) {
     InitLLVM X(argc, argv);
-    cl::HideUnrelatedOptions(UnformatOptionsCategory);
+    cl::HideUnrelatedOptions(unformat::priv::UnformatOptionsCategory);
     cl::ParseCommandLineOptions(argc, argv, "A tool to calculate \"optimal\" format styles from existing source.\n\n");
-    int res = priv_main();
+    int res = unformat::priv::priv_main();
     return res;
 }
