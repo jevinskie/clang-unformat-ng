@@ -7,6 +7,8 @@ message(STATUS "libunformat: Found Clang ${Clang_PACKAGE_VERSION}")
 message(STATUS "libunformat: Using ClangConfig.cmake in ${Clang_DIR}")
 
 set(LIBUNFMTNG_SRC
+    core.cpp
+    style.cpp
     utils.cpp
 )
 
