@@ -48,12 +48,12 @@ endforeach()
 
 set(LIBUNFMTNG_PUBLIC_LIBS
     fmt::fmt
-    rfl
-    reflect-cpp
 )
 
 set(LIBUNFMTNG_PRIVATE_LIBS
+    # LLVM
     LLVMSupport
+    # Clang
     clangAST
     clangASTMatchers
     clangBasic
@@ -66,9 +66,9 @@ set(LIBUNFMTNG_PRIVATE_LIBS
     clangToolingCore
     clangToolingRefactoring
     clangTransformer
+    # etc
+    reflectcpp
 )
-
-message(WARNING "LIBUNFMTNG_HDR: ${LIBUNFMTNG_HDR}")
 
 # LIBUNFMTNG_HDR added for IDE project generation
 add_library(clang-unformat-ng ${LIBUNFMTNG_SRC} ${LIBUNFMTNG_HDR})

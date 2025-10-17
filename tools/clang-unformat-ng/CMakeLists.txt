@@ -16,19 +16,7 @@ set(UNFMTNG_PUBLIC_LIBS
 set(UNFMTNG_PRIVATE_LIBS
     clang-unformat-ng
     fmt::fmt
-    reflect-cpp
     LLVMSupport
-    clangAST
-    clangASTMatchers
-    clangBasic
-    clangFrontend
-    clangFormat
-    clangHandleCXX
-    clangRewrite
-    clangSerialization
-    clangTooling
-    clangToolingCore
-    clangToolingRefactoring
 )
 
 # UNFMTNG_HDR added for IDE project generation
@@ -42,7 +30,7 @@ PRIVATE
 )
 
 target_include_directories(unformat
-    PRIVATE ${CMAKE_CURRENT_BINARY_DIR} ${CLANG_INCLUDE_DIRS}
+    PRIVATE ${CMAKE_CURRENT_BINARY_DIR} ${LLVM_INCLUDE_DIRS}
 )
 
 set_target_properties(unformat PROPERTIES
