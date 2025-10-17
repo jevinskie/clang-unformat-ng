@@ -51,7 +51,9 @@ static clang::tooling::Replacements reformat_file(const file_buf_t &fbuf) {
 
     const auto style = format::getLLVMStyle();
 
-    return clang::format::reformat(style, src, {0, src.size()}, path);
+    const tooling::Range file_ranges[] = {tooling::Range{0, static_cast<unsigned int>(src.size())}};
+
+    return clang::format::reformat(style, src, file_ranges, path);
 }
 
 file_replacements_t reformat_file_buf(const file_buf_t &fbuf) {
