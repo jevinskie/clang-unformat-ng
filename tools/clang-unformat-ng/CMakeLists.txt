@@ -1,18 +1,10 @@
 find_package(LLVM REQUIRED CONFIG GLOBAL)
-message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
-message(STATUS "Using LLVMConfig.cmake in ${LLVM_DIR}")
-# FIXME: Needed?
-list(APPEND CMAKE_MODULE_PATH ${LLVM_CMAKE_DIR})
+message(STATUS "unformat: Found LLVM ${LLVM_PACKAGE_VERSION}")
+message(STATUS "unformat: Using LLVMConfig.cmake in ${LLVM_DIR}")
 
 find_package(Clang REQUIRED CONFIG GLOBAL)
-message(STATUS "Found Clang ${Clang_PACKAGE_VERSION}")
-message(STATUS "Using ClangConfig.cmake in ${Clang_DIR}")
-# FIXME: Needed?
-list(APPEND CMAKE_MODULE_PATH ${CLANG_CMAKE_DIR})
-
-message(WARNING "fuck ${CLANG_INCLUDE_DIRS}")
-# set(CLANG_INCLUDE_DIRS FORCE PARENT_DIRECTORY "${CLANG_INCLUDE_DIRS}")
-# message(WARNING "fuck-post ${CLANG_INCLUDE_DIRS}")
+message(STATUS "unformat: Found Clang ${Clang_PACKAGE_VERSION}")
+message(STATUS "unformat: Using ClangConfig.cmake in ${Clang_DIR}")
 
 set(UNFMTNG_SRC
     unformat.cpp
@@ -50,14 +42,13 @@ PRIVATE
 )
 
 target_include_directories(unformat
-    PRIVATE ${CMAKE_CURRENT_BINARY_DIR} ${CLANG_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/../../include
+    PRIVATE ${CMAKE_CURRENT_BINARY_DIR} ${CLANG_INCLUDE_DIRS}
 )
-message(WARNING "fuck ${CLANG_INCLUDE_DIRS}")
 
 set_target_properties(unformat PROPERTIES
     CXX_STANDARD 23
     CXX_EXTENSIONS ON
     CXX_STANDARD_REQUIRED ON
-    # CXX_VISIBILITY_PRESET hidden
-    # VISIBILITY_INLINES_HIDDEN ON
+    CXX_VISIBILITY_PRESET hidden
+    VISIBILITY_INLINES_HIDDEN ON
 )

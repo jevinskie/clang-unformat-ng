@@ -1,3 +1,11 @@
+find_package(LLVM REQUIRED CONFIG GLOBAL)
+message(STATUS "libunformat: Found LLVM ${LLVM_PACKAGE_VERSION}")
+message(STATUS "libunformat: Using LLVMConfig.cmake in ${LLVM_DIR}")
+
+find_package(Clang REQUIRED CONFIG GLOBAL)
+message(STATUS "libunformat: Found Clang ${Clang_PACKAGE_VERSION}")
+message(STATUS "libunformat: Using ClangConfig.cmake in ${Clang_DIR}")
+
 set(LIBUNFMTNG_SRC
     utils.cpp
 )
