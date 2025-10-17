@@ -26,6 +26,7 @@ int priv_main() {
     auto reps = reformat_vfs(vfs);
     fmt::print("reps.size(): {}\n", reps.size());
     fmt::print("reps:\n{}\n", fmt::join(reps, ", "));
+    for (const auto &rep : reps) {}
 
     return 0;
 }

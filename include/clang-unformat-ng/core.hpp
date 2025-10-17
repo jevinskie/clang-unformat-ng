@@ -28,15 +28,8 @@ struct file_replacements_t {
     clang::tooling::Replacements replacements;
 };
 
-using vfs_t      = std::map<std::string, file_buf_t>;
-using vfs_key_t  = vfs_t::key_type;
-using vfs_val_t  = vfs_t::value_type;
-using vfs_item_t = std::pair<vfs_key_t, vfs_val_t>;
-
-using vfs_replacements_t      = std::map<std::string, file_replacements_t>;
-using vfs_replacements_key_t  = vfs_replacements_t::key_type;
-using vfs_replacements_val_t  = vfs_replacements_t::value_type;
-using vfs_replacements_item_t = std::pair<vfs_replacements_key_t, vfs_replacements_val_t>;
+using vfs_t              = std::map<std::string, file_buf_t>;
+using vfs_replacements_t = std::map<std::string, file_replacements_t>;
 
 vfs_t construct_vfs(const std::vector<std::string> &fnames);
 file_replacements_t reformat_file_buf(const file_buf_t &fbuf);
