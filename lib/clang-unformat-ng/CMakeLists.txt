@@ -39,6 +39,7 @@ set(UNFMTNG_PUBLIC_LIBS
 
 set(UNFMTNG_PRIVATE_LIBS
     fmt::fmt
+    reflect-cpp
     LLVMSupport
     clangAST
     clangASTMatchers
