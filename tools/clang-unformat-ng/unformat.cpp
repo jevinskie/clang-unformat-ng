@@ -31,31 +31,7 @@
 
 using namespace llvm;
 using namespace clang;
-// using namespace ast_matchers;
-// using namespace transformer;
 using clang::tooling::Replacements;
-
-static_assert(std::ranges::range<clang::tooling::Replacements>);
-
-template <> struct fmt::formatter<clang::tooling::Replacement> : fmt::formatter<fmt::string_view> {
-    constexpr auto format(const clang::tooling::Replacement &r, fmt::format_context &ctx) const
-        -> fmt::format_context::iterator {
-        fmt::format_to(ctx.out(), "R1 {{ ");
-        fmt::format_to(ctx.out(), "{}", r.toString());
-        fmt::format_to(ctx.out(), " }}");
-        return ctx.out();
-    }
-};
-
-template <> struct fmt::formatter<clang::tooling::Replacements> : fmt::formatter<fmt::string_view> {
-    constexpr auto format(const clang::tooling::Replacements &rs, fmt::format_context &ctx) const
-        -> fmt::format_context::iterator {
-        fmt::format_to(ctx.out(), "Rn {{ ");
-        fmt::format_to(ctx.out(), "{}", fmt::join(rs, " "));
-        fmt::format_to(ctx.out(), " }}");
-        return ctx.out();
-    }
-};
 
 #if 0
 namespace {
@@ -197,8 +173,6 @@ namespace priv {
 
 static cl::OptionCategory UnformatOptionsCategory("unformat");
 static cl::list<std::string> FileNames(cl::Positional, cl::desc("[<file> ...]"), cl::cat(UnformatOptionsCategory));
-
-void construct_memfs(const std::vector<std::string> fnames) {}
 
 int priv_main() {
     std::vector<std::string> fnames(FileNames.begin(), FileNames.end());

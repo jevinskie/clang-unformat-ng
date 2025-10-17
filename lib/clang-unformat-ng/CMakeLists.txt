@@ -8,6 +8,7 @@ message(STATUS "libunformat: Using ClangConfig.cmake in ${Clang_DIR}")
 
 set(LIBUNFMTNG_SRC
     core.cpp
+    fmt.cpp
     style.cpp
     utils.cpp
 )
@@ -46,10 +47,10 @@ foreach(SRC ${LIBUNFMTNG_SRC})
 endforeach()
 
 set(LIBUNFMTNG_PUBLIC_LIBS
+    fmt::fmt
 )
 
 set(LIBUNFMTNG_PRIVATE_LIBS
-    fmt::fmt
     reflect-cpp
     LLVMSupport
     clangAST
@@ -62,12 +63,15 @@ set(LIBUNFMTNG_PRIVATE_LIBS
     clangSerialization
     clangTooling
     clangToolingCore
+    clangToolingRefactoring
     clangTransformer
 )
 
+message(WARNING "LIBUNFMTNG_HDR: ${LIBUNFMTNG_HDR}")
+
 # LIBUNFMTNG_HDR added for IDE project generation
 add_library(clang-unformat-ng ${LIBUNFMTNG_SRC} ${LIBUNFMTNG_HDR})
-set_target_properties(clang-unformat-ng PROPERTIES PUBLIC_HEADER ${LIBUNFMTNG_HDR})
+# set_target_properties(clang-unformat-ng PROPERTIES PUBLIC_HEADER ${LIBUNFMTNG_HDR})
 
 target_link_libraries(clang-unformat-ng
 PUBLIC
