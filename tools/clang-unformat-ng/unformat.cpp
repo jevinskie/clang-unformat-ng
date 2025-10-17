@@ -205,8 +205,6 @@ int priv_main() {
     for (const auto &f : fnames) {
         fmt::print("file: {}\n", f);
     }
-    fmt::print(stderr, "fmt print stderr alice\n");
-    llvm::errs() << "llvm::errs() bob\n";
 
     return 0;
 }
