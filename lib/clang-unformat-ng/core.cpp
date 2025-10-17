@@ -2,6 +2,7 @@
 
 #include "common-internal.hpp"
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -25,16 +26,19 @@ static FileID createInMemoryFile(StringRef FileName, MemoryBufferRef Source, Sou
     return Sources.createFileID(*File, SourceLocation(), SrcMgr::C_User);
 }
 
-IntrusiveRefCntPtr<vfs::InMemoryFileSystem> construct_memfs(const std::vector<std::string> &fnames) {
-    auto imvfs = makeIntrusiveRefCnt<vfs::InMemoryFileSystem>();
-    FileManager Files(FileSystemOptions(), imvfs);
+// IntrusiveRefCntPtr<vfs::InMemoryFileSystem> construct_memfs(const std::vector<std::string> &fnames) {
+std::unique_ptr<vfs::InMemoryFileSystem> construct_memfs(const std::vector<std::string> &fnames) {
+    // auto imvfs = makeIntrusiveRefCnt<vfs::InMemoryFileSystem>();
+    // vfs::InMemoryFileSystem imvfs;
+    auto imvfs = std::make_unique<vfs::InMemoryFileSystem>();
+    FileManager Files(FileSystemOptions(), &*imvfs);
     DiagnosticOptions DiagOpts;
     DiagnosticsEngine Diagnostics(DiagnosticIDs::create(), DiagOpts);
     SourceManager Sources(Diagnostics, Files);
     for (const auto &fname : fnames) {
         const auto fstr = slurp_file_string(fname);
         auto mb         = MemoryBuffer::getMemBufferCopy(fstr, fname);
-        const auto fid  = createInMemoryFile(fname, *mb, Sources, Files, imvfs.get());
+        const auto fid  = createInMemoryFile(fname, *mb, Sources, Files, &*imvfs);
     }
     return imvfs;
 }
