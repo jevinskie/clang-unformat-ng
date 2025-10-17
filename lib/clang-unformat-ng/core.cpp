@@ -44,7 +44,7 @@ std::unique_ptr<vfs::FileSystem> construct_memfs(const std::vector<std::string> 
     return imvfs;
 }
 
-clang::tooling::Replacements reformat_vfs(std::unique_ptr<vfs::FileSystem> fs) {
+clang::tooling::Replacements reformat_vfs(vfs::FileSystem &fs) {
     return {};
 }
 

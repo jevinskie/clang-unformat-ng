@@ -11,5 +11,5 @@
 
 namespace unformat {
 std::unique_ptr<llvm::vfs::FileSystem> construct_memfs(const std::vector<std::string> &fnames);
-clang::tooling::Replacements reformat_vfs(std::unique_ptr<llvm::vfs::FileSystem> vfs);
+clang::tooling::Replacements reformat_vfs(llvm::vfs::FileSystem &vfs);
 }; // namespace unformat
