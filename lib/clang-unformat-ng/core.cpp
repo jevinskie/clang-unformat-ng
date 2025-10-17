@@ -5,6 +5,7 @@
 #include "clang-unformat-ng/utils.hpp"
 #include "clang/Tooling/Core/Replacement.h"
 
+#include <_abort.h>
 #include <string>
 #include <vector>
 
@@ -53,7 +54,13 @@ static clang::tooling::Replacements reformat_file(const file_buf_t &fbuf) {
 
     const tooling::Range file_ranges[] = {tooling::Range{0, static_cast<unsigned int>(src.size())}};
 
-    return clang::format::reformat(style, src, file_ranges, path);
+    format::FormattingAttemptStatus fmt_status;
+    auto res = clang::format::reformat(style, src, file_ranges, path, &fmt_status);
+    if (!fmt_status.FormatComplete) {
+        fmt::print("couldn't complete format for fbuf for \"{}\"\n", fbuf.path);
+        abort();
+    }
+    return res;
 }
 
 file_replacements_t reformat_file_buf(const file_buf_t &fbuf) {
