@@ -2,6 +2,7 @@
 
 #include "common.hpp"
 
+#include <map>
 #include <memory>
 #include <string>
 #include <vector>
@@ -16,9 +17,16 @@ struct file_buf_t {
     std::string body;
 };
 
-using vfs_t = std::map<std::string, file_buf_t>;
+struct file_replacements_t {
+    std::string path;
+    clang::tooling::Replacements replacements;
+};
+
+using vfs_t              = std::map<std::string, file_buf_t>;
+using vfs_replacements_t = std::map<std::string, file_replacements_t>;
 
 vfs_t construct_vfs(const std::vector<std::string> &fnames);
-clang::tooling::Replacements reformat_vfs(const vfs_t &vfs);
+file_replacements_t reformat_file_buf(const file_buf_t &fbuf);
+vfs_replacements_t reformat_vfs(const vfs_t &vfs);
 
 }; // namespace unformat
