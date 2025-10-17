@@ -73,7 +73,7 @@ set(LIBUNFMTNG_PRIVATE_LIBS
 # LIBUNFMTNG_HDR added for IDE project generation
 add_library(clang-unformat-ng ${LIBUNFMTNG_SRC} ${LIBUNFMTNG_HDR})
 set_target_properties(clang-unformat-ng PROPERTIES PUBLIC_HEADER "${LIBUNFMTNG_HDR}")
-
+target_compile_options(clang-unformat-ng PRIVATE -fno-rtti)
 target_link_libraries(clang-unformat-ng
 PUBLIC
     ${LIBUNFMTNG_PUBLIC_LIBS}
