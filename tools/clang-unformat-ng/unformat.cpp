@@ -21,12 +21,8 @@ int priv_main() {
     for (const auto &f : fnames) {
         fmt::print("file: {}\n", f);
     }
-    auto vfs = construct_memfs(fnames);
-    if (vfs == nullptr) {
-        fmt::print("vfs is null\n");
-        return 1;
-    }
-    auto reps = reformat_vfs(*vfs.get());
+    auto vfs  = construct_vfs(fnames);
+    auto reps = reformat_vfs(vfs);
     fmt::print("reps.size(): {}\n", reps.size());
 
     return 0;

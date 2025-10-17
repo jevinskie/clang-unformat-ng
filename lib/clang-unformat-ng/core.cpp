@@ -2,7 +2,8 @@
 
 #include "common-internal.hpp"
 
-#include <memory>
+#include "clang-unformat-ng/utils.hpp"
+
 #include <string>
 #include <vector>
 
@@ -10,41 +11,23 @@
 #include <clang/Basic/SourceLocation.h>
 #include <clang/Basic/SourceManager.h>
 #include <llvm/Support/FileSystem.h>
-
-#include "clang-unformat-ng/utils.hpp"
-#include "llvm/Support/VirtualFileSystem.h"
+#include <llvm/Support/VirtualFileSystem.h>
 
 namespace unformat {
 
 using namespace llvm;
 using namespace clang;
 
-static FileID createInMemoryFile(StringRef FileName, MemoryBufferRef Source, SourceManager &Sources, FileManager &Files,
-                                 vfs::InMemoryFileSystem *MemFS) {
-    MemFS->addFileNoOwn(FileName, 0, Source);
-    auto File = Files.getOptionalFileRef(FileName);
-    assert(File && "File not added to MemFS?");
-    return Sources.createFileID(*File, SourceLocation(), SrcMgr::C_User);
-}
-
-// IntrusiveRefCntPtr<vfs::InMemoryFileSystem> construct_memfs(const std::vector<std::string> &fnames) {
-std::unique_ptr<vfs::FileSystem> construct_memfs(const std::vector<std::string> &fnames) {
-    // auto imvfs = makeIntrusiveRefCnt<vfs::InMemoryFileSystem>();
-    // vfs::InMemoryFileSystem imvfs;
-    auto imvfs = std::make_unique<vfs::InMemoryFileSystem>();
-    FileManager Files(FileSystemOptions(), &*imvfs);
-    DiagnosticOptions DiagOpts;
-    DiagnosticsEngine Diagnostics(DiagnosticIDs::create(), DiagOpts);
-    SourceManager Sources(Diagnostics, Files);
+vfs_t construct_vfs(const std::vector<std::string> &fnames) {
+    vfs_t fs;
     for (const auto &fname : fnames) {
-        const auto fstr = slurp_file_string(fname);
-        auto mb         = MemoryBuffer::getMemBufferCopy(fstr, fname);
-        const auto fid  = createInMemoryFile(fname, *mb, Sources, Files, &*imvfs);
+        const auto src = slurp_file_string(fname);
+        fs.insert_or_assign(fname, file_buf_t{fname, src});
     }
-    return imvfs;
+    return fs;
 }
 
-clang::tooling::Replacements reformat_vfs(vfs::FileSystem &fs) {
+clang::tooling::Replacements reformat_vfs(const vfs_t &vfs) {
     return {};
 }
 

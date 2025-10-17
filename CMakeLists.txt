@@ -15,6 +15,11 @@ if (${FORCE_COLORED_OUTPUT})
     endif ()
 endif ()
 
+add_compile_options(${JEV_COLOR_DIAGS})
+add_compile_options(-fsanitize=address)
+add_link_options(-fsanitize=address)
+
+
 add_subdirectory(3rdparty)
 add_subdirectory(lib)
 add_subdirectory(tools)

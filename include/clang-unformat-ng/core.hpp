@@ -10,6 +10,15 @@
 #include <llvm/Support/VirtualFileSystem.h>
 
 namespace unformat {
-std::unique_ptr<llvm::vfs::FileSystem> construct_memfs(const std::vector<std::string> &fnames);
-clang::tooling::Replacements reformat_vfs(llvm::vfs::FileSystem &vfs);
+
+struct file_buf_t {
+    std::string path;
+    std::string body;
+};
+
+using vfs_t = std::map<std::string, file_buf_t>;
+
+vfs_t construct_vfs(const std::vector<std::string> &fnames);
+clang::tooling::Replacements reformat_vfs(const vfs_t &vfs);
+
 }; // namespace unformat
