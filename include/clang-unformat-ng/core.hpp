@@ -47,7 +47,7 @@ vfs_replacements_t reformat_vfs(const vfs_t &vfs);
 template <> struct fmt::formatter<unformat::file_buf_t> : fmt::formatter<fmt::string_view> {
     constexpr auto format(const unformat::file_buf_t &b, fmt::format_context &ctx) const
         -> fmt::format_context::iterator {
-        fmt::format_to(ctx.out(), "FBuf{{.path = \"{}\", .body = \"{:24s}\"}}", b.path, b.body);
+        fmt::format_to(ctx.out(), "FBuf{{.path = \"{}\", .body = \"{:.24s}\"}}", b.path, b.body);
         return ctx.out();
     }
 };
