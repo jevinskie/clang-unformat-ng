@@ -1,3 +1,5 @@
 #pragma once
 
-#include "utils.hpp"
+extern int utils;
+
+int common = utils;
