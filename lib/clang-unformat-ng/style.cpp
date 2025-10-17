@@ -4,5 +4,3 @@
 
 #include <rfl.hpp>
 #include <rfl/json.hpp>
-
-[[gnu::visibility("default")]] int dummy_style;
