@@ -1,18 +1,14 @@
-# find_package(LLVM REQUIRED CONFIG)
-# message(STATUS "Tool: Found LLVM ${LLVM_PACKAGE_VERSION}")
-# message(STATUS "Tool: Using LLVMConfig.cmake in ${LLVM_DIR}")
-# list(APPEND CMAKE_MODULE_PATH ${LLVM_CMAKE_DIR})
+set(UNFMTNG_SRC
+    unformat.cpp
+)
 
-# find_package(Clang REQUIRED CONFIG)
-# message(STATUS "Tool: Found Clang ${Clang_PACKAGE_VERSION}")
-# message(STATUS "Tool: Using ClangConfig.cmake in ${Clang_DIR}")
+set(UNFMTNG_PUBLIC_LIBS
+)
 
-
-add_executable(unformat unformat.cpp)
-target_compile_options(unformat PRIVATE ${JEV_COLOR_DIAGS} -fno-rtti)
-target_include_directories(unformat PRIVATE ${CLANG_INCLUDE_DIRS})
-target_link_libraries(unformat PRIVATE
+set(UNFMTNG_PRIVATE_LIBS
+    clang-unformat-ng
     fmt::fmt
+    reflect-cpp
     LLVMSupport
     clangAST
     clangASTMatchers
@@ -25,7 +21,21 @@ target_link_libraries(unformat PRIVATE
     clangTooling
     clangToolingCore
     clangTransformer
-    clang-unformat-ng
+)
+
+# UNFMTNG_HDR added for IDE project generation
+add_library(unformat ${UNFMTNG_SRC})
+
+target_link_libraries(unformat
+PUBLIC
+    ${UNFMTNG_PUBLIC_LIBS}
+PRIVATE
+    ${UNFMTNG_PRIVATE_LIBS}
+)
+
+target_include_directories(unformat
+    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../../include
+    PRIVATE ${CMAKE_CURRENT_BINARY_DIR} ${CLANG_INCLUDE_DIRS}
 )
 
 set_target_properties(unformat PROPERTIES
@@ -35,5 +45,3 @@ set_target_properties(unformat PROPERTIES
     CXX_VISIBILITY_PRESET hidden
     VISIBILITY_INLINES_HIDDEN ON
 )
-
-install(TARGETS unformat)
