@@ -57,7 +57,7 @@ static clang::tooling::Replacements reformat_file(const file_buf_t &fbuf) {
     format::FormattingAttemptStatus fmt_status;
     auto res = clang::format::reformat(style, src, file_ranges, path, &fmt_status);
     if (!fmt_status.FormatComplete) {
-        fmt::print("couldn't complete format for fbuf for \"{}\"\n", fbuf.path);
+        fmt::print("couldn't complete format (line {}) for fbuf for \"{}\"\n", fmt_status.Line, fbuf.path);
         abort();
     }
     return res;

@@ -23,10 +23,12 @@ int priv_main() {
     }
     auto vfs = construct_vfs(fnames);
     fmt::print("vfs:\n{}\n", vfs);
-    auto reps = reformat_vfs(vfs);
-    fmt::print("reps.size(): {}\n", reps.size());
-    fmt::print("reps:\n{}\n", fmt::join(reps, ", "));
-    for (const auto &rep : reps) {}
+    auto vreps = reformat_vfs(vfs);
+    fmt::print("vreps.size(): {}\n", vreps.size());
+    // fmt::print("vreps:\n{}\n", fmt::join(vreps, ", "));
+    for (const auto &[path, vrep] : vreps) {
+        fmt::print("\n[!] path: {}\n", path);
+    }
 
     return 0;
 }
