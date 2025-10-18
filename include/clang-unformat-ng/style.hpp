@@ -29,6 +29,7 @@ enum class builtin_style_t {
     clang_format,
 };
 
+const clang::format::FormatStyle &get_style(builtin_style_t style);
 builtin_style_t random_style_enum();
 
 }; // namespace unformat

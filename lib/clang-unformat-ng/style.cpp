@@ -112,7 +112,7 @@ const FormatStyle &get_style(builtin_style_t style) {
             }
         }
     });
-    return builtin_styles[style];
+    return builtin_styles[enchantum::to_underlying(style)];
 }
 
 enum builtin_style_t random_style_enum() {

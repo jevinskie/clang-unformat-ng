@@ -2,10 +2,12 @@
 
 #include "common-internal.hpp"
 
+#include "clang-unformat-ng/style.hpp"
 #include "clang-unformat-ng/utils.hpp"
+
 #include "clang/Tooling/Core/Replacement.h"
 
-#include <_abort.h>
+#include <stdlib.h>
 #include <string>
 #include <vector>
 
@@ -72,6 +74,7 @@ vfs_replacements_t reformat_vfs(const vfs_t &vfs) {
     for (const auto &[path, src] : vfs) {
         res.insert_or_assign(path, reformat_file_buf(vfs.at(path)));
     }
+    get_style(builtin_style_t::none);
     return res;
 }
 
