@@ -1,7 +1,9 @@
 #include "clang-unformat-ng/style.hpp"
 
 #include "common-internal.hpp"
+#include "enchantum/entries.hpp"
 
+#include <_abort.h>
 #include <clang/Format/Format.h>
 
 #include <array>
@@ -55,11 +57,19 @@ using clang::format::FormatStyle;
 using clang::format::FormattingAttemptStatus;
 
 const FormatStyle get_style(builtin_style_t style) {
-    static const std::array<std::unique_ptr<FormatStyle>, enchantum::count<builtin_style_t>> builtin_styles{};
+    static std::array<FormatStyle, enchantum::count<builtin_style_t>> builtin_styles{};
     static std::once_flag generated;
     std::call_once(generated, []() {
         for (const auto &[val, str] : enchantum::entries<builtin_style_t>) {
             fmt::print("val: {} str: {}\n", enchantum::to_string(val), str);
+            using sty = builtin_style_t;
+            switch (val) {
+            case sty::llvm:
+                builtin_styles[enchantum::to_underlying(sty::llvm)] = clang::format::getLLVMStyle();
+            default:
+                abort();
+                break;
+            }
         }
     });
     return {};
