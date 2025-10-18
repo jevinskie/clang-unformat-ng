@@ -1,16 +1,17 @@
 #include "clang-unformat-ng/style.hpp"
 
 #include "common-internal.hpp"
-#include "clang/Format/Format.h"
+
+#include <clang/Format/Format.h>
 
 #include <array>
+
+#include <effolkronium/random.hpp>
+#include <enchantum/enchantum.hpp>
 #include <rfl.hpp>
 #include <rfl/json.hpp>
 
-#include <effolkronium/random.hpp>
-
-using clang::format::FormatStyle;
-using clang::format::FormattingAttemptStatus;
+namespace unformat {
 
 // fmt: off
 /// Returns a format style complying with the LLVM coding standards:
@@ -49,10 +50,30 @@ FormatStyle getClangFormatStyle();
 FormatStyle getNoStyle();
 // fmt: on
 
-namespace unformat {
+using clang::format::FormatStyle;
+using clang::format::FormattingAttemptStatus;
 
-builtin_style_t random_style_enum() {
+enum builtin_style_t random_style_enum() {
     return builtin_style_t::llvm;
+}
+
+static const std::array<std::unique_ptr<FormatStyle>, enchantum::count<builtin_style_t>> builtin_styles{};
+
+const FormatStyle &random_style() {
+    static std::once_flag generated;
+    std::call_once(generated, []() {
+        std::cout << "Simple example: called once\n";
+    });
+
+    switch (random_style_enum()) {
+    case builtin_style_t::llvm:
+        return clang::format::getLLVMStyle();
+        break;
+    default:
+        abort();
+        break;
+    }
+    return getNoStyle();
 }
 
 }; // namespace unformat

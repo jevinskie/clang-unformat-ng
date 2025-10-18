@@ -18,6 +18,7 @@ struct Type {
 }; // namespace style
 
 enum class builtin_style_t {
+    none = 0,
     llvm,
     google,
     chromium,
@@ -26,7 +27,6 @@ enum class builtin_style_t {
     gnu,
     microsoft,
     clang_format,
-    none,
 };
 
 builtin_style_t random_style_enum();

@@ -68,6 +68,7 @@ set(LIBUNFMTNG_PRIVATE_LIBS
     clangTransformer
     # etc
     reflectcpp
+    enchantum::enchantum
     effolkronium_random
 )
 
