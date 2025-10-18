@@ -5,8 +5,6 @@
 #include "clang-unformat-ng/style.hpp"
 #include "clang-unformat-ng/utils.hpp"
 
-#include "clang/Tooling/Core/Replacement.h"
-
 #include <string>
 #include <vector>
 
@@ -14,6 +12,7 @@
 #include <clang/Basic/SourceLocation.h>
 #include <clang/Basic/SourceManager.h>
 #include <clang/Format/Format.h>
+#include <clang/Tooling/Core/Replacement.h>
 #include <llvm/Support/FileSystem.h>
 #include <llvm/Support/VirtualFileSystem.h>
 

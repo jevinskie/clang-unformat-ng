@@ -1,12 +1,11 @@
 #include "clang-unformat-ng/style.hpp"
 
 #include "common-internal.hpp"
-#include "enchantum/entries.hpp"
-
-#include <_abort.h>
-#include <clang/Format/Format.h>
 
 #include <array>
+#include <mutex>
+
+#include <clang/Format/Format.h>
 
 #include <effolkronium/random.hpp>
 #include <enchantum/enchantum.hpp>

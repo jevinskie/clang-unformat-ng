@@ -1,4 +1,3 @@
-#include "clang-unformat-ng/style.hpp"
 #include <string>
 #include <vector>
 
