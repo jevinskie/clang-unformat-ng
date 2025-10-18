@@ -16,59 +16,7 @@
 
 namespace unformat {
 
-using Rand = effolkronium::random_local;
-
-// fmt: off
-// /// Returns a format style complying with the LLVM coding standards:
-// /// http://llvm.org/docs/CodingStandards.html.
-// FormatStyle getLLVMStyle(FormatStyle::LanguageKind Language = FormatStyle::LK_Cpp);
-
-// /// Returns a format style complying with one of Google's style guides:
-// /// http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml.
-// /// http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml.
-// /// https://developers.google.com/protocol-buffers/docs/style.
-// FormatStyle getGoogleStyle(FormatStyle::LanguageKind Language);
-
-// /// Returns a format style complying with Chromium's style guide:
-// /// http://www.chromium.org/developers/coding-style.
-// FormatStyle getChromiumStyle(FormatStyle::LanguageKind Language);
-
-// /// Returns a format style complying with Mozilla's style guide:
-// /// https://firefox-source-docs.mozilla.org/code-quality/coding-style/index.html.
-// FormatStyle getMozillaStyle();
-
-// /// Returns a format style complying with Webkit's style guide:
-// /// http://www.webkit.org/coding/coding-style.html
-// FormatStyle getWebKitStyle();
-
-// /// Returns a format style complying with GNU Coding Standards:
-// /// http://www.gnu.org/prep/standards/standards.html
-// FormatStyle getGNUStyle();
-
-// /// Returns a format style complying with Microsoft style guide:
-// /// https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference?view=vs-2017
-// FormatStyle getMicrosoftStyle(FormatStyle::LanguageKind Language);
-
-// FormatStyle getClangFormatStyle();
-
-// /// Returns style indicating formatting should be not applied at all.
-// FormatStyle getNoStyle();
-// fmt: on
-
 using clang::format::FormatStyle;
-using clang::format::FormattingAttemptStatus;
-
-// enum class builtin_style_t {
-//     none = 0,
-//     llvm,
-//     google,
-//     chromium,
-//     mozilla,
-//     webkit,
-//     gnu,
-//     microsoft,
-//     clang_format,
-// };
 
 const FormatStyle &get_style(builtin_style_t style) {
     static std::array<FormatStyle, enchantum::count<builtin_style_t>> builtin_styles{};
@@ -117,11 +65,11 @@ const FormatStyle &get_style(builtin_style_t style) {
 }
 
 builtin_style_t random_style_enum() {
-    static Rand local_rand;
+    static effolkronium::random_local local_rand;
     // this is dumb, there is no thread-safety in local_rand.get()
     static std::once_flag rand_init;
     std::call_once(rand_init, []() {
-        local_rand = Rand{};
+        local_rand = {};
     });
     return builtin_style_t{
         local_rand.get<std::underlying_type_t<builtin_style_t>>(0, enchantum::count<builtin_style_t>)};
