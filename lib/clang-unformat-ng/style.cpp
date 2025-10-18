@@ -23,7 +23,6 @@ const FormatStyle &get_style(builtin_style_t style) {
     static std::once_flag generated;
     std::call_once(generated, []() {
         for (const auto &[val, str] : enchantum::entries<builtin_style_t>) {
-            fmt::print("val: {} str: {}\n", enchantum::to_string(val), str);
             using sty = builtin_style_t;
             switch (val) {
             case sty::none:

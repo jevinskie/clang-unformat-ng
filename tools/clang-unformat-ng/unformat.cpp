@@ -1,3 +1,4 @@
+#include "clang-unformat-ng/style.hpp"
 #include <string>
 #include <vector>
 
@@ -23,17 +24,19 @@ int priv_main() {
     }
     auto vfs = construct_vfs(fnames);
     fmt::print("vfs:\n{}\n", vfs);
-    auto vreps = reformat_vfs(vfs);
+    const auto style = random_style_enum();
+    fmt::print("style: {}\n", style_name(style));
+    auto vreps = reformat_vfs(vfs, style);
     fmt::print("vreps.size(): {}\n", vreps.size());
     // fmt::print("vreps:\n{}\n", fmt::join(vreps, ", "));
-    for (const auto &[path, vrep] : vreps) {
-        fmt::print("\n[!] path: {}\n", path);
-        const auto &freps = vrep.replacements;
-        size_t i          = 0;
-        for (const auto &r : freps) {
-            fmt::print("[{:4d}]: {}\n", i, r);
-        }
-    }
+    // for (const auto &[path, vrep] : vreps) {
+    //     fmt::print("\n[!] path: {}\n", path);
+    //     const auto &freps = vrep.replacements;
+    //     size_t i          = 0;
+    //     for (const auto &r : freps) {
+    //         fmt::print("[{:4d}]: {}\n", i, r);
+    //     }
+    // }
 
     return 0;
 }
