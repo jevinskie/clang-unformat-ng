@@ -28,15 +28,15 @@ int priv_main() {
     fmt::print("style: {}\n", style_name(style));
     auto vreps = reformat_vfs(vfs, style);
     fmt::print("vreps.size(): {}\n", vreps.size());
-    // fmt::print("vreps:\n{}\n", fmt::join(vreps, ", "));
-    // for (const auto &[path, vrep] : vreps) {
-    //     fmt::print("\n[!] path: {}\n", path);
-    //     const auto &freps = vrep.replacements;
-    //     size_t i          = 0;
-    //     for (const auto &r : freps) {
-    //         fmt::print("[{:4d}]: {}\n", i, r);
-    //     }
-    // }
+    for (const auto &[path, vrep] : vreps) {
+        fmt::print("\n[!] path: {}\n", path);
+        const auto &freps = vrep.replacements;
+        size_t i          = 0;
+        for (const auto &r : freps) {
+            fmt::print("[{:4d}]: off: {} sz: {}\n", i, r.getOffset(), r.getLength());
+            ++i;
+        }
+    }
 
     return 0;
 }
