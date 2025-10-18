@@ -56,7 +56,19 @@ namespace unformat {
 using clang::format::FormatStyle;
 using clang::format::FormattingAttemptStatus;
 
-const FormatStyle get_style(builtin_style_t style) {
+// enum class builtin_style_t {
+//     none = 0,
+//     llvm,
+//     google,
+//     chromium,
+//     mozilla,
+//     webkit,
+//     gnu,
+//     microsoft,
+//     clang_format,
+// };
+
+const FormatStyle &get_style(builtin_style_t style) {
     static std::array<FormatStyle, enchantum::count<builtin_style_t>> builtin_styles{};
     static std::once_flag generated;
     std::call_once(generated, []() {
@@ -64,15 +76,43 @@ const FormatStyle get_style(builtin_style_t style) {
             fmt::print("val: {} str: {}\n", enchantum::to_string(val), str);
             using sty = builtin_style_t;
             switch (val) {
+            case sty::none:
+                builtin_styles[enchantum::to_underlying(sty::none)] = clang::format::getNoStyle();
+                break;
             case sty::llvm:
                 builtin_styles[enchantum::to_underlying(sty::llvm)] = clang::format::getLLVMStyle();
+                break;
+            case sty::google:
+                builtin_styles[enchantum::to_underlying(sty::google)] =
+                    clang::format::getGoogleStyle(FormatStyle::LK_Cpp);
+                break;
+            case sty::chromium:
+                builtin_styles[enchantum::to_underlying(sty::chromium)] =
+                    clang::format::getChromiumStyle(FormatStyle::LK_Cpp);
+                break;
+            case sty::mozilla:
+                builtin_styles[enchantum::to_underlying(sty::mozilla)] = clang::format::getMozillaStyle();
+                break;
+            case sty::webkit:
+                builtin_styles[enchantum::to_underlying(sty::webkit)] = clang::format::getWebKitStyle();
+                break;
+            case sty::gnu:
+                builtin_styles[enchantum::to_underlying(sty::gnu)] = clang::format::getGNUStyle();
+                break;
+            case sty::microsoft:
+                builtin_styles[enchantum::to_underlying(sty::microsoft)] =
+                    clang::format::getMicrosoftStyle(FormatStyle::LK_Cpp);
+                break;
+            case sty::clang_format:
+                builtin_styles[enchantum::to_underlying(sty::clang_format)] = clang::format::getClangFormatStyle();
+                break;
             default:
                 abort();
                 break;
             }
         }
     });
-    return {};
+    return builtin_styles[style];
 }
 
 enum builtin_style_t random_style_enum() {
