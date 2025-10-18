@@ -16,6 +16,8 @@
 
 namespace unformat {
 
+using Rand = effolkronium::random_local;
+
 // fmt: off
 // /// Returns a format style complying with the LLVM coding standards:
 // /// http://llvm.org/docs/CodingStandards.html.
@@ -77,34 +79,33 @@ const FormatStyle &get_style(builtin_style_t style) {
             using sty = builtin_style_t;
             switch (val) {
             case sty::none:
-                builtin_styles[enchantum::to_underlying(sty::none)] = clang::format::getNoStyle();
+                builtin_styles[std::to_underlying(sty::none)] = clang::format::getNoStyle();
                 break;
             case sty::llvm:
-                builtin_styles[enchantum::to_underlying(sty::llvm)] = clang::format::getLLVMStyle();
+                builtin_styles[std::to_underlying(sty::llvm)] = clang::format::getLLVMStyle();
                 break;
             case sty::google:
-                builtin_styles[enchantum::to_underlying(sty::google)] =
-                    clang::format::getGoogleStyle(FormatStyle::LK_Cpp);
+                builtin_styles[std::to_underlying(sty::google)] = clang::format::getGoogleStyle(FormatStyle::LK_Cpp);
                 break;
             case sty::chromium:
-                builtin_styles[enchantum::to_underlying(sty::chromium)] =
+                builtin_styles[std::to_underlying(sty::chromium)] =
                     clang::format::getChromiumStyle(FormatStyle::LK_Cpp);
                 break;
             case sty::mozilla:
-                builtin_styles[enchantum::to_underlying(sty::mozilla)] = clang::format::getMozillaStyle();
+                builtin_styles[std::to_underlying(sty::mozilla)] = clang::format::getMozillaStyle();
                 break;
             case sty::webkit:
-                builtin_styles[enchantum::to_underlying(sty::webkit)] = clang::format::getWebKitStyle();
+                builtin_styles[std::to_underlying(sty::webkit)] = clang::format::getWebKitStyle();
                 break;
             case sty::gnu:
-                builtin_styles[enchantum::to_underlying(sty::gnu)] = clang::format::getGNUStyle();
+                builtin_styles[std::to_underlying(sty::gnu)] = clang::format::getGNUStyle();
                 break;
             case sty::microsoft:
-                builtin_styles[enchantum::to_underlying(sty::microsoft)] =
+                builtin_styles[std::to_underlying(sty::microsoft)] =
                     clang::format::getMicrosoftStyle(FormatStyle::LK_Cpp);
                 break;
             case sty::clang_format:
-                builtin_styles[enchantum::to_underlying(sty::clang_format)] = clang::format::getClangFormatStyle();
+                builtin_styles[std::to_underlying(sty::clang_format)] = clang::format::getClangFormatStyle();
                 break;
             default:
                 abort();
@@ -112,28 +113,26 @@ const FormatStyle &get_style(builtin_style_t style) {
             }
         }
     });
-    return builtin_styles[enchantum::to_underlying(style)];
+    return builtin_styles[std::to_underlying(style)];
 }
 
-enum builtin_style_t random_style_enum() {
-    return builtin_style_t::llvm;
-}
-
-const FormatStyle random_style() {
-    static std::once_flag generated;
-    std::call_once(generated, []() {
-        std::cout << "Simple example: called once\n";
+builtin_style_t random_style_enum() {
+    static Rand local_rand;
+    // this is dumb, there is no thread-safety in local_rand.get()
+    static std::once_flag rand_init;
+    std::call_once(rand_init, []() {
+        local_rand = Rand{};
     });
+    return builtin_style_t{
+        local_rand.get<std::underlying_type_t<builtin_style_t>>(0, enchantum::count<builtin_style_t>)};
+}
 
-    switch (random_style_enum()) {
-    case builtin_style_t::llvm:
-        return clang::format::getLLVMStyle();
-        break;
-    default:
-        abort();
-        break;
-    }
-    return clang::format::getNoStyle();
+const clang::format::FormatStyle &random_style() {
+    return get_style(random_style_enum());
+}
+
+std::string_view style_name(builtin_style_t style) {
+    return enchantum::to_string(style);
 }
 
 }; // namespace unformat

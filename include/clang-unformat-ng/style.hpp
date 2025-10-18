@@ -3,6 +3,7 @@
 #include "common.hpp"
 
 #include <string>
+#include <string_view>
 
 #include <clang/Format/Format.h>
 
@@ -30,6 +31,8 @@ enum class builtin_style_t {
 };
 
 const clang::format::FormatStyle &get_style(builtin_style_t style);
+const clang::format::FormatStyle &random_style();
 builtin_style_t random_style_enum();
+std::string_view style_name(builtin_style_t style);
 
 }; // namespace unformat
