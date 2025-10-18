@@ -10,3 +10,6 @@
 [submodule "3rdparty/enchantum"]
 	path = 3rdparty/enchantum
 	url = https://github.com/ZXShady/enchantum
+[submodule "3rdparty/StringZilla"]
+	path = 3rdparty/StringZilla
+	url = https://github.com/ashvardanian/StringZilla
