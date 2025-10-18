@@ -6,3 +6,6 @@ option(REFLECTCPP_USE_STD_EXPECTED "Use std::expected instead of the built-in Re
 add_subdirectory(reflect-cpp EXCLUDE_FROM_ALL)
 
 add_subdirectory(random EXCLUDE_FROM_ALL)
+
+set(JSON_BuildTests OFF CACHE INTERNAL "")
+add_subdirectory(json EXCLUDE_FROM_ALL)
