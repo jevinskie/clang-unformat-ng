@@ -8,6 +8,6 @@ int add(int a, int b) {
     return a + b;
 }
 
-NB_MODULE(cxx_py_ffi, m) {
+NB_MODULE(cxx_py, m) {
     m.def("add", &add);
 }
