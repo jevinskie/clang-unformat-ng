@@ -1,15 +1,8 @@
 
-# message(WARNING "pre my Python3 find")
-# set(Python3_FIND_UNVERSIONED_NAMES FIRST)
-# set(Python3_FIND_STRATEGY LOCATION)
-# find_package(Python3 3.11 COMPONENTS Development)
-# message(WARNING "post my Python3 find")
 
-message(WARNING "pre my Python find")
 set(Python_FIND_UNVERSIONED_NAMES FIRST)
 set(Python_FIND_STRATEGY LOCATION)
 find_package(Python COMPONENTS Interpreter Development REQUIRED GLOBAL)
-message(WARNING "post my Python find")
 
 add_subdirectory(nanobind EXCLUDE_FROM_ALL)
 

@@ -97,11 +97,11 @@ set_target_properties(clang-unformat-ng PROPERTIES
     VISIBILITY_INLINES_HIDDEN ON
 )
 
-message(WARNING "pre2 my Python find")
-set(Python_FIND_UNVERSIONED_NAMES FIRST)
-set(Python_FIND_STRATEGY LOCATION)
-find_package(Python COMPONENTS Interpreter Development REQUIRED)
-message(WARNING "post2 my Python find")
+# set(Python_FIND_UNVERSIONED_NAMES FIRST)
+# set(Python_FIND_STRATEGY LOCATION)
+# find_package(Python COMPONENTS Interpreter Development REQUIRED)
 
-nanobind_add_module(pyclang-unformat-ng python.cpp)
-target_link_libraries(pyclang-unformat-ng PRIVATE)
+# nanobind_add_module(pyclang-unformat-ng python.cpp)
+# target_link_libraries(pyclang-unformat-ng PRIVATE)
+
+add_subdirectory(python)
