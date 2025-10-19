@@ -1,6 +1,6 @@
 #pragma once
 
-#if 0
+#if 1
 #include <string>
 using string_t = std::string;
 #else
