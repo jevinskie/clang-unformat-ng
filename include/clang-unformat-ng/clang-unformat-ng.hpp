@@ -2,5 +2,6 @@
 
 #include "core.hpp"
 #include "fmt.hpp"
+#include "json.hpp"
 #include "style.hpp"
 #include "utils.hpp"

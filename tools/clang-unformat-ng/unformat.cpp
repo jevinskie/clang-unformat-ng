@@ -5,6 +5,8 @@
 #include <llvm/Support/InitLLVM.h>
 
 #include <fmt/format.h>
+#include <rfl.hpp>
+#include <rfl/json.hpp>
 
 #include <clang-unformat-ng/clang-unformat-ng.hpp>
 
@@ -36,6 +38,9 @@ int priv_main() {
             ++i;
         }
     }
+
+    const auto foo = style::Type{"foo", "bar", false, true, false};
+    fmt::print("foo json: {}\n", rfl::json::write(foo));
 
     return 0;
 }

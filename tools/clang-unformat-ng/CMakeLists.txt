@@ -16,6 +16,7 @@ set(UNFMTNG_PUBLIC_LIBS
 set(UNFMTNG_PRIVATE_LIBS
     clang-unformat-ng
     fmt::fmt
+    reflectcpp
     LLVMSupport
 )
 
