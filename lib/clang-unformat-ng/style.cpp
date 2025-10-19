@@ -70,7 +70,7 @@ builtin_style_t random_style_enum() {
         local_rand = {};
     });
     return builtin_style_t{
-        local_rand.get<std::underlying_type_t<builtin_style_t>>(0, enchantum::count<builtin_style_t>)};
+        local_rand.get<std::underlying_type_t<builtin_style_t>>(0, enchantum::count<builtin_style_t> - 1)};
 }
 
 const clang::format::FormatStyle &random_style() {
