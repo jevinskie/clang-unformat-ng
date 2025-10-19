@@ -21,7 +21,7 @@ namespace unformat {
 using namespace llvm;
 using namespace clang;
 
-vfs_t construct_vfs(const std::vector<std::string> &fnames) {
+vfs_t construct_vfs(const std::vector<string_t> &fnames) {
     vfs_t fs;
     for (const auto &fname : fnames) {
         const auto src = slurp_file_string(fname);
@@ -35,7 +35,6 @@ vfs_t construct_vfs(const std::vector<std::string> &fnames) {
 //                                StringRef FileName = "<stdin>", format::FormattingAttemptStatus *Status = nullptr);
 
 static clang::tooling::Replacements reformat_file(const file_buf_t &fbuf, builtin_style_t style) {
-    // run libformat reformat()
     const auto &src  = fbuf.body;
     const auto &path = fbuf.path;
 

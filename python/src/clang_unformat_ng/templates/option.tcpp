@@ -1,0 +1,6 @@
+{# class Type:
+    cxx_name: str
+    yaml_name: str
+    is_list: bool
+    is_optional: bool
+    is_deprecated: bool #}
