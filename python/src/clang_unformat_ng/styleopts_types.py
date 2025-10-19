@@ -20,14 +20,12 @@ class Version:
 class NestedField:
     name: str = field(kw_only=True)
     type: Type = field(kw_only=True)
-    comment: str | None = field(converter=lambda x: None if x is None else str.strip(x), repr=False, default=None)
     version: Version | None = field(default=None)
 
 
 @define(auto_attribs=True, frozen=True)
 class EnumValue:
     name: str = field(kw_only=True)
-    comment: str | None = field(converter=lambda x: None if x is None else str.strip(x), repr=False, default=None)
     config: str = field(kw_only=True)
 
 
@@ -35,7 +33,6 @@ class EnumValue:
 class Enum:
     name: str
     type: Type
-    comment: str | None = field(converter=lambda x: None if x is None else str.strip(x), repr=False, default=None)
     values: list[EnumValue] = Factory(list)
 
 
@@ -43,7 +40,6 @@ class Enum:
 class NestedEnum:
     name: str
     type: Type
-    comment: str | None = field(converter=lambda x: None if x is None else str.strip(x), repr=False, default=None)
     version: Version | None = field(kw_only=True)
     values: list = field(kw_only=True)
 
@@ -52,7 +48,6 @@ class NestedEnum:
 class NestedStruct:
     name: str
     type: Type
-    comment: str | None = field(converter=lambda x: None if x is None else str.strip(x), repr=False, default=None)
     values: list[NestedEnum | NestedField] = Factory(list)
 
 
@@ -60,7 +55,6 @@ class NestedStruct:
 class Option:
     name: str
     type: Type
-    comment: str | None = field(converter=lambda x: None if x is None else str.strip(x), repr=False, default=None)
     version: Version | None = field(default=None)
     enum: Enum | None = field(default=None)
     nested_struct: NestedStruct | None = field(default=None)
