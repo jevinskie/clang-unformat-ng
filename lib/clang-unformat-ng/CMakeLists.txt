@@ -96,3 +96,6 @@ set_target_properties(clang-unformat-ng PROPERTIES
     CXX_VISIBILITY_PRESET hidden
     VISIBILITY_INLINES_HIDDEN ON
 )
+
+nanobind_add_module(pyclang-unformat-ng python.cpp)
+target_link_libraries(pyclang-unformat-ng PRIVATE)
