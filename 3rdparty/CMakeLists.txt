@@ -17,3 +17,5 @@ add_subdirectory(random EXCLUDE_FROM_ALL)
 
 set(JSON_BuildTests OFF CACHE INTERNAL "")
 add_subdirectory(json EXCLUDE_FROM_ALL)
+
+add_subdirectory(StringZilla EXCLUDE_FROM_ALL)

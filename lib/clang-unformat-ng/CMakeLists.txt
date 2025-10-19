@@ -48,6 +48,7 @@ endforeach()
 
 set(LIBUNFMTNG_PUBLIC_LIBS
     fmt::fmt
+    stringzilla_header
 )
 
 set(LIBUNFMTNG_PRIVATE_LIBS
@@ -96,12 +97,5 @@ set_target_properties(clang-unformat-ng PROPERTIES
     CXX_VISIBILITY_PRESET hidden
     VISIBILITY_INLINES_HIDDEN ON
 )
-
-# set(Python_FIND_UNVERSIONED_NAMES FIRST)
-# set(Python_FIND_STRATEGY LOCATION)
-# find_package(Python COMPONENTS Interpreter Development REQUIRED)
-
-# nanobind_add_module(pyclang-unformat-ng python.cpp)
-# target_link_libraries(pyclang-unformat-ng PRIVATE)
 
 add_subdirectory(python)
