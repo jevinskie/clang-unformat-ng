@@ -80,3 +80,16 @@ def enum_cxx_type_name_is_deprecated(name: str) -> bool:
         "ReturnTypeBreakingStyle",
         "SpaceBeforeParensStyle",
     )
+
+
+BOOL_TYPE = Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False)
+UINT_TYPE = Type(cxx_name="unsigned", yaml_name="Unsigned", is_list=False, is_optional=False, is_deprecated=False)
+SINT_TYPE = Type(cxx_name="int", yaml_name="Integer", is_list=False, is_optional=False, is_deprecated=False)
+STR_TYPE = Type(cxx_name="std::string", yaml_name="String", is_list=False, is_optional=False, is_deprecated=False)
+STR_LIST_TYPE = Type(
+    cxx_name="std::vector<std::string>",
+    yaml_name="List of Strings",
+    is_list=True,
+    is_optional=False,
+    is_deprecated=False,
+)
