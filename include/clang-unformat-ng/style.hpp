@@ -2,12 +2,14 @@
 
 #include "common.hpp"
 
+#include <optional>
 #include <string>
 #include <string_view>
 
 #include <clang/Format/Format.h>
 
 namespace unformat {
+
 namespace style {
 struct Type {
     std::string cxx_name;
@@ -15,6 +17,17 @@ struct Type {
     bool is_list;
     bool is_optional;
     bool is_deprecated;
+};
+
+struct Version {
+    unsigned major;
+    std::optional<unsigned> minor;
+};
+
+struct NestedField {
+    std::string name;
+    Type type;
+    std::optional<Version> version;
 };
 }; // namespace style
 
