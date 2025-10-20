@@ -1,4 +1,3 @@
-#include "clang-unformat-ng/style.hpp"
 #include <string>
 #include <vector>
 
@@ -50,6 +49,8 @@ int priv_main() {
     fmt::print("nf json: {}\n", rfl::json::write(nf));
     const auto nf_nover = style::NestedField{"nf", foo};
     fmt::print("nf_nover json: {}\n", rfl::json::write(nf_nover));
+
+    fmt::print("rpc_cmd::FormatReq json: {}\n", rfl::json::write(rpc_cmd::FormatReq{}));
 
     // const auto cstyle = get_style(builtin_style_t::llvm);
     // fmt::print("cstyle: json: {}\n", rfl::json::write(cstyle));

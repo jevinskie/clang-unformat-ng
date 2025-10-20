@@ -7,8 +7,8 @@ from cattrs import structure
 from rich.pretty import pprint
 
 import clang_unformat_ng.styleopts as sopts
-import clang_unformat_ng.styleopts_template as stmp
-import clang_unformat_ng.styleopts_types as styp
+import clang_unformat_ng.styleopts.template as stmp
+import clang_unformat_ng.styleopts.types as styp
 
 
 def do_dump_opts():

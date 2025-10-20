@@ -1,4 +1,4 @@
-from clang_unformat_ng.styleopts_types import (
+from clang_unformat_ng.styleopts.types import (
     Enum,
     EnumValue,
     NestedEnum,
