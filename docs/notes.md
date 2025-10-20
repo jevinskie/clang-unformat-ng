@@ -15,6 +15,7 @@ enum SpacesInAnglesStyle : int8_t {
   SIAS_Always,
   SIAS_Leave
 };
+SpacesInAnglesStyle SpacesInAngles;
 ```
 
 ### clang_unformat_ng.styleopts.data
