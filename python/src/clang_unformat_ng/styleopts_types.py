@@ -41,7 +41,7 @@ class NestedEnum:
     name: str
     type: Type
     version: Version | None
-    values: list
+    values: list[EnumValue] = Factory(list)
 
 
 @define(auto_attribs=True, frozen=True)

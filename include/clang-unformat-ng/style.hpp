@@ -5,8 +5,11 @@
 #include <optional>
 #include <string>
 #include <string_view>
+#include <variant>
+#include <vector>
 
 #include <clang/Format/Format.h>
+#include <rfl.hpp>
 
 namespace unformat {
 
@@ -28,6 +31,40 @@ struct NestedField {
     std::string name;
     Type type;
     std::optional<Version> version;
+};
+
+struct EnumValue {
+    std::string name;
+    std::string config;
+};
+
+struct Enum {
+    std::string name;
+    Type type;
+    std::vector<EnumValue> values;
+};
+
+struct NestedEnum {
+    std::string name;
+    Type type;
+    std::optional<Version> version;
+    std::vector<EnumValue> values;
+};
+
+using NestedStructValue = std::variant<NestedEnum, NestedField>;
+
+struct NestedStruct {
+    std::string name;
+    Type type;
+    std::vector<NestedStructValue> values;
+};
+
+struct Option {
+    std::string name;
+    Type type;
+    std::optional<Version> version;
+    rfl::Rename<"enum", std::optional<Enum>> enum_;
+    std::optional<NestedStruct> nested_struct;
 };
 }; // namespace style
 
