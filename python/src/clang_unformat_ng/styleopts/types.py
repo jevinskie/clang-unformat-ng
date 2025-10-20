@@ -1,3 +1,5 @@
+from typing import Any
+
 import cattrs
 from attrs import Factory, define
 
@@ -11,13 +13,13 @@ class Type:
     is_deprecated: bool
 
 
-@define(auto_attribs=True, frozen=True)
+@define(auto_attribs=True, frozen=True, order=True)
 class Version:
     major: int
     minor: int | None
 
 
-@define(auto_attribs=True, frozen=True)
+@define(auto_attribs=True, frozen=True, order=True)
 class EnumValue:
     name: str
     config: str
@@ -27,7 +29,10 @@ class EnumValue:
 class Enum:
     name: str
     type: Type
-    values: list[EnumValue, ...] = Factory(list)
+    values: list[EnumValue] = Factory(list)
+
+    def __hash__(self) -> int:
+        return hash((self.name, self.type, tuple(sorted(self.values))))
 
 
 @define(auto_attribs=True, frozen=True)
@@ -35,7 +40,31 @@ class NestedEnum:
     name: str
     type: Type
     version: Version | None
-    values: list[EnumValue, ...] = Factory(list)
+    values: list[EnumValue] = Factory(list)
+
+    def __eq__(self, other: Any) -> bool:
+        if not isinstance(other, NestedEnum):
+            raise TypeError(f"Expected NestedEnum, other is: {type(other)}")
+
+        return (
+            self.name == other.name
+            and self.type == other.type
+            and self.version == other.version
+            and tuple(sorted(self.values)) == tuple(sorted(other.values))
+        )
+
+    def __lt__(self, other: Any) -> bool:
+        if not isinstance(other, NestedEnum):
+            raise TypeError(f"Expected NestedEnum, other is: {type(other)}")
+        return (self.name, self.type, self.version, tuple(sorted(self.values))) < (
+            other.name,
+            other.type,
+            other.version,
+            tuple(sorted(other.values)),
+        )
+
+    def __hash__(self) -> int:
+        return hash((self.name, self.type, self.version, tuple(sorted(self.values))))
 
 
 @define(auto_attribs=True, frozen=True)
@@ -44,12 +73,22 @@ class NestedField:
     type: Type
     version: Version | None
 
+    def __lt__(self, other: Any) -> bool:
+        if not isinstance(other, NestedField):
+            raise TypeError(f"Expected NestedField, other is: {type(other)}")
+        return (self.name, self.type, self.version) < (other.name, other.type, other.version)
+
 
 @define(auto_attribs=True, frozen=True)
 class NestedStruct:
     name: str
     type: Type
     values: list[NestedEnum | NestedField] = Factory(list)
+
+    def __hash__(self) -> int:
+        enum_vals = filter(lambda v: isinstance(v, NestedEnum), self.values)
+        field_vals = filter(lambda v: isinstance(v, NestedField), self.values)
+        return hash((self.name, self.type, tuple(sorted(enum_vals)), tuple(sorted(field_vals))))
 
 
 class OptionBase:
