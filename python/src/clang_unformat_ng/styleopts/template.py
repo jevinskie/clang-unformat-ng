@@ -10,4 +10,5 @@ env = Environment(
 
 
 def render_enum() -> str:
-    pass
+    eb = "SIAS_Never,\nSIAS_Always,\nSIAS_Leave"
+    return eb
