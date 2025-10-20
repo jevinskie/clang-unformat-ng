@@ -1,11 +1,7 @@
 from clang_unformat_ng import styleopts_data
-from clang_unformat_ng.styleopts_template import env, template
 from clang_unformat_ng.styleopts_types import (
     Type,
 )
-
-print(env)
-print(template)
 
 opts = styleopts_data.opts
 

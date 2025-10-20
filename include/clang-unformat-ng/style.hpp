@@ -27,12 +27,6 @@ struct Version {
     std::optional<unsigned> minor;
 };
 
-struct NestedField {
-    std::string name;
-    Type type;
-    std::optional<Version> version;
-};
-
 struct EnumValue {
     std::string name;
     std::string config;
@@ -49,6 +43,12 @@ struct NestedEnum {
     Type type;
     std::optional<Version> version;
     std::vector<EnumValue> values;
+};
+
+struct NestedField {
+    std::string name;
+    Type type;
+    std::optional<Version> version;
 };
 
 using NestedStructValue = std::variant<NestedEnum, NestedField>;

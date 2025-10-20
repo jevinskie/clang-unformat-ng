@@ -17,13 +17,6 @@ class Version:
 
 
 @define(auto_attribs=True, frozen=True)
-class NestedField:
-    name: str
-    type: Type
-    version: Version | None
-
-
-@define(auto_attribs=True, frozen=True)
 class EnumValue:
     name: str
     config: str
@@ -42,6 +35,13 @@ class NestedEnum:
     type: Type
     version: Version | None
     values: list[EnumValue] = Factory(list)
+
+
+@define(auto_attribs=True, frozen=True)
+class NestedField:
+    name: str
+    type: Type
+    version: Version | None
 
 
 @define(auto_attribs=True, frozen=True)
