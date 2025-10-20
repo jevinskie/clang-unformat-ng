@@ -1,9 +1,6 @@
-import clang_unformat_ng.styleopts.data
 from clang_unformat_ng.styleopts.types import (
     Type,
 )
-
-opts = clang_unformat_ng.styleopts.data.opts
 
 BOOL_TYPE = Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False)
 UINT_TYPE = Type(cxx_name="unsigned", yaml_name="Unsigned", is_list=False, is_optional=False, is_deprecated=False)

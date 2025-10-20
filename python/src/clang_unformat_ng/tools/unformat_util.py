@@ -6,13 +6,13 @@ from attrs import define
 from cattrs import structure
 from rich.pretty import pprint
 
-import clang_unformat_ng.styleopts as sopts
+import clang_unformat_ng.styleopts.data as sopts_data
 import clang_unformat_ng.styleopts.template as stmp
 import clang_unformat_ng.styleopts.types as styp
 
 
 def do_dump_opts():
-    pprint(sopts.opts)
+    pprint(sopts_data.opts)
 
 
 def do_template():
@@ -22,7 +22,7 @@ def do_template():
 
 def do_etc():
     print("doing etc")
-    opt_vals = sopts.opts.values()
+    opt_vals = sopts_data.opts.values()
 
     @define
     class Opts:
