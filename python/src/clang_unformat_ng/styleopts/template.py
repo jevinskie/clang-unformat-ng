@@ -1,5 +1,6 @@
 from jinja2 import Environment, PackageLoader, select_autoescape
-from rich import print as rprint
+
+from clang_unformat_ng.styleopts.types import Option
 
 env = Environment(
     loader=PackageLoader("clang_unformat_ng.styleopts"),
@@ -10,16 +11,11 @@ env = Environment(
 )
 
 
-def render_enum() -> str:
+def render_enum(opt: Option) -> str:
     eb = "SIAS_Never,\nSIAS_Always,\nSIAS_Leave"
     return eb
 
 
-def render_rfl() -> str:
-    r = ""
-    template = env.get_template("rfl.cpp")
-    rprint(template)
-    rendered = template.render()
-    rprint(rendered)
-    r = rendered
-    return r
+def render_rfl(**kwargs) -> str:
+    template = env.get_template("rfl.tcpp")
+    return template.render(decls=("a", "b"))
