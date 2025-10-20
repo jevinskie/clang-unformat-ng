@@ -1,3 +1,4 @@
+import cattrs
 from attrs import Factory, define
 
 
@@ -58,6 +59,19 @@ class Option:
     version: Version | None
     enum: Enum | None
     nested_struct: NestedStruct | None
+
+
+# TODO: is needed? it calls attrs.resolve_types on all seralized classes
+# _resolve_json_schema_obj_cls_types()
+
+_converter = cattrs.Converter()
+
+
+def _add_cattrs_hooks():
+    pass
+
+
+_add_cattrs_hooks()
 
 
 def enum_cxx_type_name_is_deprecated(name: str) -> bool:
