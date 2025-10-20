@@ -9,6 +9,8 @@ message(STATUS "libunformat: Using ClangConfig.cmake in ${Clang_DIR}")
 set(LIBUNFMTNG_SRC
     core.cpp
     fmt.cpp
+    json.cpp
+    rpc.cpp
     style.cpp
     utils.cpp
 )

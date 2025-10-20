@@ -2,18 +2,17 @@
 
 import argparse
 
+from attrs import define
+from cattrs import structure
 from rich.pretty import pprint
 
 import clang_unformat_ng.styleopts as sopts
 import clang_unformat_ng.styleopts_template as stmp
+import clang_unformat_ng.styleopts_types as styp
 
 
 def do_dump_opts():
     pprint(sopts.opts)
-
-
-def do_etc():
-    print("doing etc")
 
 
 def do_template():
@@ -21,11 +20,23 @@ def do_template():
     stmp._do_template_test()
 
 
+def do_etc():
+    print("doing etc")
+    opt_vals = sopts.opts.values()
+
+    @define
+    class Opts:
+        opts: list[styp.Option]
+
+    v = structure(opt_vals, list[styp.Option])
+    pprint(v)
+
+
 def get_arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="clang-unformat-ng-py-util")
     parser.add_argument("--dump-opts", action="store_true", help="Dump style opts")
-    parser.add_argument("--etc", action="store_true", help="Do other scratch work stuff")
     parser.add_argument("--template", action="store_true", help="Do template stuff")
+    parser.add_argument("--etc", action="store_true", help="Do other scratch work stuff")
     return parser
 
 
