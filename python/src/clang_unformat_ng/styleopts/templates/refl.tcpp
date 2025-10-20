@@ -1,0 +1,12 @@
+namespace unformat {
+namespace rfl {
+
+/// Declarations
+
+{% for decl in decls %}
+{% endfor %}
+
+// Implementations
+
+};
+};
