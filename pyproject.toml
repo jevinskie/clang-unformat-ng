@@ -39,12 +39,21 @@ clang-unformat-ng-py-util = "clang_unformat_ng.tools.unformat_util:main"
 [project.urls]
 repository = "https://github.com/jevinskie/clang-unformat-ng"
 
+[tool.pytest.ini_options]
+addopts = [
+  "--import-mode=importlib"
+]
+testpaths = ["python/tests"]
+
 [tool.ruff]
 line-length = 120
-target-version = "py312"
+preview = true
+required-version = ">=0.14"
+show-fixes = true
+unsafe-fixes = true
 
 [tool.ruff.lint]
-extend-select = ["I"]
+extend-select = ["I", "PERF", "RUF", "FA", "UP"]
 
 [tool.setuptools]
 package-dir = {"" = "python/src"}
