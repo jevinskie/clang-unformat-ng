@@ -2,8 +2,8 @@
 
 import argparse
 
-from attrs import define
-from cattrs import structure
+from cattrs import unstructure
+from rich import print
 from rich.pretty import pprint
 
 import clang_unformat_ng.styleopts.data as sopts_data
@@ -22,13 +22,13 @@ def do_template():
 
 def do_etc():
     print("doing etc")
-    opt_vals = sopts_data.opts.values()
+    opts = sopts_data.opts
+    # opt_vals = opts.values()
 
-    @define
-    class Opts:
-        opts: list[styp.Option]
+    collim_opt = opts["ColumnLimit"]
+    print(f"collim_opt: {collim_opt}")
 
-    v = structure(opt_vals, list[styp.Option])
+    v = unstructure(collim_opt, styp.Option)
     pprint(v)
 
 
