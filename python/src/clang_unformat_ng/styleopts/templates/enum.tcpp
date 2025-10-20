@@ -1,0 +1,4 @@
+enum {{enum_name}} {
+{{enum_body}}
+};
+{{enum_name}} {{name}};
