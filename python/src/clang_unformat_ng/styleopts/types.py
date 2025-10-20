@@ -27,7 +27,7 @@ class EnumValue:
 class Enum:
     name: str
     type: Type
-    values: list[EnumValue] = Factory(list)
+    values: list[EnumValue, ...] = Factory(list)
 
 
 @define(auto_attribs=True, frozen=True)
@@ -35,7 +35,7 @@ class NestedEnum:
     name: str
     type: Type
     version: Version | None
-    values: list[EnumValue] = Factory(list)
+    values: list[EnumValue, ...] = Factory(list)
 
 
 @define(auto_attribs=True, frozen=True)
@@ -52,7 +52,7 @@ class NestedStruct:
     values: list[NestedEnum | NestedField] = Factory(list)
 
 
-@define(auto_attribs=True)
+@define(auto_attribs=True, frozen=True)
 class Option:
     name: str
     type: Type

@@ -8,7 +8,6 @@ from rich.pretty import pprint
 
 import clang_unformat_ng.styleopts.data as sopts_data
 import clang_unformat_ng.styleopts.template as stmp
-import clang_unformat_ng.styleopts.types as styp
 
 
 def do_dump_opts():
@@ -28,7 +27,7 @@ def do_etc():
     collim_opt = opts["ColumnLimit"]
     print(f"collim_opt: {collim_opt}")
 
-    v = unstructure(collim_opt, styp.Option)
+    v = unstructure(collim_opt, tuple(opts.values()))
     pprint(v)
 
 
