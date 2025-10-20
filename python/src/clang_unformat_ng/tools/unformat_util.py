@@ -2,7 +2,6 @@
 
 import argparse
 
-from cattrs import unstructure
 from rich import print
 from rich.pretty import pprint
 
@@ -22,14 +21,13 @@ def do_template():
 
 def do_etc():
     print("doing etc")
-    opts = sopts_data.opts
     # opt_vals = opts.values()
 
-    collim_opt = opts["ColumnLimit"]
-    print(f"collim_opt: {collim_opt}")
+    # collim_opt = opts["ColumnLimit"]
+    # print(f"collim_opt: {collim_opt}")
 
-    v = unstructure(collim_opt, tuple(opts.values()))
-    pprint(v)
+    # v = unstructure(collim_opt, tuple(opts.values()))
+    # pprint(v)
 
 
 def get_arg_parser() -> argparse.ArgumentParser:
