@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import builtins
 
 from cattrs import unstructure
 from rich import print
@@ -11,7 +12,8 @@ import clang_unformat_ng.styleopts.template as stmp
 
 
 def do_dump_opts():
-    pprint(sopts_data.opts)
+    # pprint(sopts_data.opts)
+    builtins.print(sopts_data.opts.values())
 
 
 def do_template():

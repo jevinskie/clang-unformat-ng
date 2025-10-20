@@ -52,14 +52,16 @@ class NestedStruct:
     values: list[NestedEnum | NestedField] = Factory(list)
 
 
-@define(auto_attribs=True, frozen=True)
-class Option:
+class OptionBase:
     name: str
     type: Type
     version: Version | None
     enum: Enum | None
     nested_struct: NestedStruct | None
 
+
+Option = define(auto_attribs=True, frozen=True)(OptionBase)
+MutableOption = define(auto_attribs=True)(OptionBase)
 
 # TODO: is needed? it calls attrs.resolve_types on all seralized classes
 # _resolve_json_schema_obj_cls_types()
