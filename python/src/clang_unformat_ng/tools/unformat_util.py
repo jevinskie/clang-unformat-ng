@@ -6,7 +6,6 @@ from rich import print
 from rich.pretty import pprint
 
 import clang_unformat_ng.styleopts.data as sopts_data
-import clang_unformat_ng.styleopts.template as stmp
 
 
 def do_dump_opts():
@@ -16,7 +15,6 @@ def do_dump_opts():
 
 def do_template():
     print("doing template")
-    stmp._do_template_test()
 
 
 def do_etc():

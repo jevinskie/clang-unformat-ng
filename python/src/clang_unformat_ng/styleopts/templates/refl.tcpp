@@ -4,6 +4,7 @@ namespace rfl {
 /// Declarations
 
 {% for decl in decls %}
+{% decl_for(decl) %}
 {% endfor %}
 
 // Implementations
