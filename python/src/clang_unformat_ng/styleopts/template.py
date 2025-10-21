@@ -1,7 +1,7 @@
 from jinja2 import Environment, PackageLoader, select_autoescape
 
 # from rich import print as rprint
-from clang_unformat_ng.styleopts.types import BOOL_TYPE, Option
+from clang_unformat_ng.styleopts.types import BOOL_TYPE, SINT_TYPE, UINT_TYPE, Option
 
 env = Environment(
     loader=PackageLoader("clang_unformat_ng.styleopts"),
@@ -22,7 +22,7 @@ def render_rfl(opts: list[Option], **kwargs) -> str:
     # enums = filter(lambda x: x.enum is not None, opts)
     # std = filter(lambda x: x.type in UNION_STD_TYPE_TUPLE, opts)
     enums = tuple()
-    std = filter(lambda x: x.type == BOOL_TYPE, opts)
+    std = filter(lambda x: x.type in (BOOL_TYPE, UINT_TYPE, SINT_TYPE), opts)
 
     # other = filter(lambda x: x.enum is None and x.nested_struct is None, opts)
     # rprint(list(other))

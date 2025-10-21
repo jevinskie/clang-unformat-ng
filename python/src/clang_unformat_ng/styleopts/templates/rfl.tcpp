@@ -4,7 +4,7 @@
 #include <rfl.hpp>
 
 namespace unformat {
-namespace rfl {
+namespace reflect {
 
 /// Declarations
 
@@ -35,7 +35,7 @@ struct Reflector<clang::format::FormatStyle> {
   };
 
   static clang::format::FormatStyle to(const ReflType& v) noexcept {
-    clang::format::FormatStyle s;
+    clang::format::FormatStyle s{};
     {# {% for opt in opts %}.{{opt.name}} = v.{{opt.name}},
     {% endfor %} #}
     {% for opt in opts %}s.{{opt.name}} = v.{{opt.name}};
