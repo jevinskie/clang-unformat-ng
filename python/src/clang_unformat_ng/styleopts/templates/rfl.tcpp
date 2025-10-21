@@ -7,6 +7,10 @@ namespace rfl {
 enum class Rfl{{e.type.cxx_name}};
 {% endfor %}
 
+{% for o in other %}
+Rfl{{o.type.cxx_name}} {{o.type.cxx_name}};
+{% endfor %}
+
 struct FormatStyle;
 
 // Implementations
