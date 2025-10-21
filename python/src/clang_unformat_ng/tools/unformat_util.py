@@ -14,7 +14,7 @@ def do_dump_opts():
     # builtins.print(sopts_data.opts.values())
 
 
-def do_template():
+def do_template(in_path: str, out_path: str):
     print("doing template")
     # sia_opt = sopts_data.opts["SpacesInAngles"]
     # sip_opt = sopts_data.opts["SpacesInParens"]
@@ -44,6 +44,8 @@ def get_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument("--dump-opts", action="store_true", help="Dump style opts")
     parser.add_argument("--template", action="store_true", help="Do template stuff")
     parser.add_argument("--etc", action="store_true", help="Do other scratch work stuff")
+    parser.add_argument("-i", "--input", action="store_true", help="input path")
+    parser.add_argument("-o", "--out", action="store_true", help="output path")
     return parser
 
 
@@ -54,7 +56,9 @@ def real_main(args: argparse.Namespace):
     elif args.etc:
         do_etc()
     elif args.template:
-        do_template()
+        if not (args.input or args.out):
+            raise ValueError("need input and output")
+        do_template(args.input, args.output)
 
 
 def main():
