@@ -1,4 +1,5 @@
 #include <clang/Format/Format.h>
+#include <clang/Tooling/Inclusions/IncludeStyle.h>
 #include <rfl.hpp>
 
 namespace unformat {
@@ -28,7 +29,8 @@ namespace rfl {
 template <>
 struct Reflector<clang::format::FormatStyle> {
   struct ReflType {
-    using fst = clang::format::FormatStyle;
+    using clang::format::FormatStyle;
+    using clang::tooling::IncludeStyle;
     {% for opt in opts %}{{opt.cxx_type}} {{opt.name}};
     {% endfor %}
   };

@@ -127,7 +127,7 @@ class Option:
         tyname = self.type.cxx_name
         if tyname in builtin_types:
             return tyname
-        return f"fst::{tyname}"
+        return f"{tyname}"
 
 
 # TODO: is needed? it calls attrs.resolve_types on all seralized classes
