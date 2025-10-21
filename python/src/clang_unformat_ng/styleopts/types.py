@@ -48,7 +48,7 @@ class EnumValue:
 @define(auto_attribs=True, frozen=True)
 class Enum:
     name: str
-    type: Type = field(converter=lambda o: Type(**asdict(o).update({"cxx_qual": "clang::format::FormatStyle"})))
+    type: Type = field(converter=lambda o: Type(**(asdict(o) | {"cxx_qual": "clang::format::FormatStyle"})))
     values: list[EnumValue] = Factory(list)
 
     def __hash__(self) -> int:
