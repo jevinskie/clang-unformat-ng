@@ -63,9 +63,6 @@ const FormatStyle &get_style(builtin_style_t style) {
 }
 
 builtin_style_t random_style_enum() {
-    // static effolkronium::random_thread_local tls_rand;
-    // return builtin_style_t{
-    //     tls_rand.get<std::underlying_type_t<builtin_style_t>>(0, enchantum::count<builtin_style_t> - 1)};
     return builtin_style_t{effolkronium::random_thread_local::get<std::underlying_type_t<builtin_style_t>>(
         0, enchantum::count<builtin_style_t> - 1)};
 }

@@ -6,10 +6,32 @@ find_package(Clang REQUIRED CONFIG GLOBAL)
 message(STATUS "libunformat: Found Clang ${Clang_PACKAGE_VERSION}")
 message(STATUS "libunformat: Using ClangConfig.cmake in ${Clang_DIR}")
 
+# FIXME: y u no global?
+set(Python_FIND_UNVERSIONED_NAMES FIRST)
+set(Python_FIND_STRATEGY LOCATION)
+find_package(Python COMPONENTS Interpreter Development REQUIRED GLOBAL)
+
+add_custom_command(
+    OUTPUT
+        ${CMAKE_CURRENT_BINARY_DIR}/rfl.cpp
+    VERBATIM COMMAND ${CMAKE_COMMAND} -E env PYTHON_PATH=${PROJECT_SOURCE_DIR}/python/src --
+        ${Python_EXECUTABLE} -m clang_unformat_ng.tools.unformat_util --template -o ${CMAKE_CURRENT_BINARY_DIR}/rfl.cpp
+    CODEGEN
+    DEPENDS
+        ${Python_EXECUTABLE}
+        ${PROJECT_SOURCE_DIR}/python/src/clang_unformat_ng/styleopts/__init__.py
+        ${PROJECT_SOURCE_DIR}/python/src/clang_unformat_ng/styleopts/data.py
+        ${PROJECT_SOURCE_DIR}/python/src/clang_unformat_ng/styleopts/template.py
+        ${PROJECT_SOURCE_DIR}/python/src/clang_unformat_ng/styleopts/templates/rfl.tcpp
+        ${PROJECT_SOURCE_DIR}/python/src/clang_unformat_ng/styleopts/types.py
+    DEPENDS_EXPLICIT_ONLY
+)
+
 set(LIBUNFMTNG_SRC
     core.cpp
     fmt.cpp
     json.cpp
+    ${CMAKE_CURRENT_BINARY_DIR}/rfl.cpp
     rpc.cpp
     style.cpp
     utils.cpp
@@ -48,15 +70,6 @@ foreach(SRC ${LIBUNFMTNG_SRC})
     endif()
 endforeach()
 
-
-add_custom_command(OUTPUT
-    ${CMAKE_CURRENT_BINARY_DIR}/mach_exc.h
-    ${CMAKE_CURRENT_BINARY_DIR}/mach_excServer.c
-    ${CMAKE_CURRENT_BINARY_DIR}/mach_excUser.c
-    VERBATIM COMMAND ${Python_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/mach_exc.defs
-    CODEGEN
-    DEPENDS_EXPLICIT_ONLY
-)
 
 set(LIBUNFMTNG_PUBLIC_LIBS
     fmt::fmt

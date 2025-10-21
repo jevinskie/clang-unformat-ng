@@ -1,5 +1,6 @@
 #include <clang/Format/Format.h>
 #include <clang/Tooling/Inclusions/IncludeStyle.h>
+
 #include <rfl.hpp>
 
 namespace unformat {
