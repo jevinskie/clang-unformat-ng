@@ -27,20 +27,21 @@ namespace rfl {
 template <>
 struct Reflector<FormatStyle> {
   struct ReflType {
-    {% for opt in opts %}int {{opt.name}};
+    using _t = void *;
+    {% for opt in opts %}{{opt.type.cxx_name}} {{opt.name}};
     {% endfor %}
   };
 
   static FormatStyle to(const ReflType& v) noexcept {
     return {
-        {% for opt in opts %}v.{{opt.name}},
+        {% for opt in opts %}.{{opt.name}} = v.{{opt.name}},
         {% endfor %}
     };
   }
 
   static ReflType from(const FormatStyle& v) {
     return {
-        {% for opt in opts %}v.{{opt.name}},
+        {% for opt in opts %}.{{opt.name}} = v.{{opt.name}},
         {% endfor %}
     };
   }
