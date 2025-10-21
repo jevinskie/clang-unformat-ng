@@ -1,19 +1,48 @@
+#include <clang/Format/Format.h>
+
 namespace unformat {
 namespace rfl {
 
 /// Declarations
 
+// Implementations
+
+{#
 {% for e in enums %}
-enum class Rfl{{e.type.cxx_name}};
+enum class Rfl_{{e.type.cxx_name}};
+{% endfor %}
+
+{% for e in enums %}
+enum class Rfl_{{e.type.cxx_name}};
 {% endfor %}
 
 {% for o in other %}
-Rfl{{o.type.cxx_name}} {{o.type.cxx_name}};
-{% endfor %}
+Rfl_{{o.type.cxx_name}} {{o.type.cxx_name}};
+{% endfor %} #}
 
-struct FormatStyle;
+};
+};
 
-// Implementations
+namespace rfl {
+template <>
+struct Reflector<FormatStyle> {
+  struct ReflType {
+    {% for opt in opts %}int {{opt.name}};
+    {% endfor %}
+  };
 
+  static FormatStyle to(const ReflType& v) noexcept {
+    return {
+        {% for opt in opts %}v.{{opt.name}},
+        {% endfor %}
+    };
+  }
+
+  static ReflType from(const FormatStyle& v) {
+    return {
+        {% for opt in opts %}v.{{opt.name}},
+        {% endfor %}
+    };
+  }
 };
 };
