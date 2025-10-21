@@ -4,8 +4,10 @@ namespace rfl {
 /// Declarations
 
 {% for e in enums %}
-enum {{e.type.cxx_name}};
+enum class Rfl{{e.type.cxx_name}};
 {% endfor %}
+
+struct FormatStyle;
 
 // Implementations
 

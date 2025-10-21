@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Literal
 
 import cattrs
 from attrs import Factory, define
@@ -132,3 +132,6 @@ STR_LIST_TYPE = Type(
     is_optional=False,
     is_deprecated=False,
 )
+
+UNION_TYPE = Literal[BOOL_TYPE] | Literal[UINT_TYPE] | Literal[SINT_TYPE] | Literal[STR_TYPE] | Literal[STR_LIST_TYPE]
+UNION_TYPE_TUPLE = (BOOL_TYPE, UINT_TYPE, SINT_TYPE, STR_TYPE, STR_LIST_TYPE)
