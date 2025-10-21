@@ -1,7 +1,7 @@
 from typing import Any, Literal
 
 import cattrs
-from attrs import Factory, asdict, define, evolve, field
+from attrs import Factory, define, evolve, field
 
 
 @define(auto_attribs=True, frozen=True)
@@ -48,7 +48,8 @@ class EnumValue:
 @define(auto_attribs=True, frozen=True)
 class Enum:
     name: str
-    type: Type = field(converter=lambda o: Type(**(asdict(o) | {"cxx_qual": "clang::format::FormatStyle"})))
+    # type: Type = field(converter=lambda o: Type(**(asdict(inst=o) | {"cxx_qual": "clang::format::FormatStyle"})))
+    type: Type
     values: list[EnumValue] = Factory(list)
 
     def __hash__(self) -> int:
@@ -129,6 +130,7 @@ class Option:
 
     @property
     def resolved_type(self) -> Type:
+        return self.type
         if self.type.cxx_qual is not None:
             if self.enum or self.nested_struct:
                 # return Type(**(asdict(self.type) | {"cxx_qual": "clang::Format::FormatStyle"}))
