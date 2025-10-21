@@ -30,7 +30,7 @@ namespace rfl {
 template <>
 struct Reflector<clang::format::FormatStyle> {
   struct ReflType {
-    {% for opt in opts %}{{opt.cxx_type}} {{opt.name}};
+    {% for opt in opts %}{{opt.cxx_qual}}::{{opt.cxx_type}} {{opt.name}};
     {% endfor %}
   };
 

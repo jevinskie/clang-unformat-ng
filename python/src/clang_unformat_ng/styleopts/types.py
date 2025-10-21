@@ -1,7 +1,7 @@
 from typing import Any, Literal
 
 import cattrs
-from attrs import Factory, define
+from attrs import Factory, asdict, define, field
 
 
 @define(auto_attribs=True, frozen=True)
@@ -11,6 +11,7 @@ class Type:
     is_list: bool
     is_optional: bool
     is_deprecated: bool
+    cxx_qual: str | None = field(default=None)
 
 
 BOOL_TYPE = Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False)
@@ -25,9 +26,6 @@ STR_LIST_TYPE = Type(
     is_deprecated=False,
 )
 
-UNION_STD_TYPE = (
-    Literal[BOOL_TYPE] | Literal[UINT_TYPE] | Literal[SINT_TYPE] | Literal[STR_TYPE] | Literal[STR_LIST_TYPE]
-)
 UNION_STD_TYPE_TUPLE = (BOOL_TYPE, UINT_TYPE, SINT_TYPE, STR_TYPE, STR_LIST_TYPE)
 
 
@@ -50,7 +48,7 @@ class EnumValue:
 @define(auto_attribs=True, frozen=True)
 class Enum:
     name: str
-    type: Type
+    type: Type = field(converter=lambda o: Type(**asdict(o).update({"cxx_qual": "clang::format::FormatStyle"})))
     values: list[EnumValue] = Factory(list)
 
     def __hash__(self) -> int:
