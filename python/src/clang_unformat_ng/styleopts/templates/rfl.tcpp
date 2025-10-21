@@ -27,7 +27,7 @@ namespace rfl {
 template <>
 struct Reflector<FormatStyle> {
   struct ReflType {
-    using _t = void *;
+    using t = clang::format::FormatStyle;
     {% for opt in opts %}{{opt.type.cxx_name}} {{opt.name}};
     {% endfor %}
   };
