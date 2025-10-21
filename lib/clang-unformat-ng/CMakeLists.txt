@@ -24,7 +24,7 @@ add_custom_command(
         ${PROJECT_SOURCE_DIR}/python/src/clang_unformat_ng/styleopts/template.py
         ${PROJECT_SOURCE_DIR}/python/src/clang_unformat_ng/styleopts/templates/rfl.tcpp
         ${PROJECT_SOURCE_DIR}/python/src/clang_unformat_ng/styleopts/types.py
-    DEPENDS_EXPLICIT_ONLY
+    # DEPENDS_EXPLICIT_ONLY
 )
 
 set(LIBUNFMTNG_SRC
