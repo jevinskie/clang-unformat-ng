@@ -29,20 +29,20 @@ namespace rfl {
 template <>
 struct Reflector<clang::format::FormatStyle> {
   struct ReflType {
-    using clang::format::FormatStyle;
-    using clang::tooling::IncludeStyle;
     {% for opt in opts %}{{opt.cxx_type}} {{opt.name}};
     {% endfor %}
   };
 
-  static FormatStyle to(const ReflType& v) noexcept {
-    return {
-        {% for opt in opts %}.{{opt.name}} = v.{{opt.name}},
-        {% endfor %}
-    };
+  static clang::format::FormatStyle to(const ReflType& v) noexcept {
+    clang::format::FormatStyle s;
+    {# {% for opt in opts %}.{{opt.name}} = v.{{opt.name}},
+    {% endfor %} #}
+    {% for opt in opts %}s.{{opt.name}} = v.{{opt.name}};
+    {% endfor %}
+    return s;
   }
 
-  static ReflType from(const FormatStyle& v) {
+  static ReflType from(const clang::format::FormatStyle& v) {
     return {
         {% for opt in opts %}.{{opt.name}} = v.{{opt.name}},
         {% endfor %}
