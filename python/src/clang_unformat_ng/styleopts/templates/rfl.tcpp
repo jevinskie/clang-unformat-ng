@@ -51,3 +51,5 @@ struct Reflector<clang::format::FormatStyle> {
   }
 };
 };
+
+static_assert(((void)rfl::Reflector<clang::format::FormatStyle>{}, true), "materializable");
