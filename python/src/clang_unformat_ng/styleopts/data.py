@@ -1,3 +1,5 @@
+import attrs
+
 from clang_unformat_ng.styleopts.types import (
     Enum,
     EnumValue,
@@ -1817,6 +1819,7 @@ opts = {
             is_list=False,
             is_optional=False,
             is_deprecated=False,
+            cxx_qual="clang::tooling::IncludeStyle",
         ),
         version=Version(major=6, minor=None),
         enum=Enum(
@@ -1827,6 +1830,7 @@ opts = {
                 is_list=False,
                 is_optional=False,
                 is_deprecated=False,
+                cxx_qual="clang::tooling::IncludeStyle",
             ),
             values=[
                 EnumValue(name="IBS_Preserve", config="IBS_Preserve"),
@@ -2320,6 +2324,7 @@ opts = {
             is_list=False,
             is_optional=False,
             is_deprecated=False,
+            cxx_qual="clang::tooling::IncludeStyle",
         ),
         version=Version(major=19, minor=None),
         enum=Enum(
@@ -2330,6 +2335,7 @@ opts = {
                 is_list=False,
                 is_optional=False,
                 is_deprecated=False,
+                cxx_qual="clang::tooling::IncludeStyle",
             ),
             values=[
                 EnumValue(name="MICD_Quote", config="MICD_Quote"),
@@ -3741,5 +3747,7 @@ opts = {
         nested_struct=None,
     ),
 }
+
+opts = {k: attrs.evolve(v, **{"type": v.resolved_type}) for k, v in opts.items()}
 
 __all__ = ["opts"]

@@ -1,4 +1,5 @@
 from jinja2 import Environment, PackageLoader, select_autoescape
+from rich import print as rprint
 
 # from rich import print as rprint
 from clang_unformat_ng.styleopts.types import BOOL_TYPE, SINT_TYPE, UINT_TYPE, Option
@@ -19,11 +20,14 @@ def render_enum(opt: Option) -> str:
 
 def render_rfl(opts: list[Option], **kwargs) -> str:
     template = env.get_template("rfl.tcpp")
-    enums = filter(lambda x: x.enum is not None, opts)
+    enums = list(filter(lambda x: x.enum is not None, opts))
+    # rprint(enums)
     # std = filter(lambda x: x.type in UNION_STD_TYPE_TUPLE, opts)
     # enums = tuple()
     std = filter(lambda x: x.type in (BOOL_TYPE, UINT_TYPE, SINT_TYPE), opts)
 
     # other = filter(lambda x: x.enum is None and x.nested_struct is None, opts)
     # rprint(list(other))
-    return template.render(enums=enums, opts=list((*std, *enums)))
+    lopts = list((*std, *enums))
+    rprint(lopts)
+    return template.render(opts=lopts)

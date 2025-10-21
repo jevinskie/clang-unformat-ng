@@ -1,7 +1,7 @@
 from typing import Any, Literal
 
 import cattrs
-from attrs import Factory, asdict, define, field
+from attrs import Factory, asdict, define, evolve, field
 
 
 @define(auto_attribs=True, frozen=True)
@@ -126,6 +126,14 @@ class Option:
         if tyname in builtin_types:
             return tyname
         return f"{tyname}"
+
+    @property
+    def resolved_type(self) -> Type:
+        if self.type.cxx_qual is not None:
+            if self.enum or self.nested_struct:
+                # return Type(**(asdict(self.type) | {"cxx_qual": "clang::Format::FormatStyle"}))
+                return evolve(self.type, **{"cxx_qual": "clang::format::FormatStyle"})
+        return self.type
 
 
 # TODO: is needed? it calls attrs.resolve_types on all seralized classes
