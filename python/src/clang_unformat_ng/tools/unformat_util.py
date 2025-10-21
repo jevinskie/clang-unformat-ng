@@ -17,10 +17,13 @@ def do_dump_opts():
 def do_template():
     print("doing template")
     sia_opt = sopts_data.opts["SpacesInAngles"]
+    sip_opt = sopts_data.opts["SpacesInParens"]
     # if not isinstance(sia_opt, )
     print("sia_opt:")
     pprint(sia_opt)
-    r = sopts_tmpl.render_rfl([sia_opt])
+    print("sip_opt:")
+    pprint(sip_opt)
+    r = sopts_tmpl.render_rfl([sia_opt, sip_opt])
     print(r)
 
 
