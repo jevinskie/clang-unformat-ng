@@ -1,4 +1,5 @@
 #include <clang/Format/Format.h>
+#include <rfl.hpp>
 
 namespace unformat {
 namespace rfl {
@@ -25,7 +26,7 @@ Rfl_{{o.type.cxx_name}} {{o.type.cxx_name}};
 
 namespace rfl {
 template <>
-struct Reflector<FormatStyle> {
+struct Reflector<clang::format::FormatStyle> {
   struct ReflType {
     using fst = clang::format::FormatStyle;
     {% for opt in opts %}{{opt.cxx_type}} {{opt.name}};
@@ -34,15 +35,15 @@ struct Reflector<FormatStyle> {
 
   static FormatStyle to(const ReflType& v) noexcept {
     return {
-        {# {% for opt in opts %}.{{opt.name}} = v.{{opt.name}},
-        {% endfor %} #}
+        {% for opt in opts %}.{{opt.name}} = v.{{opt.name}},
+        {% endfor %}
     };
   }
 
   static ReflType from(const FormatStyle& v) {
     return {
-        {# {% for opt in opts %}.{{opt.name}} = v.{{opt.name}},
-        {% endfor %} #}
+        {% for opt in opts %}.{{opt.name}} = v.{{opt.name}},
+        {% endfor %}
     };
   }
 };
