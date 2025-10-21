@@ -23,4 +23,4 @@ def render_rfl(opts: list[Option], **kwargs) -> str:
     std = filter(lambda x: x.type in UNION_STD_TYPE_TUPLE, opts)
     # other = filter(lambda x: x.enum is None and x.nested_struct is None, opts)
     # rprint(list(other))
-    return template.render(enums=enums, opts=std)
+    return template.render(enums=enums, opts=list((*std, *enums)))

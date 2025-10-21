@@ -27,22 +27,22 @@ namespace rfl {
 template <>
 struct Reflector<FormatStyle> {
   struct ReflType {
-    using t = clang::format::FormatStyle;
-    {% for opt in opts %}{{opt.type.cxx_name}} {{opt.name}};
+    using fst = clang::format::FormatStyle;
+    {% for opt in opts %}{{opt.cxx_type}} {{opt.name}};
     {% endfor %}
   };
 
   static FormatStyle to(const ReflType& v) noexcept {
     return {
-        {% for opt in opts %}.{{opt.name}} = v.{{opt.name}},
-        {% endfor %}
+        {# {% for opt in opts %}.{{opt.name}} = v.{{opt.name}},
+        {% endfor %} #}
     };
   }
 
   static ReflType from(const FormatStyle& v) {
     return {
-        {% for opt in opts %}.{{opt.name}} = v.{{opt.name}},
-        {% endfor %}
+        {# {% for opt in opts %}.{{opt.name}} = v.{{opt.name}},
+        {% endfor %} #}
     };
   }
 };

@@ -13,6 +13,28 @@ class Type:
     is_deprecated: bool
 
 
+BOOL_TYPE = Type(cxx_name="bool", yaml_name="Boolean", is_list=False, is_optional=False, is_deprecated=False)
+UINT_TYPE = Type(cxx_name="unsigned", yaml_name="Unsigned", is_list=False, is_optional=False, is_deprecated=False)
+SINT_TYPE = Type(cxx_name="int", yaml_name="Integer", is_list=False, is_optional=False, is_deprecated=False)
+STR_TYPE = Type(cxx_name="std::string", yaml_name="String", is_list=False, is_optional=False, is_deprecated=False)
+STR_LIST_TYPE = Type(
+    cxx_name="std::vector<std::string>",
+    yaml_name="List of Strings",
+    is_list=True,
+    is_optional=False,
+    is_deprecated=False,
+)
+
+UNION_STD_TYPE = (
+    Literal[BOOL_TYPE] | Literal[UINT_TYPE] | Literal[SINT_TYPE] | Literal[STR_TYPE] | Literal[STR_LIST_TYPE]
+)
+UNION_STD_TYPE_TUPLE = (BOOL_TYPE, UINT_TYPE, SINT_TYPE, STR_TYPE, STR_LIST_TYPE)
+
+
+def is_std_ty(t: Type) -> bool:
+    return t in UNION_STD_TYPE_TUPLE
+
+
 @define(auto_attribs=True, frozen=True, order=True)
 class Version:
     major: int
@@ -99,6 +121,14 @@ class Option:
     enum: Enum | None
     nested_struct: NestedStruct | None
 
+    @property
+    def cxx_type(self) -> str:
+        builtin_types = ("bool", "unsigned", "int", "std::string", "std::vector<std::string>")
+        tyname = self.type.cxx_name
+        if tyname in builtin_types:
+            return tyname
+        return f"fst::{tyname}"
+
 
 # TODO: is needed? it calls attrs.resolve_types on all seralized classes
 # _resolve_json_schema_obj_cls_types()
@@ -137,3 +167,7 @@ UNION_STD_TYPE = (
     Literal[BOOL_TYPE] | Literal[UINT_TYPE] | Literal[SINT_TYPE] | Literal[STR_TYPE] | Literal[STR_LIST_TYPE]
 )
 UNION_STD_TYPE_TUPLE = (BOOL_TYPE, UINT_TYPE, SINT_TYPE, STR_TYPE, STR_LIST_TYPE)
+
+
+def is_std(t: Type) -> bool:
+    return t in UNION_STD_TYPE_TUPLE
