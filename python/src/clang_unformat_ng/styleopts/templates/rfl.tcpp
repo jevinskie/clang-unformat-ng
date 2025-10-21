@@ -3,8 +3,8 @@ namespace rfl {
 
 /// Declarations
 
-{% for decl in decls %}
-{{decl}}
+{% for e in enums %}
+enum {{e.type.cxx_name}};
 {% endfor %}
 
 // Implementations

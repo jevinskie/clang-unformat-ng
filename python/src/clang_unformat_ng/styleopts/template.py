@@ -16,6 +16,7 @@ def render_enum(opt: Option) -> str:
     return eb
 
 
-def render_rfl(**kwargs) -> str:
+def render_rfl(opts: list[Option], **kwargs) -> str:
     template = env.get_template("rfl.tcpp")
-    return template.render(decls=("a", "b"))
+    enums = filter(lambda x: x.enum is not None, opts)
+    return template.render(enums=enums)
