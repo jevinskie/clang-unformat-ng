@@ -2,7 +2,6 @@
 
 #include "common-internal.hpp"
 
-#include <_abort.h>
 #include <cassert>
 #include <cstdlib>
 #include <sys/fcntl.h>

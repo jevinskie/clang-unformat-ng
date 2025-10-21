@@ -53,7 +53,7 @@ int priv_main() {
     fmt::print("rpc_cmd::FormatReq json: {}\n", rfl::json::write(rpc_cmd::FormatReq{}));
 
     const auto cstyle = get_style(builtin_style_t::llvm);
-    fmt::print("cstyle: json: {}\n", rfl::json::write(cstyle));
+    // fmt::print("cstyle: json: {}\n", rfl::json::write(cstyle));
 
     return 0;
 }

@@ -48,6 +48,16 @@ foreach(SRC ${LIBUNFMTNG_SRC})
     endif()
 endforeach()
 
+
+add_custom_command(OUTPUT
+    ${CMAKE_CURRENT_BINARY_DIR}/mach_exc.h
+    ${CMAKE_CURRENT_BINARY_DIR}/mach_excServer.c
+    ${CMAKE_CURRENT_BINARY_DIR}/mach_excUser.c
+    VERBATIM COMMAND ${Python_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/mach_exc.defs
+    CODEGEN
+    DEPENDS_EXPLICIT_ONLY
+)
+
 set(LIBUNFMTNG_PUBLIC_LIBS
     fmt::fmt
     stringzilla_header
