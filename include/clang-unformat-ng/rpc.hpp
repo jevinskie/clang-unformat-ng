@@ -1,8 +1,10 @@
 #pragma once
 
 #include "common.hpp"
+#include "style.hpp"
 
 #include <map>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -23,8 +25,8 @@ struct SetPathsResp {
     bool ok;
 };
 struct SetStyleReq {
-    using style_t = std::string;
-    style_t style;
+    std::string style_json;
+    std::optional<builtin_style_t> based_on;
 };
 struct SetStyleResp {
     bool ok;
