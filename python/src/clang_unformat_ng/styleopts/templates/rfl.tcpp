@@ -31,7 +31,7 @@ template <>
 struct Reflector<clang::format::FormatStyle> {
   struct ReflType {
     {% for opt in opts %}
-    {% if opt.enum and opt.type.cxx_qual %}{{opt.type.cxx_qual}}::{% endif %}{{opt.cxx_type}} {{opt.name}};
+    {% if not opt.plain %}{{opt.type.cxx_qual}}::{% endif %}{{opt.cxx_type}} {{opt.name}};
     {% endfor %}
   };
 
