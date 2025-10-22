@@ -8,7 +8,17 @@
 #include <string>
 #include <vector>
 
+#include <rfl.hpp>
+
 namespace unformat {
+
+// enum class rpc_cmd_t {
+//     RPC_HELLO,
+//     RPC_SETPATHS,
+//     RPC_SETSTYLE,
+//     RPC_FORMAT
+// };
+
 namespace rpc_cmd {
 struct HelloReq {
     std::string hello_req;
@@ -24,6 +34,7 @@ struct SetPathsReq {
 struct SetPathsResp {
     bool ok;
 };
+
 struct SetStyleReq {
     std::string style_json;
     std::optional<builtin_style_t> based_on;
@@ -39,5 +50,9 @@ struct FormatResp {
     bool ok;
     std::map<std::string, FormatRespResult> results;
 };
+
+using Requests  = rfl::TaggedUnion<"rpc_req", HelloReq, SetPathsReq, SetStyleReq, FormatReq>;
+using Responses = rfl::TaggedUnion<"rpc_resp", HelloResp, SetPathsResp, SetStyleResp, FormatResp>;
+
 }; // namespace rpc_cmd
 }; // namespace unformat

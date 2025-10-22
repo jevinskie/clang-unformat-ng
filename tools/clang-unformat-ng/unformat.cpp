@@ -52,8 +52,17 @@ int priv_main() {
 
     fmt::print("rpc_cmd::FormatReq json: {}\n", rfl::json::write(rpc_cmd::FormatReq{}));
 
-    const auto cstyle = get_style(builtin_style_t::llvm);
+    const auto cstyle = get_style(builtin_style_t::none);
     fmt::print("cstyle: json: {}\n", rfl::json::write(cstyle));
+
+    // const auto st = rpc_cmd_t::RPC_HELLO;
+    // fmt::print("st: json: {}\n", rfl::json::write(st));
+
+    const auto h_req = rpc_cmd::HelloReq{"hola"};
+    fmt::print("h_req: json: {}\n", rfl::json::write(h_req));
+    const auto h_resp = rpc_cmd::HelloResp{true, "como esta"};
+    fmt::print("h_resp: json: {}\n", rfl::json::write(h_resp));
+    fmt::print("var_resp<h_resp>: json: {}\n", rfl::json::write<rfl::AddTagsToVariants>(rpc_cmd::Responses{h_resp}));
 
     return 0;
 }
