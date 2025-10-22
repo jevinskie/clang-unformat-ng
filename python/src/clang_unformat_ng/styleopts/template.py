@@ -22,11 +22,12 @@ def render_enum(opt: Option) -> str:
 def render_rfl(opts: list[Option], **kwargs) -> str:
     template = env.get_template("rfl.tcpp")
     enums = list(filter(lambda x: x.enum is not None, opts))
+    # std = filter(lambda x: x.type in UNION_STD_TYPE_TUPLE, opts)
     std = filter(lambda x: x.type in UNION_STD_TYPE_TUPLE, opts)
     # rprint(enums)
-    std = filter(lambda x: x.type in UNION_STD_TYPE_TUPLE, opts)
+    std = filter(lambda x: x.type in (BOOL_TYPE, UINT_TYPE, SINT_TYPE), opts)
     # enums = tuple()
-    filter(lambda x: x.type in (BOOL_TYPE, UINT_TYPE, SINT_TYPE), opts)
+    # filter(lambda x: x.type in (BOOL_TYPE, UINT_TYPE, SINT_TYPE), opts)
 
     enums_none = list(filter(lambda x: x.type.cxx_qual is None, enums))
     enums_new = list(
