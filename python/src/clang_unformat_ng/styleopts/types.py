@@ -141,6 +141,10 @@ class Option:
     def plain(self) -> bool:
         return not ((self.enum is not None) or (self.nested_struct is not None))
 
+    @property
+    def is_str(self) -> bool:
+        return self.type in (STR_TYPE, STR_LIST_TYPE)
+
 
 # TODO: is needed? it calls attrs.resolve_types on all seralized classes
 # _resolve_json_schema_obj_cls_types()
