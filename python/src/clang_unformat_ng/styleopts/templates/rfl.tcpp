@@ -31,6 +31,7 @@ template <>
 struct Reflector<clang::format::FormatStyle> {
   struct ReflType {
     {% for opt in opts %}
+    {% if opt.plain %}{{opt.cxx_type}} {{opt.name}} {%endif%};
     {% if not opt.plain %}{{opt.type.cxx_qual}}::{% endif %}{{opt.cxx_type}} {{opt.name}};
     {% endfor %}
   };

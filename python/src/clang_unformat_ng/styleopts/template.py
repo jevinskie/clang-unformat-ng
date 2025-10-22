@@ -1,3 +1,4 @@
+from attrs import evolve
 from jinja2 import Environment, PackageLoader, select_autoescape
 from rich import print as rprint
 
@@ -24,10 +25,20 @@ def render_rfl(opts: list[Option], **kwargs) -> str:
     # rprint(enums)
     # std = filter(lambda x: x.type in UNION_STD_TYPE_TUPLE, opts)
     # enums = tuple()
-    std = filter(lambda x: x.type in (BOOL_TYPE, UINT_TYPE, SINT_TYPE), opts)
+    filter(lambda x: x.type in (BOOL_TYPE, UINT_TYPE, SINT_TYPE), opts)
+
+    enums_none = list(filter(lambda x: x.type.cxx_qual is not None, enums))
+    enums_some = list(
+        filter(
+            lambda x: evolve(x, **{"type": evolve(x.type, **{"cxx_qual": "clang::format::FormatStyle"})}), enums_none
+        )
+    )
+
+    list(filter(lambda x: x.type.cxx_qual is not None, enums))
 
     # other = filter(lambda x: x.enum is None and x.nested_struct is None, opts)
     # rprint(list(other))
-    lopts = list((*std, *enums))
+    # lopts = list((*std, *enums))
+    lopts = list((*enums_some,))
     rprint(lopts)
     return template.render(opts=lopts)
