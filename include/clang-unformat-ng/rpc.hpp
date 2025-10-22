@@ -42,6 +42,7 @@ struct SetStyleReq {
 struct SetStyleResp {
     bool ok;
 };
+
 struct FormatReq {};
 struct FormatRespResult {
     double score;
@@ -51,8 +52,8 @@ struct FormatResp {
     std::map<std::string, FormatRespResult> results;
 };
 
-using Requests  = rfl::TaggedUnion<"rpc_req", HelloReq, SetPathsReq, SetStyleReq, FormatReq>;
-using Responses = rfl::TaggedUnion<"rpc_resp", HelloResp, SetPathsResp, SetStyleResp, FormatResp>;
+using Request  = rfl::TaggedUnion<"rpc_req", HelloReq, SetPathsReq, SetStyleReq, FormatReq>;
+using Response = rfl::TaggedUnion<"rpc_resp", HelloResp, SetPathsResp, SetStyleResp, FormatResp>;
 
 }; // namespace rpc_cmd
 }; // namespace unformat

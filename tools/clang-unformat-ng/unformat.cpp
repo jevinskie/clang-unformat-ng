@@ -62,7 +62,7 @@ int priv_main() {
     fmt::print("h_req: json: {}\n", rfl::json::write(h_req));
     const auto h_resp = rpc_cmd::HelloResp{true, "como esta"};
     fmt::print("h_resp: json: {}\n", rfl::json::write(h_resp));
-    fmt::print("var_resp<h_resp>: json: {}\n", rfl::json::write<rfl::AddTagsToVariants>(rpc_cmd::Responses{h_resp}));
+    fmt::print("var_resp<h_resp>: json: {}\n", rfl::json::write<rfl::AddTagsToVariants>(rpc_cmd::Response{h_resp}));
 
     return 0;
 }
