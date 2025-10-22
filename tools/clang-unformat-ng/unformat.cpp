@@ -10,8 +10,6 @@
 
 #include <clang-unformat-ng/clang-unformat-ng.hpp>
 
-#include "../../lib/clang-unformat-ng/rfl.cpp"
-
 using namespace llvm;
 
 namespace unformat {

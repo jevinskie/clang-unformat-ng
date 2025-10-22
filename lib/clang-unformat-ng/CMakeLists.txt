@@ -13,9 +13,9 @@ find_package(Python COMPONENTS Interpreter Development REQUIRED GLOBAL)
 
 add_custom_command(
     OUTPUT
-        ${CMAKE_CURRENT_BINARY_DIR}/rfl.cpp
+        ${CMAKE_CURRENT_BINARY_DIR}/reflect.hpp
     VERBATIM COMMAND ${CMAKE_COMMAND} -E env PYTHON_PATH=${PROJECT_SOURCE_DIR}/python/src --
-        ${Python_EXECUTABLE} -m clang_unformat_ng.tools.unformat_util --template -o ${CMAKE_CURRENT_BINARY_DIR}/rfl.cpp
+        ${Python_EXECUTABLE} -m clang_unformat_ng.tools.unformat_util --template -o ${CMAKE_CURRENT_BINARY_DIR}/reflect.hpp
     CODEGEN
     DEPENDS
         ${Python_EXECUTABLE}
@@ -31,7 +31,6 @@ set(LIBUNFMTNG_SRC
     core.cpp
     fmt.cpp
     json.cpp
-    ${CMAKE_CURRENT_BINARY_DIR}/rfl.cpp
     rpc.cpp
     style.cpp
     utils.cpp
@@ -48,6 +47,9 @@ set(LIBUNFMTNG_HDR_STANDALONE_PRIVATE
 set(LIBUNFMTNG_HDR)
 foreach(HDR ${LIBUNFMTNG_HDR_STANDALONE})
     set(RELHDR "${CMAKE_CURRENT_SOURCE_DIR}/../../include/clang-unformat-ng/${HDR}")
+    if(NOT EXISTS ${RELHDR})
+        set(RELHDR "${CMAKE_CURRENT_BINARY_DIR}/${HDR}")
+    endif()
     if(NOT EXISTS ${RELHDR})
         message(ERROR "LIBUNFMTNG_HDR_STANDALONE missing: ${HDR} ${RELHDR}")
     endif()
@@ -69,6 +71,8 @@ foreach(SRC ${LIBUNFMTNG_SRC})
         list(APPEND LIBUNFMTNG_HDR ${HDR})
     endif()
 endforeach()
+
+list(APPEND LIBUNFMTNG_HDR ${CMAKE_CURRENT_BINARY_DIR}/reflect.hpp)
 
 
 set(LIBUNFMTNG_PUBLIC_LIBS
@@ -100,7 +104,7 @@ set(LIBUNFMTNG_PRIVATE_LIBS
 )
 
 # LIBUNFMTNG_HDR added for IDE project generation
-add_library(clang-unformat-ng ${LIBUNFMTNG_SRC} ${LIBUNFMTNG_HDR})
+add_library(clang-unformat-ng ${LIBUNFMTNG_SRC} ${LIBUNFMTNG_HDR} ${CMAKE_CURRENT_BINARY_DIR})
 set_target_properties(clang-unformat-ng PROPERTIES PUBLIC_HEADER "${LIBUNFMTNG_HDR}")
 target_compile_options(clang-unformat-ng PRIVATE -fno-rtti)
 target_link_libraries(clang-unformat-ng
@@ -111,8 +115,8 @@ PRIVATE
 )
 
 target_include_directories(clang-unformat-ng
-    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../../include
-    PRIVATE ${CMAKE_CURRENT_BINARY_DIR} ${CLANG_INCLUDE_DIRS}
+    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../../include ${CMAKE_CURRENT_BINARY_DIR}
+    PRIVATE ${CLANG_INCLUDE_DIRS}
 )
 
 set_target_properties(clang-unformat-ng PROPERTIES
