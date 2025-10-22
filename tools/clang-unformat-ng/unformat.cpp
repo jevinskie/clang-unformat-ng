@@ -1,3 +1,5 @@
+#include "clang-unformat-ng/rpc.hpp"
+#include "clang-unformat-ng/style.hpp"
 #include <string>
 #include <vector>
 
@@ -50,7 +52,7 @@ int priv_main() {
     const auto nf_nover = style::NestedField{"nf", foo};
     fmt::print("nf_nover json: {}\n", rfl::json::write(nf_nover));
 
-    fmt::print("rpc_cmd::FormatReq json: {}\n", rfl::json::write(rpc_cmd::FormatReq{}));
+    fmt::print("rpc_cmd::FormatReq json: {}\n", rfl::json::write(rpc_cmd::format_req{}));
 
     const auto cstyle = get_style(builtin_style_t::none);
     fmt::print("cstyle: json: {}\n", rfl::json::write(cstyle));
@@ -58,11 +60,11 @@ int priv_main() {
     // const auto st = rpc_cmd_t::RPC_HELLO;
     // fmt::print("st: json: {}\n", rfl::json::write(st));
 
-    const auto h_req = rpc_cmd::HelloReq{"hola"};
+    const auto h_req = rpc_cmd::get_style_req{builtin_style_t::llvm};
     fmt::print("h_req: json: {}\n", rfl::json::write(h_req));
-    const auto h_resp = rpc_cmd::HelloResp{true, "como esta"};
+    const auto h_resp = rpc_cmd::get_style_resp{true, "{\"como esta\"}"};
     fmt::print("h_resp: json: {}\n", rfl::json::write(h_resp));
-    fmt::print("var_resp<h_resp>: json: {}\n", rfl::json::write<rfl::AddTagsToVariants>(rpc_cmd::Response{h_resp}));
+    fmt::print("var_resp<h_resp>: json: {}\n", rfl::json::write<rfl::AddTagsToVariants>(rpc_cmd::response_t{h_resp}));
 
     return 0;
 }

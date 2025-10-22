@@ -13,47 +13,68 @@
 namespace unformat {
 
 // enum class rpc_cmd_t {
-//     RPC_HELLO,
+//     RPC_GETSTYLE,
 //     RPC_SETPATHS,
 //     RPC_SETSTYLE,
 //     RPC_FORMAT
 // };
 
 namespace rpc_cmd {
-struct HelloReq {
-    std::string hello_req;
+
+struct get_style_req {
+    builtin_style_t style;
 };
-struct HelloResp {
+struct get_style_resp {
     bool ok;
-    std::string hello_resp;
+    std::string style_json;
 };
 
-struct SetPathsReq {
+struct set_paths_req {
     std::vector<std::string> paths;
 };
-struct SetPathsResp {
+struct set_paths_resp {
     bool ok;
 };
 
-struct SetStyleReq {
+struct set_style_req {
     std::string style_json;
-    std::optional<builtin_style_t> based_on;
 };
-struct SetStyleResp {
+struct set_style_resp {
     bool ok;
 };
 
-struct FormatReq {};
-struct FormatRespResult {
+struct format_req {};
+struct format_resp_result {
     double score;
 };
-struct FormatResp {
+struct format_resp {
     bool ok;
-    std::map<std::string, FormatRespResult> results;
+    std::map<std::string, format_resp_result> results;
 };
 
-using Request  = rfl::TaggedUnion<"rpc_req", HelloReq, SetPathsReq, SetStyleReq, FormatReq>;
-using Response = rfl::TaggedUnion<"rpc_resp", HelloResp, SetPathsResp, SetStyleResp, FormatResp>;
+using request_t  = rfl::TaggedUnion<"rpc_req", get_style_req, set_paths_req, set_style_req, format_req>;
+using response_t = rfl::TaggedUnion<"rpc_resp", get_style_resp, set_paths_resp, set_style_resp, format_resp>;
 
 }; // namespace rpc_cmd
+
+class UnixSocket {
+public:
+    UnixSocket(const std::string path);
+
+private:
+    int _fd{-1};
+    const std::string _path;
+};
+
+class RPCServer {
+public:
+    static void serve();
+
+private:
+    int _sock_fd{-1};
+    std::string _sock_path;
+};
+
+void rpc_serve();
+
 }; // namespace unformat
