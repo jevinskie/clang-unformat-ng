@@ -100,7 +100,7 @@ set(LIBUNFMTNG_PRIVATE_LIBS
     reflectcpp
     enchantum::enchantum
     effolkronium_random
-    nlohmann_json::nlohmann_json
+    thread-pool
 )
 
 # LIBUNFMTNG_HDR added for IDE project generation

@@ -19,3 +19,6 @@ set(JSON_BuildTests OFF CACHE INTERNAL "")
 add_subdirectory(json EXCLUDE_FROM_ALL)
 
 add_subdirectory(StringZilla EXCLUDE_FROM_ALL)
+
+add_library(thread-pool INTERFACE)
+target_include_directories(thread-pool INTERFACE thread-pool/include)

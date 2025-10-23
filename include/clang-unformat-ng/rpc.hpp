@@ -59,7 +59,10 @@ using response_t = rfl::TaggedUnion<"rpc_resp", get_style_resp, set_paths_resp, 
 
 class UnixSocket {
 public:
-    UnixSocket(const std::string path);
+    UnixSocket(const std::string &path);
+    std::vector<uint8_t> read(size_t size);
+    void write(std::span<uint8_t> datagram);
+    void disconnect();
 
 private:
     int _fd{-1};
@@ -68,13 +71,12 @@ private:
 
 class RPCServer {
 public:
-    static void serve();
+    RPCServer(const std::string &socket_path);
+    void start();
+    void stop();
 
 private:
-    int _sock_fd{-1};
-    std::string _sock_path;
+    UnixSocket _sock;
 };
-
-void rpc_serve();
 
 }; // namespace unformat

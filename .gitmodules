@@ -19,3 +19,6 @@
 [submodule "3rdparty/nanobind"]
 	path = 3rdparty/nanobind
 	url = https://github.com/wjakob/nanobind
+[submodule "3rdparty/thread-pool"]
+	path = 3rdparty/thread-pool
+	url = https://github.com/bshoshany/thread-pool
