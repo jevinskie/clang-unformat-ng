@@ -17,6 +17,9 @@ public:
     std::vector<uint8_t> read(size_t size);
     void write(std::span<uint8_t> datagram);
     void disconnect();
+    void bind();
+    void listen();
+    void connect();
 
 private:
     const std::string _path;
