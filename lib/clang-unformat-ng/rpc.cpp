@@ -2,6 +2,4 @@
 
 #include "common-internal.hpp"
 
-namespace unformat {
-[[gnu::visibility("default")]] int dummy_rpc;
-};
+namespace unformat {}; // namespace unformat

@@ -2,11 +2,13 @@
 
 #include "common.hpp"
 #include "style.hpp"
+#include "utils.hpp"
 
 #include <map>
-#include <optional>
 #include <string>
 #include <vector>
+
+#include <clang/Format/Format.h>
 
 #include <rfl.hpp>
 
@@ -57,23 +59,20 @@ using response_t = rfl::TaggedUnion<"rpc_resp", get_style_resp, set_paths_resp, 
 
 }; // namespace rpc_cmd
 
-class UnixSocket {
-public:
-    UnixSocket(const std::string &path);
-    std::vector<uint8_t> read(size_t size);
-    void write(std::span<uint8_t> datagram);
-    void disconnect();
-
-private:
-    int _fd{-1};
-    const std::string _path;
-};
-
 class RPCServer {
 public:
     RPCServer(const std::string &socket_path);
     void start();
     void stop();
+
+private:
+    UnixSocket _sock;
+};
+
+class RPCClient {
+public:
+    RPCClient(const std::string &socket_path);
+    clang::format::FormatStyle get_style(builtin_style_t style);
 
 private:
     UnixSocket _sock;

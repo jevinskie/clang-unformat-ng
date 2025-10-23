@@ -22,3 +22,5 @@ add_subdirectory(StringZilla EXCLUDE_FROM_ALL)
 
 add_library(thread-pool INTERFACE)
 target_include_directories(thread-pool INTERFACE thread-pool/include)
+
+add_subdirectory(strong_type EXCLUDE_FROM_ALL)

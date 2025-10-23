@@ -78,6 +78,7 @@ list(APPEND LIBUNFMTNG_HDR ${CMAKE_CURRENT_BINARY_DIR}/reflect.hpp)
 set(LIBUNFMTNG_PUBLIC_LIBS
     fmt::fmt
     stringzilla_header
+    strong_type
 )
 
 set(LIBUNFMTNG_PRIVATE_LIBS

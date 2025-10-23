@@ -2,10 +2,11 @@
 
 #include "common-internal.hpp"
 
-#include <cassert>
-#include <cstdlib>
 #include <sys/fcntl.h>
+#include <sys/socket.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/un.h>
 #include <unistd.h>
 
 namespace unformat {
@@ -32,6 +33,11 @@ std::string slurp_file_string(const std::string &path) {
         ::abort();
     }
     return res;
+}
+
+UnixSocket::UnixSocket(const std::string &path) : _path{path} {
+    struct sockaddr_un addr;
+    _fd = -1;
 }
 
 }; // namespace unformat
