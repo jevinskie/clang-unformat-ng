@@ -10,10 +10,10 @@
 #include <unistd.h>
 
 #include <boost/asio/connect.hpp>
-#include <boost/asio/local/datagram_protocol.hpp>
+#include <boost/asio/local/stream_protocol.hpp>
 
 namespace net = boost::asio;
-using unix_fd = boost::asio::local::datagram_protocol;
+using unix_fd = boost::asio::local::stream_protocol;
 
 namespace unformat {
 

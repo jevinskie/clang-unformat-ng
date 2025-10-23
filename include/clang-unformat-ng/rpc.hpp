@@ -10,6 +10,8 @@
 
 #include <clang/Format/Format.h>
 
+#include <boost/asio/connect.hpp>
+#include <boost/asio/local/stream_protocol.hpp>
 #include <rfl.hpp>
 
 namespace unformat {
@@ -59,14 +61,17 @@ using response_t = rfl::TaggedUnion<"rpc_resp", get_style_resp, set_paths_resp, 
 
 }; // namespace rpc_cmd
 
+using namespace boost::asio;
+namespace local = boost::asio::local;
+typedef local::stream_protocol sp;
+
 class RPCServer {
 public:
+    using cb_t = bool (*)(RPCServer &server);
     RPCServer(const std::string &socket_path);
-    void start();
-    void stop();
+    void run(cb_t cb_func);
 
 private:
-    UnixSocket _sock;
 };
 
 class RPCClient {
@@ -75,7 +80,6 @@ public:
     clang::format::FormatStyle get_style(builtin_style_t style);
 
 private:
-    UnixSocket _sock;
 };
 
 }; // namespace unformat
