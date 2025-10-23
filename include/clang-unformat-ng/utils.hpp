@@ -26,4 +26,14 @@ private:
     int _fd{-1};
 };
 
+class UnixSocketClient : UnixSocket {
+public:
+    UnixSocketClient(const std::string &path);
+};
+
+class UnixSocketServer : UnixSocket {
+public:
+    UnixSocketServer(const std::string &path);
+};
+
 }; // namespace unformat
