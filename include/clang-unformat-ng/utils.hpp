@@ -15,7 +15,7 @@ class UnixSocket {
 public:
     UnixSocket(const std::string &path);
     std::vector<uint8_t> read(size_t size);
-    void write(std::span<uint8_t> datagram);
+    void write(std::span<const uint8_t> datagram);
     void disconnect();
     void bind();
     void listen();

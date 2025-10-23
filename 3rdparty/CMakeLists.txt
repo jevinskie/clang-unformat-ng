@@ -24,3 +24,7 @@ add_library(thread-pool INTERFACE)
 target_include_directories(thread-pool INTERFACE thread-pool/include)
 
 add_subdirectory(strong_type EXCLUDE_FROM_ALL)
+
+find_package(Boost REQUIRED COMPONENTS headers CONFIG GLOBAL)
+# TODO: figure out what this is supposed to do
+set_target_properties(Boost::headers PROPERTIES IMPORTED_GLOBAL ON)

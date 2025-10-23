@@ -102,6 +102,7 @@ set(LIBUNFMTNG_PRIVATE_LIBS
     enchantum::enchantum
     effolkronium_random
     thread-pool
+    Boost::headers
 )
 
 # LIBUNFMTNG_HDR added for IDE project generation
