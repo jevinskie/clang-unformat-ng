@@ -9,6 +9,12 @@
 #include <sys/un.h>
 #include <unistd.h>
 
+#include <boost/asio/connect.hpp>
+#include <boost/asio/local/datagram_protocol.hpp>
+
+namespace net = boost::asio;
+using unix_fd = boost::asio::local::datagram_protocol;
+
 namespace unformat {
 
 std::string slurp_file_string(const std::string &path) {
