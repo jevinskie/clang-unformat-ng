@@ -38,13 +38,14 @@ std::string slurp_file_string(const std::string &path) {
     return res;
 }
 
-UnixSocket::UnixSocket(const std::string &path) : _path{path} {
-    const auto path_w_nul_sz = _path.size() + 1;
-    assert(path_w_nul_sz <= sizeof(_addr.sun_path));
-    _addr = {.sun_len    = static_cast<uint8_t>(offsetof(decltype(_addr), sun_path) + path_w_nul_sz),
-             .sun_family = AF_UNIX};
-    std::copy_n(_path.cbegin(), std::min(path_w_nul_sz, sizeof(_addr.sun_path) - 1), _addr.sun_path);
-    _addr.sun_path[path_w_nul_sz - 1] = '\0';
+UnixSocket::UnixSocket(const std::string &path, bool force) : _path{path} {
+    // setup path in address
+    const auto psz     = _path.size();
+    const auto psz_nul = psz + 1;
+    assert(psz_nul <= sizeof(_addr.sun_path));
+    _addr = {.sun_len = static_cast<uint8_t>(offsetof(decltype(_addr), sun_path) + psz_nul), .sun_family = AF_UNIX};
+    std::copy_n(_path.cbegin(), std::min(psz, sizeof(_addr.sun_path) - 1), _addr.sun_path);
+    _addr.sun_path[psz_nul - 1] = '\0';
 };
 
 UnixSocket::~UnixSocket() {

@@ -6,6 +6,7 @@
 #include <limits>
 #include <span>
 #include <string>
+#include <sys/socket.h>
 #include <sys/un.h>
 #include <type_traits>
 #include <vector>
@@ -15,9 +16,8 @@ namespace unformat {
 std::string slurp_file_string(const std::string &path);
 
 class UnixSocket {
-    // o yah well ur butt is Undefined Behavior
 public:
-    UnixSocket(const std::string &path);
+    UnixSocket(const std::string &path, bool force);
     ~UnixSocket();
 
     std::vector<uint8_t> read(size_t size);
