@@ -52,9 +52,9 @@ template <typename sz_t = uint32_t> class LengthPrefixProtocol {
         constexpr auto sz = sizeof(T);
         static_assert(sz <= std::numeric_limits<sz_t>::max(), "msg sz is >= UINT32_MAX");
         sz_t sz_val{};
-        read({reinterpret_cast<uint8_t *>(&sz_val), sizeof(sz_t)});
+        read({static_cast<uint8_t *>(&sz_val), sizeof(sz_t)});
         T res{};
-        read({reinterpret_cast<uint8_t *>(&res), sizeof(T)});
+        read({static_cast<uint8_t *>(&res), sizeof(T)});
         return res;
     }
     template <typename T> static void write(const T &value) {
