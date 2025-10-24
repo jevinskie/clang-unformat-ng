@@ -2,18 +2,15 @@
 
 #include "common-internal.hpp"
 
+#include <algorithm>
+#include <cstddef>
+#include <cstdint>
 #include <sys/fcntl.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/un.h>
 #include <unistd.h>
-
-#include <boost/asio/connect.hpp>
-#include <boost/asio/local/stream_protocol.hpp>
-
-namespace net = boost::asio;
-using unix_fd = boost::asio::local::stream_protocol;
 
 namespace unformat {
 
@@ -42,8 +39,12 @@ std::string slurp_file_string(const std::string &path) {
 }
 
 UnixSocket::UnixSocket(const std::string &path) : _path{path} {
-    struct sockaddr_un addr;
-    _fd = -1;
-}
+    const auto path_w_nul_sz = _path.size() + 1;
+    assert(path_w_nul_sz <= sizeof(_addr.sun_path));
+    _addr = {.sun_len    = static_cast<uint8_t>(offsetof(decltype(_addr), sun_path) + path_w_nul_sz),
+             .sun_family = AF_UNIX};
+    std::copy_n(_path.cbegin(), std::min(path_w_nul_sz, sizeof(_addr.sun_path) - 1), _addr.sun_path);
+    _addr.sun_path[path_w_nul_sz - 1] = '\0';
+};
 
 }; // namespace unformat
