@@ -21,6 +21,7 @@ public:
     ~UnixSocket();
 
     std::vector<uint8_t> read_raw(size_t size);
+    void read_raw(std::vector<uint8_t> &buf);
     void read_raw(std::span<uint8_t> buf);
     std::vector<uint8_t> read(size_t size);
     void read(std::span<uint8_t> buf);
