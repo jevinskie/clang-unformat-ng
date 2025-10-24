@@ -47,4 +47,10 @@ UnixSocket::UnixSocket(const std::string &path) : _path{path} {
     _addr.sun_path[path_w_nul_sz - 1] = '\0';
 };
 
+UnixSocket::~UnixSocket() {
+    if (_fd >= 0) {
+        ::close(_fd);
+    }
+}
+
 }; // namespace unformat
