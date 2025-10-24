@@ -15,6 +15,7 @@ namespace unformat {
 std::string slurp_file_string(const std::string &path);
 
 class UnixSocket {
+    // o yah well ur butt is Undefined Behavior
 public:
     UnixSocket(const std::string &path);
     ~UnixSocket();
