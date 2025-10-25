@@ -24,10 +24,9 @@ public:
     void read(std::span<uint8_t> buf);
     void write(std::span<const uint8_t> buf);
 
-    void bind();
     void connect();
     void listen();
-    void accept();
+    int accept();
     void shutdown();
 
 private:

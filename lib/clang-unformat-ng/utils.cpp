@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <cstddef>
 #include <cstdint>
+#include <cstdio>
 #include <sys/fcntl.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
@@ -46,12 +47,54 @@ UnixSocket::UnixSocket(const std::string &path, bool force) : _path{path} {
     _addr = {.sun_len = static_cast<uint8_t>(offsetof(decltype(_addr), sun_path) + psz_nul), .sun_family = AF_UNIX};
     std::copy_n(_path.cbegin(), std::min(psz, sizeof(_addr.sun_path) - 1), _addr.sun_path);
     _addr.sun_path[psz_nul - 1] = '\0';
+
+    _fd = socket(AF_UNIX, SOCK_STREAM, 0);
+    if (_fd < 0) {
+        ::perror("UnixSocket() socket");
+        ::exit(1);
+    }
 };
 
 UnixSocket::~UnixSocket() {
     if (_fd >= 0) {
         ::close(_fd);
     }
+}
+
+void UnixSocket::connect() {
+    if (::connect(_fd, reinterpret_cast<struct sockaddr *>(&_addr), _addr.sun_len)) {
+        perror("connect");
+        exit(1);
+    }
+}
+
+void UnixSocket::listen() {
+    if (::bind(_fd, reinterpret_cast<struct sockaddr *>(&_addr), _addr.sun_len)) {
+        perror("listen - bind");
+        exit(1);
+    }
+    if (::listen(_fd, 16)) {
+        perror("listen - listen");
+        exit(1);
+    }
+}
+
+void UnixSocket::shutdown() {
+    if (::shutdown(_fd, SHUT_RDWR)) {
+        perror("shutdown");
+        exit(1);
+    }
+}
+
+int UnixSocket::accept() {
+    socklen_t slen{sizeof(_addr)};
+    struct sockaddr_un remote_addr{};
+    int conn_fd = ::accept(_fd, reinterpret_cast<struct sockaddr *>(&remote_addr), &slen);
+    if (conn_fd < 0) {
+        perror("accept");
+        exit(1);
+    }
+    assert(slen ==) return conn_fd;
 }
 
 }; // namespace unformat
