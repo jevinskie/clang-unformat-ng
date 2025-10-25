@@ -2,7 +2,6 @@
 
 #include "common.hpp"
 
-#include <string_view>
 #include <sys/un.h>
 
 #include <fmt/format.h>

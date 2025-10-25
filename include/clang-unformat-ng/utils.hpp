@@ -2,6 +2,8 @@
 
 #include "common.hpp"
 
+#include "fmt.hpp"
+
 #include <cstdint>
 #include <limits>
 #include <span>
@@ -17,7 +19,7 @@ std::string slurp_file_string(const std::string &path);
 
 class UnixSocket {
 public:
-    UnixSocket(const std::string &path, bool force);
+    UnixSocket(const std::string &path);
     ~UnixSocket();
 
     std::vector<uint8_t> read(size_t size);
@@ -29,11 +31,32 @@ public:
     int accept();
     void shutdown();
 
+    const std::string &path() const noexcept {
+        return _path;
+    }
+    const struct sockaddr_un &addr() const noexcept {
+        return _addr;
+    }
+    int fd() const noexcept {
+        return _fd;
+    }
+
 private:
     const std::string _path;
     struct sockaddr_un _addr;
     int _fd{-1};
 };
+}; // namespace unformat
+
+template <> struct fmt::formatter<unformat::UnixSocket> : fmt::formatter<fmt::string_view> {
+    constexpr auto format(const unformat::UnixSocket &s, fmt::format_context &ctx) const
+        -> fmt::format_context::iterator {
+        fmt::format_to(ctx.out(), "UnixSock{{ .path = {} .fd = {}, .addr = {}}}", s.path(), s.fd(), s.addr());
+        return ctx.out();
+    }
+};
+
+namespace unformat {
 
 class UnixSocketClient : UnixSocket {
 public:

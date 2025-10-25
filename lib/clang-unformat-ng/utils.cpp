@@ -40,7 +40,7 @@ std::string slurp_file_string(const std::string &path) {
     return res;
 }
 
-UnixSocket::UnixSocket(const std::string &path, bool force) : _path{path} {
+UnixSocket::UnixSocket(const std::string &path) : _path{path} {
     // setup path in address
     const auto psz     = _path.size();
     const auto psz_nul = psz + 1;
@@ -71,6 +71,7 @@ void UnixSocket::connect() {
 }
 
 void UnixSocket::listen() {
+    ::unlink(_path.c_str());
     if (::bind(_fd, reinterpret_cast<struct sockaddr *>(&_addr), _addr.sun_len)) {
         ::perror("listen - bind");
         std::exit(1);
