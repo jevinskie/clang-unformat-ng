@@ -94,7 +94,8 @@ int UnixSocket::accept() {
         perror("accept");
         exit(1);
     }
-    assert(slen ==) return conn_fd;
+    assert(slen == remote_addr.sun_len);
+    return conn_fd;
 }
 
 }; // namespace unformat
