@@ -2,6 +2,9 @@
 
 #include "common.hpp"
 
+#include <string_view>
+#include <sys/un.h>
+
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 #include <fmt/ranges.h>
@@ -27,6 +30,15 @@ template <> struct fmt::formatter<clang::tooling::Replacements> : fmt::formatter
         fmt::format_to(ctx.out(), "Rn {{ ");
         fmt::format_to(ctx.out(), "{}", fmt::join(rs, " "));
         fmt::format_to(ctx.out(), " }}");
+        return ctx.out();
+    }
+};
+
+template <> struct fmt::formatter<struct sockaddr_un> : fmt::formatter<fmt::string_view> {
+    constexpr auto format(const struct sockaddr_un &a, fmt::format_context &ctx) const
+        -> fmt::format_context::iterator {
+        fmt::format_to(ctx.out(), "Addr{{ .len = {:d}, .fam = {:d} .path = \"{:s}\" }}", a.sun_len, a.sun_family,
+                       a.sun_path);
         return ctx.out();
     }
 };

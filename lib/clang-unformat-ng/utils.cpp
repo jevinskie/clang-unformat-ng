@@ -1,4 +1,5 @@
 #include "clang-unformat-ng/utils.hpp"
+#include "clang-unformat-ng/fmt.hpp"
 
 #include "common-internal.hpp"
 
@@ -47,11 +48,12 @@ UnixSocket::UnixSocket(const std::string &path, bool force) : _path{path} {
     _addr = {.sun_len = static_cast<uint8_t>(offsetof(decltype(_addr), sun_path) + psz_nul), .sun_family = AF_UNIX};
     std::copy_n(_path.cbegin(), std::min(psz, sizeof(_addr.sun_path) - 1), _addr.sun_path);
     _addr.sun_path[psz_nul - 1] = '\0';
+    fmt::print(stderr, "accept: remote_addr: {}\n", _addr);
 
     _fd = socket(AF_UNIX, SOCK_STREAM, 0);
     if (_fd < 0) {
         ::perror("UnixSocket() socket");
-        ::exit(1);
+        std::exit(1);
     }
 };
 
@@ -63,26 +65,26 @@ UnixSocket::~UnixSocket() {
 
 void UnixSocket::connect() {
     if (::connect(_fd, reinterpret_cast<struct sockaddr *>(&_addr), _addr.sun_len)) {
-        perror("connect");
-        exit(1);
+        ::perror("connect");
+        std::exit(1);
     }
 }
 
 void UnixSocket::listen() {
     if (::bind(_fd, reinterpret_cast<struct sockaddr *>(&_addr), _addr.sun_len)) {
-        perror("listen - bind");
-        exit(1);
+        ::perror("listen - bind");
+        std::exit(1);
     }
     if (::listen(_fd, 16)) {
-        perror("listen - listen");
-        exit(1);
+        ::perror("listen - listen");
+        std::exit(1);
     }
 }
 
 void UnixSocket::shutdown() {
     if (::shutdown(_fd, SHUT_RDWR)) {
-        perror("shutdown");
-        exit(1);
+        ::perror("shutdown");
+        std::exit(1);
     }
 }
 
@@ -91,10 +93,11 @@ int UnixSocket::accept() {
     struct sockaddr_un remote_addr{};
     int conn_fd = ::accept(_fd, reinterpret_cast<struct sockaddr *>(&remote_addr), &slen);
     if (conn_fd < 0) {
-        perror("accept");
-        exit(1);
+        ::perror("accept");
+        std::exit(1);
     }
     assert(slen == remote_addr.sun_len);
+    fmt::print(stderr, "accept: remote_addr: {}\n", remote_addr);
     return conn_fd;
 }
 
