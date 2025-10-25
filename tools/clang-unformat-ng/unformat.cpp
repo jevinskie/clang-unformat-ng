@@ -75,8 +75,10 @@ static int priv_main() {
     if (Etc) {
         sandbox();
     } else if (!Serve.empty()) {
-        UnixSocket s{Serve.getValue()};
-        fmt::print("UnixSocket: serve: {}\n", Serve);
+        // UnixSocket s{Serve.getValue()};
+        // fmt::print("UnixSocket: serve: {}\n", Serve);
+        auto server = RPCServer(Serve.getValue());
+        server.run();
     }
     return 0;
 }

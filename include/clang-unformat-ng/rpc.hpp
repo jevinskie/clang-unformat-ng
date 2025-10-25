@@ -5,6 +5,7 @@
 #include "utils.hpp"
 
 #include <map>
+#include <stop_token>
 #include <string>
 #include <vector>
 
@@ -61,14 +62,13 @@ using response_t = rfl::TaggedUnion<"rpc_resp", get_style_resp, set_paths_resp, 
 
 class RPCServer {
 public:
-    using cb_t = bool (*)(RPCServer &server);
-
     RPCServer(const std::string &socket_path);
     ~RPCServer();
 
-    void run(cb_t cb_func);
+    std::stop_token run();
 
 private:
+    UnixSocket _s;
 };
 
 class RPCClient {
@@ -79,6 +79,7 @@ public:
     clang::format::FormatStyle get_style(builtin_style_t style);
 
 private:
+    UnixSocket _s;
 };
 
 }; // namespace unformat

@@ -1,4 +1,5 @@
 #include "clang-unformat-ng/utils.hpp"
+
 #include "clang-unformat-ng/fmt.hpp"
 
 #include "common-internal.hpp"
@@ -76,7 +77,7 @@ void UnixSocket::listen() {
         ::perror("listen - bind");
         std::exit(1);
     }
-    if (::listen(_fd, 16)) {
+    if (::listen(_fd, 4)) {
         ::perror("listen - listen");
         std::exit(1);
     }
