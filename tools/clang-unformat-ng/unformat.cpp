@@ -78,11 +78,14 @@ static int priv_main() {
         // fmt::print("UnixSocket: serve: {}\n", Serve);
         auto server      = RPCServer(Serve.getValue());
         auto stop_source = server.run();
-        for (int i = 0; i < 5; ++i) {
+        for (int i = 0; i < 4; ++i) {
             fmt::print(stderr, "main loop inner\n");
             std::this_thread::sleep_for(std::chrono::seconds{1});
         }
-        // stop_source.request_stop();
+        stop_source.request_stop();
+        fmt::print(stderr, "main end serve begin 2 second countdown\n");
+        std::this_thread::sleep_for(std::chrono::seconds{2});
+        fmt::print(stderr, "main end serve countdown done\n");
     }
     return 0;
 }
