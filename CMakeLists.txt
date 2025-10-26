@@ -16,8 +16,8 @@ if (${FORCE_COLORED_OUTPUT})
 endif ()
 
 add_compile_options(${JEV_COLOR_DIAGS})
-# add_compile_options(-fsanitize=address)
-# add_link_options(-fsanitize=address)
+add_compile_options(-fsanitize=address)
+add_link_options(-fsanitize=address)
 
 
 add_subdirectory(3rdparty)

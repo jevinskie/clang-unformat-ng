@@ -18,9 +18,9 @@ RPCServer::RPCServer(const std::string &socket_path)
           // TODO?
       };
 
-static void accept_thread_main(std::stop_token stoken) {
+static void accept_thread_main(std::stop_token stok) {
     fmt::print(stderr, "accept_thread_main entry\n");
-    while (!stoken.stop_requested()) {
+    while (!stok.stop_requested()) {
         fmt::print(stderr, "accept_thread_main foo\n");
         std::this_thread::sleep_for(std::chrono::seconds{1});
     }

@@ -99,7 +99,7 @@ int UnixSocket::accept() {
         std::exit(1);
     }
     assert(slen == remote_addr.sun_len);
-    fmt::print(stderr, "accept: remote_addr: {}\n", remote_addr);
+    fmt::print(stderr, "accept: remote_addr: {} slen: {} ra.sun_len: {}\n", remote_addr, slen, remote_addr.sun_len);
     return conn_fd;
 }
 

@@ -68,6 +68,8 @@ public:
     std::stop_source run();
 
 private:
+    // void accept_thread_main(std::stop_token stok);
+
     UnixSocket _s;
 };
 
