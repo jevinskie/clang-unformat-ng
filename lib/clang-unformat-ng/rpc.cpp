@@ -7,6 +7,8 @@
 
 #include <chrono>
 #include <stop_token>
+#include <sys/socket.h>
+#include <sys/un.h>
 #include <thread>
 
 #include <fmt/base.h>
@@ -48,13 +50,15 @@ RPCServer::RPCServer(const std::string &socket_path) : _s{socket_path} {};
 void RPCServer::accept_thread_func(std::stop_token stok) {
     std::stop_callback callback(stok, [this] {
         fmt::print(stderr, "RPCServer::accept_thread_func stop callback\n");
-        _s.shutdown();
+        // _s.shutdown();
     });
 
     fmt::print(stderr, "RPCServer::accept_thread_func entry\n");
+    _s.listen();
     while (!stok.stop_requested()) {
         fmt::print(stderr, "RPCServer::accept_thread_func loop\n");
-        std::this_thread::sleep_for(std::chrono::seconds{1});
+        auto [new_sock, remote_addr, remote_addr_len] = _s.accept();
+        fmt::print(stderr, "accept: new_sock: {} raddr: {} raddr_sz: {}\n", new_sock, remote_addr, remote_addr_len);
     }
     fmt::print(stderr, "RPCServer::accept_thread_func exit\n");
 }

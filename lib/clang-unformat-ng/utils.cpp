@@ -79,7 +79,7 @@ void UnixSocket::connect() {
 
 void UnixSocket::listen() {
     ::unlink(_path.c_str());
-    if (::bind(_fd, reinterpret_cast<struct sockaddr *>(&_addr), _addr.sun_len)) {
+    if (::bind(_fd, reinterpret_cast<struct sockaddr *>(&_addr), sizeof(_addr))) {
         ::perror("listen - bind");
         std::exit(1);
     }
@@ -96,7 +96,7 @@ void UnixSocket::shutdown() {
     }
 }
 
-int UnixSocket::accept() {
+std::tuple<int, sockaddr_un, socklen_t> UnixSocket::accept() {
     socklen_t slen{sizeof(_addr)};
     struct sockaddr_un remote_addr{};
     int conn_fd = ::accept(_fd, reinterpret_cast<struct sockaddr *>(&remote_addr), &slen);
@@ -106,7 +106,7 @@ int UnixSocket::accept() {
     }
     assert(slen == remote_addr.sun_len);
     fmt::print(stderr, "accept: remote_addr: {} slen: {} ra.sun_len: {}\n", remote_addr, slen, remote_addr.sun_len);
-    return conn_fd;
+    return {conn_fd, remote_addr, slen};
 }
 
 }; // namespace unformat

@@ -10,6 +10,7 @@
 #include <string>
 #include <sys/socket.h>
 #include <sys/un.h>
+#include <tuple>
 #include <type_traits>
 #include <vector>
 
@@ -29,7 +30,7 @@ public:
 
     void connect();
     void listen();
-    int accept();
+    std::tuple<int, sockaddr_un, socklen_t> accept();
     void shutdown();
 
     const std::string &path() const noexcept {
