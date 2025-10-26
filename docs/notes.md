@@ -7,6 +7,7 @@ cmake --fresh -W Dev -G Ninja .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE
 # Run
 
 ```console
+% ipython
 In [1]: import socket
 In [2]: s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 In [3]: s2 = s.connect("/tmp/unformat.sock")
