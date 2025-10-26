@@ -82,7 +82,7 @@ static int priv_main() {
             fmt::print(stderr, "main loop inner\n");
             std::this_thread::sleep_for(std::chrono::seconds{1});
         }
-        stop_source.request_stop();
+        // stop_source.request_stop();
     }
     return 0;
 }
