@@ -17,13 +17,17 @@ RPCServer::RPCServer(const std::string &socket_path)
           // TODO?
       };
 
-std::stop_token RPCServer::run() {
+std::stop_source RPCServer::run() {
     // TODO
     std::jthread accept_thread([] {
-        std::this_thread::sleep_for(std::chrono::seconds{1});
-        fmt::print(stderr, "accept foo\n");
+        fmt::print(stderr, "accept_thread entry\n");
+        for (int i = 0; i < 10; ++i) {
+            std::this_thread::sleep_for(std::chrono::seconds{1});
+            fmt::print(stderr, "accept foo\n");
+        }
     });
-    return accept_thread.get_stop_token();
+    accept_thread.detach();
+    return accept_thread.get_stop_source();
 }
 
 RPCServer::~RPCServer() {

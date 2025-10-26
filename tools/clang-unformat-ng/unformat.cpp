@@ -1,3 +1,4 @@
+#include <chrono>
 #include <string>
 #include <thread>
 #include <vector>
@@ -15,10 +16,6 @@ using namespace llvm;
 
 namespace unformat {
 namespace priv {
-
-constexpr auto ns_in_us = 1'000z;
-constexpr auto ns_in_ms = 1'000z * ns_in_us;
-constexpr auto ns_in_s  = 1'000z * ns_in_ms;
 
 static cl::OptionCategory UnformatOptionsCategory("unformat");
 static cl::list<std::string> FileNames(cl::Positional, cl::desc("[<file> ...]"), cl::cat(UnformatOptionsCategory));
@@ -79,12 +76,13 @@ static int priv_main() {
     } else if (!Serve.empty()) {
         // UnixSocket s{Serve.getValue()};
         // fmt::print("UnixSocket: serve: {}\n", Serve);
-        auto server     = RPCServer(Serve.getValue());
-        auto stop_token = server.run();
-        {
-            fmt::print(stderr, "main loop spin");
-            std::this_thread::sleep_for(std::chrono::nanoseconds{ns_in_s});
+        auto server      = RPCServer(Serve.getValue());
+        auto stop_source = server.run();
+        for (int i = 0; i < 5; ++i) {
+            fmt::print(stderr, "main loop inner\n");
+            std::this_thread::sleep_for(std::chrono::seconds{1});
         }
+        stop_source.request_stop();
     }
     return 0;
 }

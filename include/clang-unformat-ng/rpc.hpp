@@ -65,7 +65,7 @@ public:
     RPCServer(const std::string &socket_path);
     ~RPCServer();
 
-    std::stop_token run();
+    std::stop_source run();
 
 private:
     UnixSocket _s;
