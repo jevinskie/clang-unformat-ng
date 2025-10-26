@@ -56,7 +56,13 @@ UnixSocket::UnixSocket(const std::string &path) : _path{path} {
         ::perror("UnixSocket() socket");
         std::exit(1);
     }
-};
+}
+
+UnixSocket::UnixSocket(int sock) : _fd{sock} {
+    socklen_t slen{};
+    getsockname(_fd, reinterpret_cast<struct sockaddr *>(&_addr), &slen);
+    fmt::print(stderr, "from fd: {} slen: {}\n", _fd, slen);
+}
 
 UnixSocket::~UnixSocket() {
     if (_fd >= 0) {

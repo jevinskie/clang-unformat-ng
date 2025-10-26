@@ -20,6 +20,7 @@ std::string slurp_file_string(const std::string &path);
 class UnixSocket {
 public:
     UnixSocket(const std::string &path);
+    UnixSocket(int sock);
     ~UnixSocket();
 
     std::vector<uint8_t> read(size_t size);

@@ -13,12 +13,42 @@
 
 namespace unformat {
 
+/// RPCServerConnection
+RPCServerConnection::RPCServerConnection(int sock) : _s{sock} {};
+
+void RPCServerConnection::rpc_thread_func(std::stop_token stok) {
+    std::stop_callback callback(stok, [this] {
+        fmt::print(stderr, "RPCServerConnection::rpc_thread_func stop callback\n");
+        _s.shutdown();
+    });
+
+    fmt::print(stderr, "RPCServerConnection::rpc_thread_func entry\n");
+    while (!stok.stop_requested()) {
+        fmt::print(stderr, "RPCServerConnection::rpc_thread_func loop\n");
+        std::this_thread::sleep_for(std::chrono::seconds{1});
+    }
+    fmt::print(stderr, "RPCServerConnection::rpc_thread_func exit\n");
+}
+
+std::stop_source RPCServerConnection::run() {
+    _thread = std::jthread{[this](std::stop_token stok) {
+        rpc_thread_func(stok);
+    }};
+    _thread.detach();
+    return _thread.get_stop_source();
+}
+
+RPCServerConnection::~RPCServerConnection() {
+    _thread.get_stop_source().request_stop();
+}
+
+/// RPCServer
 RPCServer::RPCServer(const std::string &socket_path) : _s{socket_path} {};
 
 void RPCServer::accept_thread_func(std::stop_token stok) {
     std::stop_callback callback(stok, [this] {
-        _s.shutdown();
         fmt::print(stderr, "RPCServer::accept_thread_func stop callback\n");
+        _s.shutdown();
     });
 
     fmt::print(stderr, "RPCServer::accept_thread_func entry\n");

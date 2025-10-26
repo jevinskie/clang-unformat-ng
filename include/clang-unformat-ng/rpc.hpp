@@ -60,6 +60,20 @@ using response_t = rfl::TaggedUnion<"rpc_resp", get_style_resp, set_paths_resp, 
 
 }; // namespace rpc_cmd
 
+class RPCServerConnection {
+public:
+    RPCServerConnection(int sock);
+    ~RPCServerConnection();
+
+    std::stop_source run();
+
+private:
+    void rpc_thread_func(std::stop_token stok);
+
+    UnixSocket _s;
+    std::jthread _thread;
+};
+
 class RPCServer {
 public:
     RPCServer(const std::string &socket_path);
@@ -72,6 +86,7 @@ private:
 
     UnixSocket _s;
     std::jthread _accept_thread;
+    std::vector<RPCServerConnection> _connections;
 };
 
 class RPCClient {
