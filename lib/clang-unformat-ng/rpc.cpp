@@ -5,6 +5,7 @@
 #include "clang-unformat-ng/fmt.hpp"
 #include "clang-unformat-ng/utils.hpp"
 
+#include <chrono>
 #include <thread>
 
 #include <fmt/base.h>
@@ -19,7 +20,8 @@ RPCServer::RPCServer(const std::string &socket_path)
 std::stop_token RPCServer::run() {
     // TODO
     std::jthread accept_thread([] {
-        fmt::print("accept foo\n");
+        std::this_thread::sleep_for(std::chrono::seconds{1});
+        fmt::print(stderr, "accept foo\n");
     });
     return accept_thread.get_stop_token();
 }

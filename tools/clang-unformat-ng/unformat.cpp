@@ -1,7 +1,5 @@
-#include "clang-unformat-ng/rpc.hpp"
-#include "clang-unformat-ng/style.hpp"
-#include "clang-unformat-ng/utils.hpp"
 #include <string>
+#include <thread>
 #include <vector>
 
 #include <llvm/Support/CommandLine.h>
@@ -17,6 +15,10 @@ using namespace llvm;
 
 namespace unformat {
 namespace priv {
+
+constexpr auto ns_in_us = 1'000z;
+constexpr auto ns_in_ms = 1'000z * ns_in_us;
+constexpr auto ns_in_s  = 1'000z * ns_in_ms;
 
 static cl::OptionCategory UnformatOptionsCategory("unformat");
 static cl::list<std::string> FileNames(cl::Positional, cl::desc("[<file> ...]"), cl::cat(UnformatOptionsCategory));
@@ -77,8 +79,12 @@ static int priv_main() {
     } else if (!Serve.empty()) {
         // UnixSocket s{Serve.getValue()};
         // fmt::print("UnixSocket: serve: {}\n", Serve);
-        auto server = RPCServer(Serve.getValue());
-        server.run();
+        auto server     = RPCServer(Serve.getValue());
+        auto stop_token = server.run();
+        {
+            fmt::print(stderr, "main loop spin");
+            std::this_thread::sleep_for(std::chrono::nanoseconds{ns_in_s});
+        }
     }
     return 0;
 }
