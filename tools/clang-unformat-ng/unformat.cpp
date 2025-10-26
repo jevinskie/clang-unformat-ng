@@ -78,7 +78,8 @@ static int priv_main() {
         // fmt::print("UnixSocket: serve: {}\n", Serve);
         auto server      = RPCServer(Serve.getValue());
         auto stop_source = server.run();
-        for (int i = 0; i < 4; ++i) {
+        // for (int i = 0; i < 4; ++i) {
+        while (!stop_source.stop_requested()) {
             fmt::print(stderr, "main loop inner\n");
             std::this_thread::sleep_for(std::chrono::seconds{1});
         }
