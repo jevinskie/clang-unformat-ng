@@ -68,8 +68,10 @@ public:
     std::stop_source run();
 
 private:
+    void accept_thread_func(std::stop_token stok);
+
     UnixSocket _s;
-    std::stop_source _accept_stop_src;
+    std::jthread _accept_thread;
 };
 
 class RPCClient {
