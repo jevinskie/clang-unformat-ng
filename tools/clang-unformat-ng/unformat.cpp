@@ -82,10 +82,9 @@ static int priv_main() {
             fmt::print(stderr, "main loop inner\n");
             std::this_thread::sleep_for(std::chrono::seconds{1});
         }
+        fmt::print(stderr, "main request stop\n");
         stop_source.request_stop();
-        fmt::print(stderr, "main end serve begin 2 second countdown\n");
-        std::this_thread::sleep_for(std::chrono::seconds{2});
-        fmt::print(stderr, "main end serve countdown done\n");
+        fmt::print(stderr, "main end serve\n");
     }
     return 0;
 }

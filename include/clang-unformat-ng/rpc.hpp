@@ -69,6 +69,7 @@ public:
 
 private:
     UnixSocket _s;
+    std::stop_source _accept_stop_src;
 };
 
 class RPCClient {
