@@ -8,6 +8,7 @@
 #include <set>
 #include <stop_token>
 #include <string>
+#include <unordered_set>
 #include <vector>
 
 #include <clang/Format/Format.h>
@@ -103,7 +104,7 @@ private:
 
     UnixSocket _s;
     std::jthread _accept_thread;
-    std::set<RPCServerConnection> _connections;
+    std::unordered_set<RPCServerConnection> _connections;
 };
 
 class RPCClient {

@@ -27,9 +27,10 @@ void RPCServerConnection::rpc_thread_func(std::stop_token stok) {
 
     fmt::print(stderr, "RPCServerConnection::rpc_thread_func entry\n");
     while (!stok.stop_requested()) {
-        // fmt::print(stderr, "RPCServerConnection::rpc_thread_func loop\n");
-        std::this_thread::sleep_for(std::chrono::seconds{1});
-        _s.read(4);
+        fmt::print(stderr, "RPCServerConnection::rpc_thread_func loop\n");
+        // std::this_thread::sleep_for(std::chrono::seconds{1});
+        auto buf = _s.read(4);
+        fmt::print("buf sz: {}\n", buf.size());
     }
     fmt::print(stderr, "RPCServerConnection::rpc_thread_func exit\n");
 }
@@ -47,17 +48,17 @@ RPCServerConnection::~RPCServerConnection() {
 }
 
 size_t RPCServerConnection::hash() const noexcept {
-    return std::hash<UnixSocket>{}(_s);
+    return _s.hash();
 }
 
 /// RPCServer
 RPCServer::RPCServer(const std::string &socket_path) : _s{socket_path} {};
 
 void RPCServer::accept_thread_func(std::stop_token stok) {
-    std::stop_callback callback(stok, [this] {
-        fmt::print(stderr, "RPCServer::accept_thread_func stop callback\n");
-        // _s.shutdown();
-    });
+    // std::stop_callback callback(stok, [this] {
+    //     fmt::print(stderr, "RPCServer::accept_thread_func stop callback\n");
+    //     // _s.shutdown();
+    // });
 
     fmt::print(stderr, "RPCServer::accept_thread_func entry\n");
     _s.listen();
@@ -67,12 +68,14 @@ void RPCServer::accept_thread_func(std::stop_token stok) {
         fmt::print(stderr, "accept: new_sock: {} raddr: {} raddr_sz: {}\n", new_sock, remote_addr, remote_addr_len);
         RPCServerConnection conn{new_sock};
         fmt::print(stderr, "RPCServer::accept_thread_func loop RPCServerConnection created\n");
-        std::stop_callback conn_cb(stok, [&conn, this] {
-            fmt::print(stderr, "RPCServer::accept_thread_func conn_cb callback\n");
-            _connections.erase(conn);
-        });
-        conn.run();
-        _connections.emplace(std::move(conn));
+        auto conn_stok = conn.run();
+        // std::stop_callback conn_cb(conn_stok.get_token(), [this] {
+        //     fmt::print(stderr, "RPCServer::accept_thread_func conn_cb callback\n");
+        //     // _connections.erase(conn);
+        // });
+        // auto conn_it = _connections.emplace(RPCServerConnection{new_sock});
+        // conn_it.first->run();
+        _connections.emplace(RPCServerConnection{new_sock});
     }
     fmt::print(stderr, "RPCServer::accept_thread_func exit\n");
 }
