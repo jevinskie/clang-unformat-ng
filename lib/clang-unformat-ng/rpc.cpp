@@ -27,8 +27,9 @@ void RPCServerConnection::rpc_thread_func(std::stop_token stok) {
 
     fmt::print(stderr, "RPCServerConnection::rpc_thread_func entry\n");
     while (!stok.stop_requested()) {
-        fmt::print(stderr, "RPCServerConnection::rpc_thread_func loop\n");
+        // fmt::print(stderr, "RPCServerConnection::rpc_thread_func loop\n");
         std::this_thread::sleep_for(std::chrono::seconds{1});
+        _s.read(4);
     }
     fmt::print(stderr, "RPCServerConnection::rpc_thread_func exit\n");
 }

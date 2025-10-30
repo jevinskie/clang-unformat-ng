@@ -8,12 +8,14 @@
 #include <cstddef>
 #include <cstdint>
 #include <cstdio>
+#include <sys/_types/_ssize_t.h>
 #include <sys/fcntl.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/un.h>
 #include <unistd.h>
+#include <vector>
 
 namespace unformat {
 
@@ -92,6 +94,26 @@ void UnixSocket::listen() {
 void UnixSocket::shutdown() {
     if (::shutdown(_fd, SHUT_RDWR)) {
         ::perror("shutdown");
+        std::exit(1);
+    }
+}
+
+void UnixSocket::read(std::span<uint8_t> buf) {
+    if (::recv(_fd, buf.data(), static_cast<ssize_t>(buf.size_bytes()), 0) != buf.size_bytes()) {
+        ::perror("recv");
+        std::exit(1);
+    }
+}
+
+std::vector<uint8_t> UnixSocket::read(size_t size) {
+    std::vector<uint8_t> buf(size);
+    read(buf);
+    return buf;
+}
+
+void UnixSocket::write(std::span<const uint8_t> buf) {
+    if (static_cast<size_t>(::send(_fd, buf.data(), buf.size_bytes(), 0)) != buf.size_bytes()) {
+        ::perror("send");
         std::exit(1);
     }
 }
