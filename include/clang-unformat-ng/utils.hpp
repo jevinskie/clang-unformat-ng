@@ -42,11 +42,11 @@ public:
     int fd() const noexcept {
         return _fd;
     }
-
-    auto operator<=>(const UnixSocket &o) const {
+    size_t hash() const noexcept;
+    auto operator<=>(const UnixSocket &o) const noexcept {
         return _fd <=> o._fd;
     }
-    bool operator==(const UnixSocket &o) const {
+    bool operator==(const UnixSocket &o) const noexcept {
         return _fd == o._fd;
     }
 
@@ -59,7 +59,7 @@ private:
 
 template <> struct std::hash<unformat::UnixSocket> {
     size_t operator()(const unformat::UnixSocket &s) const noexcept {
-        return std::hash<decltype(s.fd())>{}(s.fd());
+        return s.hash();
     }
 };
 
