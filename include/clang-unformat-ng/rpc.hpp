@@ -64,7 +64,6 @@ using response_t = rfl::TaggedUnion<"rpc_resp", get_style_resp, set_paths_resp, 
 class RPCServerConnection {
 public:
     RPCServerConnection(int sock);
-    // RPCServerConnection() : _s{-1} {}
     RPCServerConnection(RPCServerConnection &&other) = default;
     ~RPCServerConnection();
 

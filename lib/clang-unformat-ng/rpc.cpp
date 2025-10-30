@@ -65,10 +65,12 @@ void RPCServer::accept_thread_func(std::stop_token stok) {
         auto [new_sock, remote_addr, remote_addr_len] = _s.accept();
         fmt::print(stderr, "accept: new_sock: {} raddr: {} raddr_sz: {}\n", new_sock, remote_addr, remote_addr_len);
         RPCServerConnection conn{new_sock};
-        std::stop_callback conn_cb(stok, [&conn] {
+        fmt::print(stderr, "RPCServer::accept_thread_func loop RPCServerConnection created\n");
+        std::stop_callback conn_cb(stok, [&conn, this] {
             fmt::print(stderr, "RPCServer::accept_thread_func conn_cb callback\n");
-            // _connections.erase()
+            _connections.erase(conn);
         });
+        conn.run();
         _connections.emplace(std::move(conn));
     }
     fmt::print(stderr, "RPCServer::accept_thread_func exit\n");
