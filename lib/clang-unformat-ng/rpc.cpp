@@ -47,6 +47,16 @@ RPCServerConnection::~RPCServerConnection() {
 /// RPCServer
 RPCServer::RPCServer(const std::string &socket_path) : _s{socket_path} {};
 
+void RPCServer::connection_thread(std::stop_token stok) {
+    fmt::print(stderr, "RPCServer::connection_thread exit\n");
+
+    while (!stok.stop_requested()) {
+        std::this_thread::sleep_for(std::chrono::milliseconds{250});
+    }
+
+    fmt::print(stderr, "RPCServer::connection_thread exit\n");
+}
+
 void RPCServer::accept_thread_func(std::stop_token stok) {
     std::stop_callback callback(stok, [this] {
         fmt::print(stderr, "RPCServer::accept_thread_func stop callback\n");

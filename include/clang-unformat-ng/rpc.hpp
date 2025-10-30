@@ -82,6 +82,7 @@ public:
     std::stop_source run();
 
 private:
+    void connection_thread(std::stop_token stok);
     void accept_thread_func(std::stop_token stok);
 
     UnixSocket _s;
