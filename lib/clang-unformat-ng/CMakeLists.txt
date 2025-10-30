@@ -79,6 +79,7 @@ set(LIBUNFMTNG_PUBLIC_LIBS
     fmt::fmt
     stringzilla_header
     strong_type
+    Boost::headers
 )
 
 set(LIBUNFMTNG_PRIVATE_LIBS
@@ -102,7 +103,6 @@ set(LIBUNFMTNG_PRIVATE_LIBS
     enchantum::enchantum
     effolkronium_random
     thread-pool
-    Boost::headers
 )
 
 # LIBUNFMTNG_HDR added for IDE project generation

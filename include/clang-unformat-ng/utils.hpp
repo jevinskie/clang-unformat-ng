@@ -43,12 +43,25 @@ public:
         return _fd;
     }
 
+    auto operator<=>(const UnixSocket &o) const {
+        return _fd <=> o._fd;
+    }
+    bool operator==(const UnixSocket &o) const {
+        return _fd == o._fd;
+    }
+
 private:
     const std::string _path;
     struct sockaddr_un _addr;
     int _fd{-1};
 };
 }; // namespace unformat
+
+template <> struct std::hash<unformat::UnixSocket> {
+    size_t operator()(const unformat::UnixSocket &s) const noexcept {
+        return std::hash<decltype(s.fd())>{}(s.fd());
+    }
+};
 
 template <> struct fmt::formatter<unformat::UnixSocket> : fmt::formatter<fmt::string_view> {
     constexpr auto format(const unformat::UnixSocket &s, fmt::format_context &ctx) const

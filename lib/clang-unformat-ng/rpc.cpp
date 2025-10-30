@@ -6,6 +6,7 @@
 #include "clang-unformat-ng/utils.hpp"
 
 #include <chrono>
+#include <functional>
 #include <stop_token>
 #include <sys/socket.h>
 #include <sys/un.h>
@@ -44,18 +45,12 @@ RPCServerConnection::~RPCServerConnection() {
     _thread.get_stop_source().request_stop();
 }
 
+size_t RPCServerConnection::hash() const noexcept {
+    return std::hash<UnixSocket>{}(_s);
+}
+
 /// RPCServer
 RPCServer::RPCServer(const std::string &socket_path) : _s{socket_path} {};
-
-void RPCServer::connection_thread(std::stop_token stok) {
-    fmt::print(stderr, "RPCServer::connection_thread exit\n");
-
-    while (!stok.stop_requested()) {
-        std::this_thread::sleep_for(std::chrono::milliseconds{250});
-    }
-
-    fmt::print(stderr, "RPCServer::connection_thread exit\n");
-}
 
 void RPCServer::accept_thread_func(std::stop_token stok) {
     std::stop_callback callback(stok, [this] {
@@ -69,6 +64,12 @@ void RPCServer::accept_thread_func(std::stop_token stok) {
         fmt::print(stderr, "RPCServer::accept_thread_func loop\n");
         auto [new_sock, remote_addr, remote_addr_len] = _s.accept();
         fmt::print(stderr, "accept: new_sock: {} raddr: {} raddr_sz: {}\n", new_sock, remote_addr, remote_addr_len);
+        RPCServerConnection conn{new_sock};
+        std::stop_callback conn_cb(stok, [&conn] {
+            fmt::print(stderr, "RPCServer::accept_thread_func conn_cb callback\n");
+            // _connections.erase()
+        });
+        _connections.emplace(std::move(conn));
     }
     fmt::print(stderr, "RPCServer::accept_thread_func exit\n");
 }

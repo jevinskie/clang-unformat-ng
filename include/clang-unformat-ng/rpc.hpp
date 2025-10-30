@@ -5,6 +5,7 @@
 #include "utils.hpp"
 
 #include <map>
+#include <set>
 #include <stop_token>
 #include <string>
 #include <vector>
@@ -63,9 +64,18 @@ using response_t = rfl::TaggedUnion<"rpc_resp", get_style_resp, set_paths_resp, 
 class RPCServerConnection {
 public:
     RPCServerConnection(int sock);
+    // RPCServerConnection() : _s{-1} {}
+    RPCServerConnection(RPCServerConnection &&other);
     ~RPCServerConnection();
 
     std::stop_source run();
+    size_t hash() const noexcept;
+    auto operator<=>(const RPCServerConnection &o) const {
+        return _s <=> o._s;
+    }
+    bool operator==(const RPCServerConnection &o) const {
+        return _s == o._s;
+    }
 
 private:
     void rpc_thread_func(std::stop_token stok);
@@ -73,7 +83,15 @@ private:
     UnixSocket _s;
     std::jthread _thread;
 };
+}; // namespace unformat
 
+template <> struct std::hash<unformat::RPCServerConnection> {
+    size_t operator()(const unformat::RPCServerConnection &c) const noexcept {
+        return c.hash();
+    }
+};
+
+namespace unformat {
 class RPCServer {
 public:
     RPCServer(const std::string &socket_path);
@@ -82,12 +100,11 @@ public:
     std::stop_source run();
 
 private:
-    void connection_thread(std::stop_token stok);
     void accept_thread_func(std::stop_token stok);
 
     UnixSocket _s;
     std::jthread _accept_thread;
-    std::vector<RPCServerConnection> _connections;
+    std::set<RPCServerConnection> _connections;
 };
 
 class RPCClient {
