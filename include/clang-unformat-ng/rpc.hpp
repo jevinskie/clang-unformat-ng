@@ -65,7 +65,7 @@ class RPCServerConnection {
 public:
     RPCServerConnection(int sock);
     // RPCServerConnection() : _s{-1} {}
-    RPCServerConnection(RPCServerConnection &&other);
+    RPCServerConnection(RPCServerConnection &&other) = default;
     ~RPCServerConnection();
 
     std::stop_source run();
