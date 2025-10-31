@@ -14,6 +14,8 @@
 
 #include <fmt/base.h>
 
+using namespace std::literals;
+
 namespace unformat {
 
 /// RPCServerConnection
@@ -28,9 +30,11 @@ void RPCServerConnection::rpc_thread_func(std::stop_token stok) {
     fmt::print(stderr, "RPCServerConnection::rpc_thread_func entry\n");
     while (!stok.stop_requested()) {
         fmt::print(stderr, "RPCServerConnection::rpc_thread_func loop\n");
-        auto buf = LengthPrefixProtocol<>::read(_s);
-        fmt::print(stderr, "buf sz: {}\n", buf.size());
-        fmt::print(stderr, "buf cstr: {:s}\n", reinterpret_cast<char *>(buf.data()));
+        auto in_msg_buf = LengthPrefixProtocol<>::read(_s);
+        fmt::print(stderr, "in_msg_buf sz: {}\n", in_msg_buf.size());
+        fmt::print(stderr, "in_msg_buf cstr: {:s}\n", reinterpret_cast<char *>(in_msg_buf.data()));
+        const auto resp = "{\"resp\": 200}"s;
+        LengthPrefixProtocol<>::write(_s, {reinterpret_cast<const uint8_t *>(resp.data()), resp.size()});
     }
     fmt::print(stderr, "RPCServerConnection::rpc_thread_func exit\n");
 }

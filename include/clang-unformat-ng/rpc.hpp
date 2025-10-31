@@ -83,8 +83,6 @@ private:
 
     UnixSocket _s;
     std::jthread _thread;
-
-    template using lpp_t = LengthPrefixProtocol<UnixSocket>;
 };
 }; // namespace unformat
 

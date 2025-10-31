@@ -33,7 +33,7 @@ public:
         return res;
     }
     template <POD T> void write(const T &value) {
-        write({static_cast<uint8_t *>(&value), sizeof(T)});
+        write({reinterpret_cast<uint8_t const *>(&value), sizeof(T)});
     }
 
     void connect();
