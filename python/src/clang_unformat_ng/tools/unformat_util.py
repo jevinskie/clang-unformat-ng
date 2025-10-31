@@ -45,10 +45,11 @@ def do_etc() -> None:
 def do_rpc(sock_path: str) -> None:
     client = rpc.RPCClient(sock_path)
     while True:
+        time.sleep(1)
         client.write(b"helo\0")
         recv = client.read()
         print(f"rpc recv: {recv}")
-        time.sleep(1)
+        # time.sleep(1)
 
 
 def get_arg_parser() -> argparse.ArgumentParser:
