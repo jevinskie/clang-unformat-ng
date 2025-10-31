@@ -75,9 +75,9 @@ static int priv_main() {
         sandbox();
     } else if (!Serve.empty()) {
         // UnixSocket s{Serve.getValue()};
-        // fmt::print("UnixSocket: serve: {}\n", Serve);
         auto server      = RPCServer(Serve.getValue());
         auto stop_source = server.run();
+        fmt::print(stderr, "priv_main server running\n");
         // for (int i = 0; i < 4; ++i) {
         while (!stop_source.stop_requested()) {
             // fmt::print(stderr, "main loop inner\n");

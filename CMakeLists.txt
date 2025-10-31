@@ -18,7 +18,10 @@ endif ()
 add_compile_options(${JEV_COLOR_DIAGS})
 add_compile_options(-fsanitize=address)
 add_link_options(-fsanitize=address)
-
+# add_compile_options(-fsanitize=thread)
+# add_link_options(-fsanitize=thread)
+# add_compile_options(-fsanitize=undefined)
+# add_link_options(-fsanitize=undefined)
 
 add_subdirectory(3rdparty)
 add_subdirectory(lib)

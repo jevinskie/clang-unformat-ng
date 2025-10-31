@@ -44,6 +44,8 @@ std::string slurp_file_string(const std::string &path) {
 }
 
 UnixSocket::UnixSocket(const std::string &path) : _path{path} {
+    fmt::print(stderr, "UnixSocket(\"{}\")\n", _path);
+
     // setup path in address
     const auto psz     = _path.size();
     const auto psz_nul = psz + 1;
@@ -61,12 +63,17 @@ UnixSocket::UnixSocket(const std::string &path) : _path{path} {
 }
 
 UnixSocket::UnixSocket(int sock) : _fd{sock} {
+    fmt::print(stderr, "UnixSocket({})\n", _fd);
     socklen_t slen{};
-    getsockname(_fd, reinterpret_cast<struct sockaddr *>(&_addr), &slen);
+    if (getsockname(_fd, reinterpret_cast<struct sockaddr *>(&_addr), &slen)) {
+        ::perror("UnixSocket() getsockname");
+        std::exit(1);
+    }
     fmt::print(stderr, "from fd: {} slen: {}\n", _fd, slen);
 }
 
 UnixSocket::~UnixSocket() {
+    fmt::print(stderr, "~UnixSocket({})\n", _fd);
     if (_fd >= 0) {
         ::close(_fd);
     }

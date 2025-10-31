@@ -19,7 +19,9 @@ using namespace std::literals;
 namespace unformat {
 
 /// RPCServerConnection
-RPCServerConnection::RPCServerConnection(int sock) : _s{sock} {};
+RPCServerConnection::RPCServerConnection(int sock) : _s{sock} {
+    fmt::print(stderr, "RPCServerConnection({})\n", _s);
+}
 
 void RPCServerConnection::rpc_thread_func(std::stop_token stok) {
     std::stop_callback callback(stok, [this] {
@@ -48,6 +50,7 @@ std::stop_source RPCServerConnection::run() {
 }
 
 RPCServerConnection::~RPCServerConnection() {
+    fmt::print(stderr, "~RPCServerConnection({})\n", _s);
     _thread.get_stop_source().request_stop();
 }
 
@@ -56,13 +59,15 @@ size_t RPCServerConnection::hash() const noexcept {
 }
 
 /// RPCServer
-RPCServer::RPCServer(const std::string &socket_path) : _s{socket_path} {};
+RPCServer::RPCServer(const std::string &socket_path) : _s{socket_path} {
+    fmt::print(stderr, "RPCServer({})\n", _s);
+}
 
 void RPCServer::accept_thread_func(std::stop_token stok) {
-    // std::stop_callback callback(stok, [this] {
-    //     fmt::print(stderr, "RPCServer::accept_thread_func stop callback\n");
-    //     // _s.shutdown();
-    // });
+    std::stop_callback callback(stok, [this] {
+        fmt::print(stderr, "RPCServer::accept_thread_func stop callback\n");
+        // _s.shutdown();
+    });
 
     fmt::print(stderr, "RPCServer::accept_thread_func entry\n");
     _s.listen();
@@ -95,6 +100,7 @@ std::stop_source RPCServer::run() {
 }
 
 RPCServer::~RPCServer() {
+    fmt::print(stderr, "~RPCServer(\"{}\")\n", _s.path());
     _accept_thread.get_stop_source().request_stop();
 }
 
