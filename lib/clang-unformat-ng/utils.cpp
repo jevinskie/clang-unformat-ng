@@ -8,7 +8,6 @@
 #include <cstddef>
 #include <cstdint>
 #include <cstdio>
-#include <sys/_types/_ssize_t.h>
 #include <sys/fcntl.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
