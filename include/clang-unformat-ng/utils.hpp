@@ -29,7 +29,7 @@ public:
     void write(std::span<const uint8_t> buf);
     template <POD T> T read() {
         T res{};
-        read({static_cast<uint8_t *>(&res), sizeof(T)});
+        read({reinterpret_cast<uint8_t *>(&res), sizeof(T)});
         return res;
     }
     template <POD T> void write(const T &value) {
@@ -108,10 +108,14 @@ concept ReaderWriter = requires(T t) {
 };
 
 // UB-ahoy I presume
-template <ReaderWriter rw_t, typename sz_t = uint32_t> class LengthPrefixProtocol {
+template <ReaderWriter rw_t, typename sz_t = uint32_t> struct LengthPrefixProtocol {
     static std::vector<uint8_t> read(rw_t &rw) {
         const auto sz_val = rw.template read<sz_t>();
         return rw.read(sz_val);
+    }
+    static void write(rw_t &rw, std::span<const uint8_t> buf) {
+        rw.template write<sz_t>(buf.size_bytes());
+        rw.write(buf);
     }
     template <POD T> static T read(rw_t &rw) {
         constexpr auto sz = sizeof(T);
