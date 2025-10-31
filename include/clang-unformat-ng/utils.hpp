@@ -8,11 +8,8 @@
 #include <limits>
 #include <span>
 #include <string>
-#include <sys/_types/_socklen_t.h>
 #include <sys/socket.h>
 #include <sys/un.h>
-#include <tuple>
-#include <type_traits>
 #include <vector>
 
 namespace unformat {
