@@ -122,7 +122,7 @@ size_t UnixSocket::hash() const noexcept {
     return std::hash<decltype(_fd)>{}(_fd);
 }
 
-std::tuple<int, sockaddr_un, socklen_t> UnixSocket::accept() {
+UnixSocket::accept_res_t UnixSocket::accept() {
     socklen_t slen{sizeof(_addr)};
     struct sockaddr_un remote_addr{};
     int conn_fd = ::accept(_fd, reinterpret_cast<struct sockaddr *>(&remote_addr), &slen);

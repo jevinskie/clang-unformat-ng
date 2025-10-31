@@ -8,6 +8,7 @@
 #include <limits>
 #include <span>
 #include <string>
+#include <sys/_types/_socklen_t.h>
 #include <sys/socket.h>
 #include <sys/un.h>
 #include <tuple>
@@ -20,6 +21,11 @@ std::string slurp_file_string(const std::string &path);
 
 class UnixSocket {
 public:
+    struct accept_res_t {
+        int socket;
+        struct sockaddr_un addr;
+        socklen_t addr_len;
+    };
     UnixSocket(const std::string &path);
     UnixSocket(int sock);
     ~UnixSocket();
@@ -38,7 +44,7 @@ public:
 
     void connect();
     void listen();
-    std::tuple<int, sockaddr_un, socklen_t> accept();
+    accept_res_t accept();
     void shutdown();
 
     const std::string &path() const noexcept {

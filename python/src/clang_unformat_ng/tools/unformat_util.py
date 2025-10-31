@@ -5,16 +5,17 @@ import argparse
 from rich import print
 from rich.pretty import pprint
 
+import clang_unformat_ng.rpc as rpc
 import clang_unformat_ng.styleopts.data as sopts_data
 import clang_unformat_ng.styleopts.template as sopts_tmpl
 
 
-def do_dump_opts():
+def do_dump_opts() -> None:
     pprint(sopts_data.opts)
     # builtins.print(sopts_data.opts.values())
 
 
-def do_template(out_path: str):
+def do_template(out_path: str) -> None:
     print("doing template")
     # sia_opt = sopts_data.opts["SpacesInAngles"]
     # sip_opt = sopts_data.opts["SpacesInParens"]
@@ -29,7 +30,7 @@ def do_template(out_path: str):
         outf.write(r)
 
 
-def do_etc():
+def do_etc() -> None:
     print("doing etc")
     # opt_vals = opts.values()
 
@@ -40,10 +41,19 @@ def do_etc():
     # pprint(v)
 
 
+def do_rpc(sock_path: str) -> None:
+    client = rpc.RPCClient(sock_path)
+    while True:
+        client.write(b"helo\0")
+        recv = client.read()
+        print(f"rpc recv: {recv}")
+
+
 def get_arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="clang-unformat-ng-py-util")
     parser.add_argument("--dump-opts", action="store_true", help="Dump style opts")
     parser.add_argument("--template", action="store_true", help="Do template stuff")
+    parser.add_argument("--rpc", metavar="SOCKPATH", help="Connect to RPC server")
     parser.add_argument("--etc", action="store_true", help="Do other scratch work stuff")
     # parser.add_argument("-i", "--input", help="input path")
     parser.add_argument("-o", "--out", help="output path")
@@ -60,6 +70,8 @@ def real_main(args: argparse.Namespace):
         if not args.out:
             raise ValueError("need input and output")
         do_template(args.out)
+    elif args.rpc:
+        do_rpc(args.rpc)
 
 
 def main():
