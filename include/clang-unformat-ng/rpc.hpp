@@ -6,6 +6,7 @@
 #include "utils.hpp"
 
 #include <map>
+#include <memory>
 #include <stop_token>
 #include <string>
 #include <unordered_set>
@@ -70,6 +71,7 @@ public:
     ~RPCServerConnection();
 
     std::stop_source run();
+    void stop();
     const UnixSocket &socket() const;
 
     size_t hash() const noexcept;
@@ -110,13 +112,14 @@ public:
     ~RPCServer();
 
     std::stop_source run();
+    void stop();
 
 private:
     void accept_thread_func(std::stop_token stok);
 
     UnixSocket _s;
     std::jthread _accept_thread;
-    std::unordered_set<RPCServerConnection> _connections;
+    std::unordered_set<std::unique_ptr<RPCServerConnection>> _connections;
 };
 
 class RPCClient {
