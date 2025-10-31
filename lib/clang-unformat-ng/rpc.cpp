@@ -88,21 +88,16 @@ void RPCServer::accept_thread_func(std::stop_token stok) {
         fmt::print(stderr, "accept: new_sock: {} raddr: {} raddr_sz: {}\n", new_sock, remote_addr, remote_addr_len);
         auto conn = std::make_unique<RPCServerConnection>(new_sock);
         fmt::print(stderr, "RPCServer::accept_thread_func loop RPCServerConnection created\n");
-        // auto conn_stok = conn.run();
-        // std::stop_callback conn_cb(conn_stok.get_token(), [this] {
-        //     fmt::print(stderr, "RPCServer::accept_thread_func conn_cb callback\n");
-        //     // _connections.erase(conn);
-        // });
         auto [it, added] = _connections.emplace(std::move(conn));
-        (*it)->run();
         assert(added);
-        auto it2  = _connections.find(*it);
-        auto &obj = *it2;
-        // fmt::print(stderr, "_conn.emp() => foo: {} bar: {}\n", *foo, bar);
-
-        // auto conn_it = _connections.emplace(RPCServerConnection{new_sock});
-        // conn_it.first->run();
-        // _connections.emplace(RPCServerConnection{new_sock});
+        if (*it) {
+            (*it)->run();
+            auto conn_stok = (*it)->run();
+            std::stop_callback conn_cb(conn_stok.get_token(), [this] {
+                fmt::print(stderr, "RPCServer::accept_thread_func conn_cb callback\n");
+                // _connections.erase(conn);
+            });
+        }
     }
     fmt::print(stderr, "RPCServer::accept_thread_func exit\n");
 }
@@ -129,7 +124,6 @@ void RPCServer::stop() {
 RPCServer::~RPCServer() {
     fmt::print(stderr, "~RPCServer(\"{}\")\n", _s.path());
     stop();
-    _accept_thread.request_stop();
 }
 
 }; // namespace unformat
