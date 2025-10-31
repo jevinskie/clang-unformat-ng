@@ -83,23 +83,33 @@ public:
     UnixSocketServer(const std::string &path);
 };
 
+template <typename T>
+concept read_func_t = requires(T rf) {
+    { rf(std::span<uint8_t>{}) } -> std::same_as<void>;
+};
+
+template <typename T>
+concept write_func_t = requires(T wf) {
+    { wf(std::span<const uint8_t>{}) } -> std::same_as<void>;
+};
+
 // UB-ahoy I presume
-template <typename sz_t = uint32_t> class LengthPrefixProtocol {
-    template <typename T> static T read() {
+template <read_func_t read_f, write_func_t write_f, typename sz_t = uint32_t> class LengthPrefixProtocol {
+    template <POD T> static T read() {
         constexpr auto sz = sizeof(T);
         static_assert(sz <= std::numeric_limits<sz_t>::max(), "msg sz is >= UINT32_MAX");
         sz_t sz_val{};
-        read({static_cast<uint8_t *>(&sz_val), sizeof(sz_t)});
+        read_f({static_cast<uint8_t *>(&sz_val), sizeof(sz_t)});
         T res{};
-        read({static_cast<uint8_t *>(&res), sizeof(T)});
+        read_f({static_cast<uint8_t *>(&res), sizeof(T)});
         return res;
     }
-    template <typename T> static void write(const T &value) {
+    template <POD T> static void write(const T &value) {
         constexpr auto sz = sizeof(T);
         static_assert(sz <= std::numeric_limits<sz_t>::max(), "msg sz is >= UINT32_MAX");
         const sz_t sz_val{sz};
-        write({static_cast<uint8_t *>(std::remove_cv_t<sz_t>(&sz_val)), sizeof(sz_t)});
-        write({static_cast<uint8_t *>(&value), sz});
+        write_f({static_cast<uint8_t *>(std::remove_cv_t<sz_t>(&sz_val)), sizeof(sz_t)});
+        write_f({static_cast<uint8_t *>(&value), sz});
     }
 };
 

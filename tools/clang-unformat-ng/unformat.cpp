@@ -81,7 +81,7 @@ static int priv_main() {
         // for (int i = 0; i < 4; ++i) {
         while (!stop_source.stop_requested()) {
             // fmt::print(stderr, "main loop inner\n");
-            std::this_thread::sleep_for(std::chrono::seconds{1});
+            std::this_thread::sleep_for(std::chrono::milliseconds{50});
         }
         fmt::print(stderr, "main request stop\n");
         stop_source.request_stop();
