@@ -49,6 +49,10 @@ std::stop_source RPCServerConnection::run() {
     return _thread.get_stop_source();
 }
 
+const UnixSocket &RPCServerConnection::socket() const {
+    return _s;
+};
+
 RPCServerConnection::~RPCServerConnection() {
     fmt::print(stderr, "~RPCServerConnection({})\n", _s);
     _thread.get_stop_source().request_stop();
@@ -64,12 +68,13 @@ RPCServer::RPCServer(const std::string &socket_path) : _s{socket_path} {
 }
 
 void RPCServer::accept_thread_func(std::stop_token stok) {
+    fmt::print(stderr, "RPCServer::accept_thread_func entry\n");
+
     std::stop_callback callback(stok, [this] {
         fmt::print(stderr, "RPCServer::accept_thread_func stop callback\n");
         // _s.shutdown();
     });
 
-    fmt::print(stderr, "RPCServer::accept_thread_func entry\n");
     _s.listen();
     while (!stok.stop_requested()) {
         fmt::print(stderr, "RPCServer::accept_thread_func loop\n");
@@ -82,7 +87,9 @@ void RPCServer::accept_thread_func(std::stop_token stok) {
             fmt::print(stderr, "RPCServer::accept_thread_func conn_cb callback\n");
             // _connections.erase(conn);
         });
-        _connections.emplace(RPCServerConnection{new_sock});
+        auto [foo, bar] = _connections.emplace(std::move(conn));
+        // foo->run();
+        fmt::print(stderr, "_conn.emp() => foo: {} bar: {}\n", *foo, bar);
 
         // auto conn_it = _connections.emplace(RPCServerConnection{new_sock});
         // conn_it.first->run();

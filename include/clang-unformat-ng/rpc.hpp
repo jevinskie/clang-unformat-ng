@@ -1,11 +1,11 @@
 #pragma once
 
 #include "common.hpp"
+#include "fmt.hpp"
 #include "style.hpp"
 #include "utils.hpp"
 
 #include <map>
-#include <set>
 #include <stop_token>
 #include <string>
 #include <unordered_set>
@@ -69,6 +69,7 @@ public:
     ~RPCServerConnection();
 
     std::stop_source run();
+    const UnixSocket &socket() const;
 
     size_t hash() const noexcept;
     auto operator<=>(const RPCServerConnection &o) const {
@@ -92,10 +93,19 @@ template <> struct std::hash<unformat::RPCServerConnection> {
     }
 };
 
+template <> struct fmt::formatter<unformat::RPCServerConnection> : fmt::formatter<fmt::string_view> {
+    constexpr auto format(const unformat::RPCServerConnection &sc, fmt::format_context &ctx) const
+        -> fmt::format_context::iterator {
+        fmt::format_to(ctx.out(), "RPCServerConnection(.sock = {})", sc.socket());
+        return ctx.out();
+    }
+};
+
 namespace unformat {
 class RPCServer {
 public:
     RPCServer(const std::string &socket_path);
+    RPCServer(RPCServer &other) = delete;
     ~RPCServer();
 
     std::stop_source run();

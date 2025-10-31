@@ -69,7 +69,7 @@ UnixSocket::UnixSocket(int sock) : _fd{sock} {
         ::perror("UnixSocket() getsockname");
         std::exit(1);
     }
-    fmt::print(stderr, "from fd: {} slen: {}\n", _fd, slen);
+    fmt::print(stderr, "UnixSocket() from fd: {} slen: {}\n", _fd, slen);
 }
 
 UnixSocket::~UnixSocket() {

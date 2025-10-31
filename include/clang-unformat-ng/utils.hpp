@@ -28,6 +28,8 @@ public:
     };
     UnixSocket(const std::string &path);
     UnixSocket(int sock);
+    UnixSocket(UnixSocket &other)  = delete;
+    UnixSocket(UnixSocket &&other) = default;
     ~UnixSocket();
 
     std::vector<uint8_t> read(size_t size);

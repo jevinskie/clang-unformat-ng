@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import time
 
 from rich import print
 from rich.pretty import pprint
@@ -47,6 +48,7 @@ def do_rpc(sock_path: str) -> None:
         client.write(b"helo\0")
         recv = client.read()
         print(f"rpc recv: {recv}")
+        time.sleep(1)
 
 
 def get_arg_parser() -> argparse.ArgumentParser:
