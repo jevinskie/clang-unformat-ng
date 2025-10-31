@@ -27,6 +27,14 @@ public:
     std::vector<uint8_t> read(size_t size);
     void read(std::span<uint8_t> buf);
     void write(std::span<const uint8_t> buf);
+    template <POD T> T read() {
+        T res{};
+        read({static_cast<uint8_t *>(&res), sizeof(T)});
+        return res;
+    }
+    template <POD T> void write(const T &value) {
+        write({static_cast<uint8_t *>(&value), sizeof(T)});
+    }
 
     void connect();
     void listen();
@@ -93,23 +101,30 @@ concept write_func_t = requires(T wf) {
     { wf(std::span<const uint8_t>{}) } -> std::same_as<void>;
 };
 
+template <typename T>
+concept ReaderWriter = requires(T t) {
+    { t.read(std::span<uint8_t>{}) } -> std::same_as<void>;
+    { t.write(std::span<const uint8_t>{}) } -> std::same_as<void>;
+};
+
 // UB-ahoy I presume
-template <read_func_t read_f, write_func_t write_f, typename sz_t = uint32_t> class LengthPrefixProtocol {
-    template <POD T> static T read() {
-        constexpr auto sz = sizeof(T);
-        static_assert(sz <= std::numeric_limits<sz_t>::max(), "msg sz is >= UINT32_MAX");
-        sz_t sz_val{};
-        read_f({static_cast<uint8_t *>(&sz_val), sizeof(sz_t)});
-        T res{};
-        read_f({static_cast<uint8_t *>(&res), sizeof(T)});
-        return res;
+template <ReaderWriter rw_t, typename sz_t = uint32_t> class LengthPrefixProtocol {
+    static std::vector<uint8_t> read(rw_t &rw) {
+        const auto sz_val = rw.template read<sz_t>();
+        return rw.read(sz_val);
     }
-    template <POD T> static void write(const T &value) {
+    template <POD T> static T read(rw_t &rw) {
         constexpr auto sz = sizeof(T);
         static_assert(sz <= std::numeric_limits<sz_t>::max(), "msg sz is >= UINT32_MAX");
-        const sz_t sz_val{sz};
-        write_f({static_cast<uint8_t *>(std::remove_cv_t<sz_t>(&sz_val)), sizeof(sz_t)});
-        write_f({static_cast<uint8_t *>(&value), sz});
+        const auto sz_val = rw.template read<sz_t>();
+        assert(sz_val == sz);
+        return rw.template read<T>();
+    }
+    template <POD T> static void write(rw_t &rw, const T &value) {
+        constexpr auto sz = sizeof(T);
+        static_assert(sz <= std::numeric_limits<sz_t>::max(), "msg sz is >= UINT32_MAX");
+        rw.template write<sz_t>(sz);
+        rw.template write<T>(value);
     }
 };
 

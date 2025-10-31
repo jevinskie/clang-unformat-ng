@@ -69,6 +69,7 @@ public:
     ~RPCServerConnection();
 
     std::stop_source run();
+
     size_t hash() const noexcept;
     auto operator<=>(const RPCServerConnection &o) const {
         return _s <=> o._s;
@@ -82,6 +83,8 @@ private:
 
     UnixSocket _s;
     std::jthread _thread;
+
+    using lpp_t = LengthPrefixProtocol<UnixSocket>;
 };
 }; // namespace unformat
 
