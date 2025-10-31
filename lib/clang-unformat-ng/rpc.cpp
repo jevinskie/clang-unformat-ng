@@ -28,10 +28,7 @@ void RPCServerConnection::rpc_thread_func(std::stop_token stok) {
     fmt::print(stderr, "RPCServerConnection::rpc_thread_func entry\n");
     while (!stok.stop_requested()) {
         fmt::print(stderr, "RPCServerConnection::rpc_thread_func loop\n");
-        // std::this_thread::sleep_for(std::chrono::seconds{1});
-        // auto buf = _s.read(4);
-        // auto buf = LengthPrefixProtocol<UnixSocket>::read(_s);
-        auto buf = LengthPrefixProtocol<UnixSocket>::read(_s);
+        auto buf = LengthPrefixProtocol<>::read(_s);
         fmt::print(stderr, "buf sz: {}\n", buf.size());
         fmt::print(stderr, "buf cstr: {:s}\n", reinterpret_cast<char *>(buf.data()));
     }

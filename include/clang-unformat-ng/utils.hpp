@@ -108,23 +108,23 @@ concept ReaderWriter = requires(T t) {
 };
 
 // UB-ahoy I presume
-template <ReaderWriter rw_t, typename sz_t = uint32_t> struct LengthPrefixProtocol {
-    static std::vector<uint8_t> read(rw_t &rw) {
+template <typename sz_t = uint32_t> struct LengthPrefixProtocol {
+    static std::vector<uint8_t> read(ReaderWriter auto &rw) {
         const auto sz_val = rw.template read<sz_t>();
         return rw.read(sz_val);
     }
-    static void write(rw_t &rw, std::span<const uint8_t> buf) {
+    static void write(ReaderWriter auto &rw, std::span<const uint8_t> buf) {
         rw.template write<sz_t>(buf.size_bytes());
         rw.write(buf);
     }
-    template <POD T> static T read(rw_t &rw) {
+    template <POD T> static T read(ReaderWriter auto &rw) {
         constexpr auto sz = sizeof(T);
         static_assert(sz <= std::numeric_limits<sz_t>::max(), "msg sz is >= UINT32_MAX");
         const auto sz_val = rw.template read<sz_t>();
         assert(sz_val == sz);
         return rw.template read<T>();
     }
-    template <POD T> static void write(rw_t &rw, const T &value) {
+    template <POD T> static void write(ReaderWriter auto &rw, const T &value) {
         constexpr auto sz = sizeof(T);
         static_assert(sz <= std::numeric_limits<sz_t>::max(), "msg sz is >= UINT32_MAX");
         rw.template write<sz_t>(sz);
