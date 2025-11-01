@@ -21,7 +21,7 @@ namespace unformat {
 
 /// RPCServerConnection
 RPCServerConnection::RPCServerConnection(int sock) : _s{sock} {
-    fmt::print(stderr, "RPCServerConnection({})\n", _s);
+    fmt::print(stderr, "RPCServerConnection({})\n", "fixme");
 }
 
 void RPCServerConnection::rpc_thread_func(std::stop_token stok) {
@@ -60,7 +60,7 @@ const UnixSocket &RPCServerConnection::socket() const {
 };
 
 RPCServerConnection::~RPCServerConnection() {
-    fmt::print(stderr, "~RPCServerConnection({})\n", _s);
+    fmt::print(stderr, "~RPCServerConnection({})\n", "fixme");
     stop();
 }
 
@@ -70,7 +70,7 @@ size_t RPCServerConnection::hash() const noexcept {
 
 /// RPCServer
 RPCServer::RPCServer(const std::string &socket_path) : _s{socket_path} {
-    fmt::print(stderr, "RPCServer({})\n", _s);
+    fmt::print(stderr, "RPCServer({})\n", "fixme");
 }
 
 void RPCServer::accept_thread_func(std::stop_token stok) {
