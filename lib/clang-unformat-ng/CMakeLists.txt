@@ -80,6 +80,7 @@ set(LIBUNFMTNG_PUBLIC_LIBS
     stringzilla_header
     strong_type
     Boost::headers
+    effolkronium_random
 )
 
 set(LIBUNFMTNG_PRIVATE_LIBS
@@ -101,7 +102,6 @@ set(LIBUNFMTNG_PRIVATE_LIBS
     # etc
     reflectcpp
     enchantum::enchantum
-    effolkronium_random
     thread-pool
 )
 

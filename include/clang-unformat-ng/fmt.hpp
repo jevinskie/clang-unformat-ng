@@ -36,8 +36,7 @@ template <> struct fmt::formatter<clang::tooling::Replacements> : fmt::formatter
 template <> struct fmt::formatter<struct sockaddr_un> : fmt::formatter<fmt::string_view> {
     constexpr auto format(const struct sockaddr_un &a, fmt::format_context &ctx) const
         -> fmt::format_context::iterator {
-        fmt::format_to(ctx.out(), "Addr{{ .len = {:d}, .fam = {:d} .path = \"{:s}\" }}", a.sun_len, a.sun_family,
-                       a.sun_path);
+        fmt::format_to(ctx.out(), "Addr{{ .fam = {:d} .path = \"{:s}\" }}", a.sun_family, a.sun_path);
         return ctx.out();
     }
 };

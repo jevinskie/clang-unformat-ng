@@ -49,7 +49,7 @@ UnixSocket::UnixSocket(const std::string &path) : _path{path} {
     const auto psz     = _path.size();
     const auto psz_nul = psz + 1;
     assert(psz_nul <= sizeof(_addr.sun_path));
-    _addr = {.sun_len = static_cast<uint8_t>(offsetof(decltype(_addr), sun_path) + psz_nul), .sun_family = AF_UNIX};
+    _addr = {.sun_family = AF_UNIX};
     std::copy_n(_path.cbegin(), std::min(psz, sizeof(_addr.sun_path) - 1), _addr.sun_path);
     _addr.sun_path[psz_nul - 1] = '\0';
     fmt::print(stderr, "accept: remote_addr: {}\n", _addr);
@@ -79,7 +79,7 @@ UnixSocket::~UnixSocket() {
 }
 
 void UnixSocket::connect() {
-    if (::connect(_fd, reinterpret_cast<struct sockaddr *>(&_addr), _addr.sun_len)) {
+    if (::connect(_fd, reinterpret_cast<struct sockaddr *>(&_addr), sizeof(_addr))) {
         ::perror("connect");
         std::exit(1);
     }
@@ -136,8 +136,8 @@ UnixSocket::accept_res_t UnixSocket::accept() {
         ::perror("accept");
         std::exit(1);
     }
-    assert(slen == remote_addr.sun_len);
-    fmt::print(stderr, "accept: remote_addr: {} slen: {} ra.sun_len: {}\n", remote_addr, slen, remote_addr.sun_len);
+    assert(slen == SUN_LEN(&remote_addr));
+    fmt::print(stderr, "accept: remote_addr: {} slen: {}\n", remote_addr, slen);
     return {conn_fd, remote_addr, slen};
 }
 

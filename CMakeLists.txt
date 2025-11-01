@@ -15,6 +15,9 @@ if (${FORCE_COLORED_OUTPUT})
     endif ()
 endif ()
 
+# needed on linux to build exe w/ object library
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 add_compile_options(${JEV_COLOR_DIAGS})
 add_compile_options(-fsanitize=address)
 add_link_options(-fsanitize=address)
