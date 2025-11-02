@@ -34,7 +34,7 @@ struct Reflector<clang::format::FormatStyle> {
     return {
         {% for opt in opts -%}
         .{{opt.name}} = v.{{opt.name}},
-        {% endfor -%}
+        {% endfor %}
     };
   }
 };
