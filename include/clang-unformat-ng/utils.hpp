@@ -86,16 +86,6 @@ template <> struct fmt::formatter<unformat::UnixSocket> : fmt::formatter<fmt::st
 
 namespace unformat {
 
-class UnixSocketClient : UnixSocket {
-public:
-    UnixSocketClient(const std::string &path);
-};
-
-class UnixSocketServer : UnixSocket {
-public:
-    UnixSocketServer(const std::string &path);
-};
-
 template <typename T>
 concept read_func_t = requires(T rf) {
     { rf(std::span<uint8_t>{}) } -> std::same_as<void>;
