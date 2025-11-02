@@ -40,6 +40,10 @@ set(LIBUNFMTNG_SRC
     utils.cpp
 )
 
+if (UNFMTNG_DISABLE_LLVM)
+    list(APPEND LIBUNFMTNG_SRC llvm-stubs.cpp)
+endif()
+
 set(LIBUNFMTNG_HDR_STANDALONE
     clang-unformat-ng.hpp
 )

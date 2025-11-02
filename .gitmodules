@@ -25,3 +25,6 @@
 [submodule "3rdparty/strong_type"]
 	path = 3rdparty/strong_type
 	url = https://github.com/rollbear/strong_type
+[submodule "3rdparty/flags"]
+	path = 3rdparty/flags
+	url = https://github.com/sailormoon/flags

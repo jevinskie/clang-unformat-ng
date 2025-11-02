@@ -1,5 +1,8 @@
 #include <chrono>
+#include <cstdlib>
+#include <optional>
 #include <string>
+#include <string_view>
 #include <thread>
 #include <vector>
 
@@ -14,6 +17,7 @@
 #include <llvm/Support/InitLLVM.h>
 #else
 #include <clang-unformat-ng/llvm-stubs.hpp>
+#include <flags.h>
 #endif
 
 using namespace llvm;
@@ -21,11 +25,50 @@ using namespace llvm;
 namespace unformat {
 namespace priv {
 
+#ifndef UNFMTNG_DISABLE_LLVM
 static cl::OptionCategory UnformatOptionsCategory("unformat");
 static cl::list<std::string> FileNames(cl::Positional, cl::desc("[<file> ...]"), cl::cat(UnformatOptionsCategory));
 static cl::opt<std::string> Serve("s", cl::desc("Run in server mode"), cl::value_desc("domain socket path"),
                                   cl::cat(UnformatOptionsCategory));
 static cl::opt<bool> Etc("e", cl::desc("Run etc sketch code"), cl::cat(UnformatOptionsCategory));
+#else
+template <typename T> struct cli_opt_t : public std::optional<T> {
+    auto empty() const {
+        return !this->has_value();
+    }
+    auto hasValue() const {
+        return this->has_value();
+    }
+    auto getValue() {
+        if (!this->has_value()) {
+            std::abort();
+        }
+        return this->value();
+    }
+    auto operator*() {
+        return this->value();
+    }
+};
+
+static std::vector<std::string> FileNames;
+static cli_opt_t<std::string> Serve;
+static cli_opt_t<bool> Etc;
+
+static void priv_main_parse_args(int argc, char **argv) {
+    const flags::args args(argc, argv);
+    for (const auto pos_sv : args.positional()) {
+        FileNames.push_back(std::string(pos_sv));
+    }
+    if (auto s_opt = args.get<std::string_view>("s")) {
+        fmt::print(stderr, "*s_opt: {}\n", *s_opt);
+        Serve.emplace(*s_opt);
+    }
+    if (auto e_opt = args.get<bool>("e")) {
+        fmt::print(stderr, "*e_opt: {}\n", *e_opt);
+        Etc.emplace(*e_opt);
+    }
+}
+#endif
 
 static void sandbox() {
     std::vector<std::string> fnames(FileNames.begin(), FileNames.end());
@@ -96,10 +139,14 @@ static int priv_main() {
 } // namespace priv
 } // namespace unformat
 
-int main(int argc, const char **argv) {
+int main(int argc, char **argv) {
+#ifndef UNFMTNG_DISABLE_LLVM
     InitLLVM X(argc, argv);
     cl::HideUnrelatedOptions(unformat::priv::UnformatOptionsCategory);
     cl::ParseCommandLineOptions(argc, argv, "A tool to calculate \"optimal\" format styles from existing source.\n\n");
+#else
+    unformat::priv::priv_main_parse_args(argc, argv);
+#endif
     int res = unformat::priv::priv_main();
     return res;
 }

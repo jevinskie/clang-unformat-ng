@@ -1,13 +1,21 @@
 #pragma once
 
+#include <clang-unformat-ng/common.hpp>
+
+#ifndef UNFMTNG_DISABLE_LLVM
+#error llvm-stubs should be used with UNFMTNG_DISABLE_LLVM define
+#endif
+
 #include <span>
 #include <string>
 #include <string_view>
 #include <vector>
 
 namespace llvm {
+
 using StringRef                      = std::string_view;
 template <typename T> using ArrayRef = std::span<const T>;
+
 } // namespace llvm
 
 namespace clang {
@@ -19,8 +27,16 @@ struct Range {
 };
 
 struct Replacement {
+    unsigned int offset;
+    unsigned int length;
+    auto getOffset() const {
+        return offset;
+    }
+    auto getLength() const {
+        return length;
+    }
     std::string toString() const {
-        return {};
+        return "Replacement{.offset=" + std::to_string(offset) + ", .length=" + std::to_string(length) + "}";
     }
 };
 
@@ -146,7 +162,6 @@ FormatStyle getWebKitStyle();
 FormatStyle getGNUStyle();
 FormatStyle getMicrosoftStyle(FormatStyle::LanguageKind Language);
 FormatStyle getClangFormatStyle();
-FormatStyle getNoStyle();
 
 tooling::Replacements reformat(const FormatStyle &Style, llvm::StringRef Code, llvm::ArrayRef<tooling::Range> Ranges,
                                llvm::StringRef FileName = "<stdin>", FormattingAttemptStatus *Status = nullptr);

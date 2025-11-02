@@ -19,6 +19,7 @@ set(UNFMTNG_PRIVATE_LIBS
     clang-unformat-ng
     fmt::fmt
     reflectcpp
+    flags
 )
 if (NOT UNFMTNG_DISABLE_LLVM)
 list(APPEND UNFMTNG_PRIVATE_LIBS
