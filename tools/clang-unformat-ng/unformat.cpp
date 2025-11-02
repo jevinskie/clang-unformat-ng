@@ -120,7 +120,7 @@ static void sandbox() {
 static int priv_main() {
     if (Etc) {
         sandbox();
-    } else if (Serve.hasValue()) {
+    } else if (!Serve.empty()) {
         // UnixSocket s{Serve.getValue()};
         auto server      = RPCServer(Serve.getValue());
         auto stop_source = server.run();
