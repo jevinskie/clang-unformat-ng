@@ -33,9 +33,6 @@ static cl::opt<std::string> Serve("s", cl::desc("Run in server mode"), cl::value
 static cl::opt<bool> Etc("e", cl::desc("Run etc sketch code"), cl::cat(UnformatOptionsCategory));
 #else
 template <typename T> struct cli_opt_t : public std::optional<T> {
-    auto empty() const {
-        return !this->has_value();
-    }
     auto hasValue() const {
         return this->has_value();
     }
@@ -43,9 +40,6 @@ template <typename T> struct cli_opt_t : public std::optional<T> {
         if (!this->has_value()) {
             std::abort();
         }
-        return this->value();
-    }
-    auto operator*() {
         return this->value();
     }
 };
@@ -120,7 +114,7 @@ static void sandbox() {
 static int priv_main() {
     if (Etc) {
         sandbox();
-    } else if (!Serve.empty()) {
+    } else if (Serve.hasValue()) {
         // UnixSocket s{Serve.getValue()};
         auto server      = RPCServer(Serve.getValue());
         auto stop_source = server.run();
