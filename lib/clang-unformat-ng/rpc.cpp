@@ -126,4 +126,4 @@ RPCServer::~RPCServer() {
     stop();
 }
 
-}; // namespace unformat
+} // namespace unformat

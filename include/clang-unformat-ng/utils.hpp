@@ -68,7 +68,7 @@ private:
     struct sockaddr_un _addr;
     int _fd{-1};
 };
-}; // namespace unformat
+} // namespace unformat
 
 template <> struct std::hash<unformat::UnixSocket> {
     size_t operator()(const unformat::UnixSocket &s) const noexcept {
@@ -137,4 +137,4 @@ template <typename sz_t = uint32_t> struct LengthPrefixProtocol {
     }
 };
 
-}; // namespace unformat
+} // namespace unformat

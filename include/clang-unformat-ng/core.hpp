@@ -40,7 +40,7 @@ vfs_t construct_vfs(const std::vector<std::string> &fnames);
 file_replacements_t reformat_file_buf(const file_buf_t &fbuf, builtin_style_t style);
 vfs_replacements_t reformat_vfs(const vfs_t &vfs, builtin_style_t style);
 
-}; // namespace unformat
+} // namespace unformat
 
 template <> struct fmt::formatter<unformat::file_buf_t> : fmt::formatter<fmt::string_view> {
     constexpr auto format(const unformat::file_buf_t &b, fmt::format_context &ctx) const

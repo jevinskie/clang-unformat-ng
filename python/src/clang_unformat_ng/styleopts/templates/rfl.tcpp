@@ -1,3 +1,7 @@
+#pragma once
+
+#include <clang-unformat-ng/common.hpp>
+
 #ifndef UNFMTNG_DISABLE_LLVM
 #include <clang/Format/Format.h>
 {# #include <clang/Tooling/Inclusions/IncludeStyle.h> #}
@@ -21,27 +25,47 @@ namespace rfl {
 template <>
 struct Reflector<clang::format::FormatStyle> {
   struct ReflType {
+#ifndef UNFMTNG_DISABLE_LLVM
     {% for opt in opts -%}
     {% if opt.type.cxx_qual is not none %}{{opt.type.cxx_qual}}::{% endif %}{{opt.cxx_type}} {{opt.name}};
     {% endfor -%}
+#else
+    {% for opt in opts -%}
+    {% if opt.type.cxx_qual is none %}{{opt.cxx_type}} {{opt.name}};{% endif %}
+    {% endfor -%}
+#endif
   };
 
   static clang::format::FormatStyle to(const ReflType& v) noexcept {
     clang::format::FormatStyle s{};
+#ifndef UNFMTNG_DISABLE_LLVM
     {% for opt in opts -%}
     s.{{opt.name}} = v.{{opt.name}};
     {% endfor -%}
+#else
+    {% for opt in opts -%}
+    {% if opt.type.cxx_qual is none %}s.{{opt.name}} = v.{{opt.name}};{% endif %}
+    {% endfor -%}
+#endif
     return s;
   }
 
   static ReflType from(const clang::format::FormatStyle& v) {
+#ifndef UNFMTNG_DISABLE_LLVM
     return {
         {% for opt in opts -%}
         .{{opt.name}} = v.{{opt.name}},
         {% endfor %}
     };
+#else
+    return {
+        {% for opt in opts -%}
+        {% if opt.type.cxx_qual is none %}.{{opt.name}} = v.{{opt.name}},{% endif %}
+        {% endfor %}
+    };
+#endif
   }
 };
-};
+} // namespace rfl
 
 static_assert(((void)rfl::Reflector<clang::format::FormatStyle>{}, true), "materializable");

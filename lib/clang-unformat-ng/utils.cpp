@@ -141,4 +141,4 @@ UnixSocket::accept_res_t UnixSocket::accept() {
     return {conn_fd, remote_addr, slen};
 }
 
-}; // namespace unformat
+} // namespace unformat

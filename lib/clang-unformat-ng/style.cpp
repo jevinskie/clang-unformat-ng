@@ -79,4 +79,4 @@ std::string_view style_name(builtin_style_t style) {
     return enchantum::to_string(style);
 }
 
-}; // namespace unformat
+} // namespace unformat

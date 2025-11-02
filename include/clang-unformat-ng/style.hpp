@@ -71,7 +71,7 @@ struct Option {
     rfl::Rename<"enum", std::optional<Enum>> enum_;
     std::optional<NestedStruct> nested_struct;
 };
-}; // namespace style
+} // namespace style
 
 enum class builtin_style_t {
     none = 0,
@@ -90,4 +90,4 @@ const clang::format::FormatStyle &random_style();
 builtin_style_t random_style_enum();
 std::string_view style_name(builtin_style_t style);
 
-}; // namespace unformat
+} // namespace unformat

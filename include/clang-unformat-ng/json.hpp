@@ -4,4 +4,4 @@
 
 #include <clang-unformat-ng/style.hpp>
 
-namespace unformat {}; // namespace unformat
+namespace unformat {} // namespace unformat

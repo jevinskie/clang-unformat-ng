@@ -93,8 +93,8 @@ static int priv_main() {
     }
     return 0;
 }
-}; // namespace priv
-}; // namespace unformat
+} // namespace priv
+} // namespace unformat
 
 int main(int argc, const char **argv) {
     InitLLVM X(argc, argv);

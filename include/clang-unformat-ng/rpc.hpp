@@ -66,7 +66,7 @@ struct format_resp {
 using request_t  = rfl::TaggedUnion<"rpc_req", get_style_req, set_paths_req, set_style_req, format_req>;
 using response_t = rfl::TaggedUnion<"rpc_resp", get_style_resp, set_paths_resp, set_style_resp, format_resp>;
 
-}; // namespace rpc_cmd
+} // namespace rpc_cmd
 
 class RPCServerConnection {
 public:
@@ -93,7 +93,7 @@ private:
     UnixSocket _s;
     std::jthread _thread;
 };
-}; // namespace unformat
+} // namespace unformat
 
 template <> struct std::hash<unformat::RPCServerConnection> {
     size_t operator()(const unformat::RPCServerConnection &c) const noexcept {
@@ -138,4 +138,4 @@ private:
     UnixSocket _s;
 };
 
-}; // namespace unformat
+} // namespace unformat

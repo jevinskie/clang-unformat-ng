@@ -67,4 +67,4 @@ vfs_replacements_t reformat_vfs(const vfs_t &vfs, builtin_style_t style) {
     return res;
 }
 
-}; // namespace unformat
+} // namespace unformat
