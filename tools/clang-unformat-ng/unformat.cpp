@@ -3,14 +3,18 @@
 #include <thread>
 #include <vector>
 
-#include <llvm/Support/CommandLine.h>
-#include <llvm/Support/InitLLVM.h>
-
 #include <fmt/format.h>
 #include <rfl.hpp>
 #include <rfl/json.hpp>
 
 #include <clang-unformat-ng/clang-unformat-ng.hpp>
+
+#ifndef UNFMTNG_DISABLE_LLVM
+#include <llvm/Support/CommandLine.h>
+#include <llvm/Support/InitLLVM.h>
+#else
+#include <clang-unformat-ng/llvm-stubs.hpp>
+#endif
 
 using namespace llvm;
 

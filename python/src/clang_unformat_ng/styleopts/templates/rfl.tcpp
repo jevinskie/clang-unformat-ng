@@ -1,5 +1,9 @@
+#ifndef UNFMTNG_DISABLE_LLVM
 #include <clang/Format/Format.h>
 {# #include <clang/Tooling/Inclusions/IncludeStyle.h> #}
+#else
+#include <clang-unformat-ng/llvm-stubs.hpp>
+#endif
 
 #include <rfl.hpp>
 
