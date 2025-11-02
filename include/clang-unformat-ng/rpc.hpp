@@ -1,9 +1,10 @@
 #pragma once
 
-#include "common.hpp"
-#include "fmt.hpp"
-#include "style.hpp"
-#include "utils.hpp"
+#include <clang-unformat-ng/common.hpp>
+
+#include <clang-unformat-ng/fmt.hpp>
+#include <clang-unformat-ng/style.hpp>
+#include <clang-unformat-ng/utils.hpp>
 
 #include <map>
 #include <memory>
@@ -12,7 +13,11 @@
 #include <unordered_set>
 #include <vector>
 
+#ifndef UNFMTNG_DISABLE_LLVM
 #include <clang/Format/Format.h>
+#else
+#include <clang-unformat-ng/llvm-stubs.hpp>
+#endif
 
 #include <rfl.hpp>
 

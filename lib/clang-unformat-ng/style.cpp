@@ -1,17 +1,21 @@
-#include "clang-unformat-ng/style.hpp"
+#include <clang-unformat-ng/style.hpp>
 
 #include "common-internal.hpp"
 
 #include <array>
 #include <mutex>
 
-#include <clang/Format/Format.h>
-
 #include <effolkronium/random.hpp>
 #include <enchantum/enchantum.hpp>
 #include <fmt/format.h>
 #include <rfl.hpp>
 #include <rfl/json.hpp>
+
+#ifndef UNFMTNG_DISABLE_LLVM
+#include <clang/Format/Format.h>
+#else
+#include <clang-unformat-ng/llvm-stubs.hpp>
+#endif
 
 namespace unformat {
 

@@ -1,20 +1,25 @@
 #pragma once
 
-#include "common.hpp"
+#include <clang-unformat-ng/common.hpp>
 
-#include "fmt.hpp"
-#include "style.hpp"
+#include <clang-unformat-ng/fmt.hpp>
+#include <clang-unformat-ng/style.hpp>
 
 #include <map>
 #include <string>
 #include <vector>
 
-#include <clang/Tooling/Core/Replacement.h>
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 #include <fmt/ranges.h>
 #include <fmt/std.h>
+
+#ifndef UNFMTNG_DISABLE_LLVM
+#include <clang/Tooling/Core/Replacement.h>
 #include <llvm/Support/VirtualFileSystem.h>
+#else
+#include <clang-unformat-ng/llvm-stubs.hpp>
+#endif
 
 namespace unformat {
 

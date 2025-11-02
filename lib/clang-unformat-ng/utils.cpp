@@ -1,8 +1,8 @@
 #include "clang-unformat-ng/utils.hpp"
 
-#include "clang-unformat-ng/fmt.hpp"
-
 #include "common-internal.hpp"
+
+#include <clang-unformat-ng/fmt.hpp>
 
 #include <algorithm>
 #include <cstddef>

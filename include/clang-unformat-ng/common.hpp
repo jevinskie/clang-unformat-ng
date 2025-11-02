@@ -1,5 +1,7 @@
 #pragma once
 
+#include <clang-unformat-ng/config.hpp>
+
 #include <cassert>
 #include <cerrno>
 #include <cstdlib>

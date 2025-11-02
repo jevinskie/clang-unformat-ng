@@ -1,13 +1,14 @@
-#include "clang-unformat-ng/core.hpp"
+#include <clang-unformat-ng/core.hpp>
 
 #include "common-internal.hpp"
 
-#include "clang-unformat-ng/style.hpp"
-#include "clang-unformat-ng/utils.hpp"
+#include <clang-unformat-ng/style.hpp>
+#include <clang-unformat-ng/utils.hpp>
 
 #include <string>
 #include <vector>
 
+#ifndef UNFMTNG_DISABLE_LLVM
 #include <clang/Basic/FileManager.h>
 #include <clang/Basic/SourceLocation.h>
 #include <clang/Basic/SourceManager.h>
@@ -15,6 +16,9 @@
 #include <clang/Tooling/Core/Replacement.h>
 #include <llvm/Support/FileSystem.h>
 #include <llvm/Support/VirtualFileSystem.h>
+#else
+#include <clang-unformat-ng/llvm-stubs.hpp>
+#endif
 
 namespace unformat {
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "common.hpp"
+#include <clang-unformat-ng/common.hpp>
 
 #include <sys/un.h>
 
@@ -9,9 +9,11 @@
 #include <fmt/ranges.h>
 #include <fmt/std.h>
 
+#ifndef UNFMTNG_DISABLE_LLVM
 #include <clang/Tooling/Core/Replacement.h>
-
-static_assert(std::ranges::range<clang::tooling::Replacements>);
+#else
+#include <clang-unformat-ng/llvm-stubs.hpp>
+#endif
 
 template <> struct fmt::formatter<clang::tooling::Replacement> : fmt::formatter<fmt::string_view> {
     constexpr auto format(const clang::tooling::Replacement &r, fmt::format_context &ctx) const

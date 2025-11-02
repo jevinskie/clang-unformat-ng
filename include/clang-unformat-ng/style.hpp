@@ -1,6 +1,6 @@
 #pragma once
 
-#include "common.hpp"
+#include <clang-unformat-ng/common.hpp>
 
 #include <optional>
 #include <string>
@@ -8,8 +8,13 @@
 #include <variant>
 #include <vector>
 
-#include <clang/Format/Format.h>
 #include <rfl.hpp>
+
+#ifndef UNFMTNG_DISABLE_LLVM
+#include <clang/Format/Format.h>
+#else
+#include <clang-unformat-ng/llvm-stubs.hpp>
+#endif
 
 namespace unformat {
 

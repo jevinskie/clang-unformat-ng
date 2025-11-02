@@ -1,8 +1,8 @@
 #pragma once
 
-#include "common.hpp"
+#include <clang-unformat-ng/common.hpp>
 
-#include "fmt.hpp"
+#include <clang-unformat-ng/fmt.hpp>
 
 #include <cstdint>
 #include <limits>
