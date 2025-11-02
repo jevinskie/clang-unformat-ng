@@ -1,10 +1,12 @@
-find_package(LLVM REQUIRED CONFIG GLOBAL)
-message(STATUS "libunformat: Found LLVM ${LLVM_PACKAGE_VERSION}")
-message(STATUS "libunformat: Using LLVMConfig.cmake in ${LLVM_DIR}")
+if (NOT UNFMTNG_DISABLE_LLVM)
+    find_package(LLVM REQUIRED CONFIG GLOBAL)
+    message(STATUS "libunformat: Found LLVM ${LLVM_PACKAGE_VERSION}")
+    message(STATUS "libunformat: Using LLVMConfig.cmake in ${LLVM_DIR}")
 
-find_package(Clang REQUIRED CONFIG GLOBAL)
-message(STATUS "libunformat: Found Clang ${Clang_PACKAGE_VERSION}")
-message(STATUS "libunformat: Using ClangConfig.cmake in ${Clang_DIR}")
+    find_package(Clang REQUIRED CONFIG GLOBAL)
+    message(STATUS "libunformat: Found Clang ${Clang_PACKAGE_VERSION}")
+    message(STATUS "libunformat: Using ClangConfig.cmake in ${Clang_DIR}")
+endif()
 
 # FIXME: y u no global?
 set(Python_FIND_UNVERSIONED_NAMES FIRST)
@@ -13,19 +15,21 @@ find_package(Python COMPONENTS Interpreter Development REQUIRED GLOBAL)
 
 add_custom_command(
     OUTPUT
-        ${CMAKE_CURRENT_BINARY_DIR}/reflect.hpp
-    VERBATIM COMMAND ${CMAKE_COMMAND} -E env PYTHON_PATH=${PROJECT_SOURCE_DIR}/python/src --
-        ${Python_EXECUTABLE} -m clang_unformat_ng.tools.unformat_util --template -o ${CMAKE_CURRENT_BINARY_DIR}/reflect.hpp
+        ${UNFMTNG_BINARY_INCLUDE_DIR}/clang-unformat-ng/reflect.hpp
+    VERBATIM COMMAND ${CMAKE_COMMAND} -E env PYTHON_PATH=${UNFMTNG_MAIN_SRC_DIR}/python/src --
+        ${Python_EXECUTABLE} -m clang_unformat_ng.tools.unformat_util --template -o ${UNFMTNG_BINARY_INCLUDE_DIR}/clang-unformat-ng/reflect.hpp
     CODEGEN
     DEPENDS
         ${Python_EXECUTABLE}
-        ${PROJECT_SOURCE_DIR}/python/src/clang_unformat_ng/styleopts/__init__.py
-        ${PROJECT_SOURCE_DIR}/python/src/clang_unformat_ng/styleopts/data.py
-        ${PROJECT_SOURCE_DIR}/python/src/clang_unformat_ng/styleopts/template.py
-        ${PROJECT_SOURCE_DIR}/python/src/clang_unformat_ng/styleopts/templates/rfl.tcpp
-        ${PROJECT_SOURCE_DIR}/python/src/clang_unformat_ng/styleopts/types.py
+        ${UNFMTNG_MAIN_SRC_DIR}/python/src/clang_unformat_ng/styleopts/__init__.py
+        ${UNFMTNG_MAIN_SRC_DIR}/python/src/clang_unformat_ng/styleopts/data.py
+        ${UNFMTNG_MAIN_SRC_DIR}/python/src/clang_unformat_ng/styleopts/template.py
+        ${UNFMTNG_MAIN_SRC_DIR}/python/src/clang_unformat_ng/styleopts/templates/rfl.tcpp
+        ${UNFMTNG_MAIN_SRC_DIR}/python/src/clang_unformat_ng/styleopts/types.py
     # DEPENDS_EXPLICIT_ONLY
 )
+
+configure_file(config.hpp.in ${UNFMTNG_BINARY_INCLUDE_DIR}/clang-unformat-ng/config.hpp)
 
 set(LIBUNFMTNG_SRC
     core.cpp
@@ -46,12 +50,12 @@ set(LIBUNFMTNG_HDR_STANDALONE_PRIVATE
 
 set(LIBUNFMTNG_HDR)
 foreach(HDR ${LIBUNFMTNG_HDR_STANDALONE})
-    set(RELHDR "${CMAKE_CURRENT_SOURCE_DIR}/../../include/clang-unformat-ng/${HDR}")
+    set(RELHDR "${UNFMTNG_MAIN_INCLUDE_DIR}/clang-unformat-ng/${HDR}")
     if(NOT EXISTS ${RELHDR})
         set(RELHDR "${CMAKE_CURRENT_BINARY_DIR}/${HDR}")
     endif()
     if(NOT EXISTS ${RELHDR})
-        message(ERROR "LIBUNFMTNG_HDR_STANDALONE missing: ${HDR} ${RELHDR}")
+        message(STATUS "LIBUNFMTNG_HDR_STANDALONE missing: ${HDR} ${RELHDR}")
     endif()
     list(APPEND LIBUNFMTNG_HDR ${RELHDR})
 endforeach()
@@ -59,20 +63,23 @@ endforeach()
 foreach(HDR ${LIBUNFMTNG_HDR_STANDALONE_PRIVATE})
     set(RELHDR "${CMAKE_CURRENT_SOURCE_DIR}/${HDR}")
     if(NOT EXISTS ${RELHDR})
-        message(ERROR "LIBUNFMTNG_HDR_STANDALONE_PRIVATE missing: ${HDR} ${RELHDR}")
+        message(STATUS "LIBUNFMTNG_HDR_STANDALONE_PRIVATE missing: ${HDR} ${RELHDR}")
     endif()
     list(APPEND LIBUNFMTNG_HDR ${RELHDR})
 endforeach()
 
 foreach(SRC ${LIBUNFMTNG_SRC})
     get_filename_component(HDR_NAME ${SRC} NAME_WLE)
-    set(HDR "${CMAKE_CURRENT_SOURCE_DIR}/../../include/clang-unformat-ng/${HDR_NAME}.hpp")
+    set(HDR "${UNFMTNG_MAIN_INCLUDE_DIR}/clang-unformat-ng/${HDR_NAME}.hpp")
     if(EXISTS ${HDR})
         list(APPEND LIBUNFMTNG_HDR ${HDR})
     endif()
 endforeach()
 
-list(APPEND LIBUNFMTNG_HDR ${CMAKE_CURRENT_BINARY_DIR}/reflect.hpp)
+list(APPEND LIBUNFMTNG_HDR
+    ${UNFMTNG_BINARY_INCLUDE_DIR}/clang-unformat-ng/config.hpp
+    ${UNFMTNG_BINARY_INCLUDE_DIR}/clang-unformat-ng/reflect.hpp
+)
 
 
 set(LIBUNFMTNG_PUBLIC_LIBS
@@ -84,6 +91,13 @@ set(LIBUNFMTNG_PUBLIC_LIBS
 )
 
 set(LIBUNFMTNG_PRIVATE_LIBS
+    # etc
+    reflectcpp
+    enchantum::enchantum
+    thread-pool
+)
+if (NOT UNFMTNG_DISABLE_LLVM)
+list(APPEND LIBUNFMTNG_PRIVATE_LIBS
     # LLVM
     LLVMSupport
     # Clang
@@ -99,14 +113,11 @@ set(LIBUNFMTNG_PRIVATE_LIBS
     clangToolingCore
     clangToolingRefactoring
     clangTransformer
-    # etc
-    reflectcpp
-    enchantum::enchantum
-    thread-pool
 )
+endif()
 
 # LIBUNFMTNG_HDR added for IDE project generation
-add_library(clang-unformat-ng OBJECT ${LIBUNFMTNG_SRC} ${LIBUNFMTNG_HDR} ${CMAKE_CURRENT_BINARY_DIR})
+add_library(clang-unformat-ng OBJECT ${LIBUNFMTNG_SRC} ${LIBUNFMTNG_HDR})
 set_target_properties(clang-unformat-ng PROPERTIES PUBLIC_HEADER "${LIBUNFMTNG_HDR}")
 target_compile_options(clang-unformat-ng PRIVATE -fno-rtti)
 target_link_libraries(clang-unformat-ng
@@ -117,8 +128,8 @@ PRIVATE
 )
 
 target_include_directories(clang-unformat-ng
-    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../../include ${CMAKE_CURRENT_BINARY_DIR}
-    PRIVATE ${CLANG_INCLUDE_DIRS}
+    PUBLIC ${UNFMTNG_MAIN_INCLUDE_DIR} ${UNFMTNG_BINARY_INCLUDE_DIR}
+    PRIVATE ${LLVM_INCLUDE_DIRS} ${CLANG_INCLUDE_DIRS}
 )
 
 set_target_properties(clang-unformat-ng PROPERTIES

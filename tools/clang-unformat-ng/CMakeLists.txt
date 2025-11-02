@@ -1,10 +1,12 @@
-find_package(LLVM REQUIRED CONFIG GLOBAL)
-message(STATUS "unformat: Found LLVM ${LLVM_PACKAGE_VERSION}")
-message(STATUS "unformat: Using LLVMConfig.cmake in ${LLVM_DIR}")
+if (NOT UNFMTNG_DISABLE_LLVM)
+    find_package(LLVM REQUIRED CONFIG GLOBAL)
+    message(STATUS "unformat: Found LLVM ${LLVM_PACKAGE_VERSION}")
+    message(STATUS "unformat: Using LLVMConfig.cmake in ${LLVM_DIR}")
 
-find_package(Clang REQUIRED CONFIG GLOBAL)
-message(STATUS "unformat: Found Clang ${Clang_PACKAGE_VERSION}")
-message(STATUS "unformat: Using ClangConfig.cmake in ${Clang_DIR}")
+    find_package(Clang REQUIRED CONFIG GLOBAL)
+    message(STATUS "unformat: Found Clang ${Clang_PACKAGE_VERSION}")
+    message(STATUS "unformat: Using ClangConfig.cmake in ${Clang_DIR}")
+endif()
 
 set(UNFMTNG_SRC
     unformat.cpp
@@ -17,8 +19,12 @@ set(UNFMTNG_PRIVATE_LIBS
     clang-unformat-ng
     fmt::fmt
     reflectcpp
+)
+if (NOT UNFMTNG_DISABLE_LLVM)
+list(APPEND UNFMTNG_PRIVATE_LIBS
     LLVMSupport
 )
+endif()
 
 # UNFMTNG_HDR added for IDE project generation
 add_executable(unformat-ng ${UNFMTNG_SRC})
@@ -32,7 +38,7 @@ PRIVATE
 )
 
 target_include_directories(unformat-ng
-    PRIVATE ${CMAKE_CURRENT_BINARY_DIR} ${LLVM_INCLUDE_DIRS}
+    PRIVATE ${LLVM_INCLUDE_DIRS}
 )
 
 set_target_properties(unformat-ng PROPERTIES
