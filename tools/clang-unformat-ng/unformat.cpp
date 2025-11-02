@@ -44,8 +44,14 @@ template <typename T> struct cli_opt_t : public std::optional<T> {
     }
 };
 
+struct cli_str_opt_t : cli_opt_t<std::string> {
+    auto empty() const {
+        return !this->has_value() || this->value().empty();
+    }
+};
+
 static std::vector<std::string> FileNames;
-static cli_opt_t<std::string> Serve;
+static cli_str_opt_t Serve;
 static cli_opt_t<bool> Etc;
 
 static void priv_main_parse_args(int argc, char **argv) {
