@@ -19,9 +19,9 @@ std::string slurp_file_string(const std::string &path);
 class UnixSocket {
 public:
     struct accept_res_t {
-        int socket;
-        struct sockaddr_un addr;
-        socklen_t addr_len;
+        int socket{-1};
+        struct sockaddr_un addr{};
+        socklen_t addr_len{};
     };
     UnixSocket(const std::string &path);
     UnixSocket(int sock);
@@ -65,7 +65,7 @@ public:
 
 private:
     const std::string _path;
-    struct sockaddr_un _addr;
+    struct sockaddr_un _addr{};
     int _fd{-1};
 };
 } // namespace unformat
