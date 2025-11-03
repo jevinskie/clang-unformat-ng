@@ -129,16 +129,14 @@ size_t UnixSocket::hash() const noexcept {
 }
 
 UnixSocket::accept_res_t UnixSocket::accept() {
-    // socklen_t slen{sizeof(_addr)};
-    socklen_t slen{0xdeadbeefu};
     struct sockaddr_un remote_addr{};
+    socklen_t slen{sizeof(remote_addr)};
     int conn_fd = ::accept(_fd, reinterpret_cast<struct sockaddr *>(&remote_addr), &slen);
     if (conn_fd < 0) {
         ::perror("accept");
         std::exit(1);
     }
     fmt::print(stderr, "accept: remote_addr: {} slen: {} SUN_LEN: {}\n", remote_addr, slen, SUN_LEN(&remote_addr));
-    // assert(slen == SUN_LEN(&remote_addr));
     return {conn_fd, remote_addr, slen};
 }
 
