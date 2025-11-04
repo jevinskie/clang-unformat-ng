@@ -25,6 +25,14 @@ set(UNFMTNG_BINARY_INCLUDE_DIR ${UNFMTNG_BINARY_DIR}/include  )
 # needed on linux to build exe w/ object library
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+set(UNFMTNG_WARNING_FLAGS
+    -Wall
+    -Wextra
+    -Wpedantic
+    -Wno-unused-parameter
+    -Wno-missing-field-initializers
+)
+
 add_compile_options(${JEV_COLOR_DIAGS})
 
 if (APPLE)

@@ -33,7 +33,7 @@ std::string slurp_file_string(const std::string &path) {
         ::abort();
     }
     auto res = std::string(sz, '\0');
-    if (sz != ::read(fd, res.data(), res.size())) {
+    if (static_cast<ssize_t>(sz) != ::read(fd, res.data(), res.size())) {
         ::abort();
     }
     if (::close(fd)) {
@@ -105,7 +105,7 @@ void UnixSocket::shutdown() {
 }
 
 void UnixSocket::read(std::span<uint8_t> buf) {
-    if (::recv(_fd, buf.data(), static_cast<ssize_t>(buf.size_bytes()), 0) != buf.size_bytes()) {
+    if (::recv(_fd, buf.data(), static_cast<ssize_t>(buf.size_bytes()), 0) != static_cast<ssize_t>(buf.size_bytes())) {
         ::perror("recv");
         std::exit(1);
     }

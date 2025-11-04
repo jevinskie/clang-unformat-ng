@@ -30,7 +30,7 @@ endif()
 # UNFMTNG_HDR added for IDE project generation
 add_executable(unformat-ng ${UNFMTNG_SRC})
 
-target_compile_options(unformat-ng PRIVATE -fno-rtti)
+target_compile_options(unformat-ng PRIVATE ${UNFMTNG_WARNING_FLAGS})
 target_link_libraries(unformat-ng
 PUBLIC
     ${UNFMTNG_PUBLIC_LIBS}

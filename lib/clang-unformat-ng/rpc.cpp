@@ -79,6 +79,7 @@ void RPCServer::accept_thread_func(std::stop_token stok) {
     std::stop_callback callback(stok, [this] {
         fmt::print(stderr, "RPCServer::accept_thread_func stop callback\n");
         // _s.shutdown();
+        (void)this;
     });
 
     _s.listen();
@@ -96,6 +97,7 @@ void RPCServer::accept_thread_func(std::stop_token stok) {
             std::stop_callback conn_cb(conn_stok.get_token(), [this] {
                 fmt::print(stderr, "RPCServer::accept_thread_func conn_cb callback\n");
                 // _connections.erase(conn);
+                (void)this;
             });
         }
     }
