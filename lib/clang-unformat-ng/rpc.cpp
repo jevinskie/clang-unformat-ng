@@ -8,12 +8,10 @@
 #include <chrono>
 #include <functional>
 #include <memory>
-#include <stop_token>
 #include <sys/socket.h>
 #include <sys/un.h>
-#include <thread>
 
-#include <fmt/base.h>
+#include <fmt/format.h>
 
 using namespace std::literals;
 

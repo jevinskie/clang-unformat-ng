@@ -1,6 +1,7 @@
 #include <chrono>
 #include <cstdlib>
 #include <optional>
+#include <stop_token>
 #include <string>
 #include <string_view>
 #include <thread>
