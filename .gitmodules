@@ -28,3 +28,6 @@
 [submodule "3rdparty/flags"]
 	path = 3rdparty/flags
 	url = https://github.com/sailormoon/flags
+[submodule "3rdparty/leaf"]
+	path = 3rdparty/leaf
+	url = https://github.com/boostorg/leaf

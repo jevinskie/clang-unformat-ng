@@ -43,10 +43,10 @@ std::string slurp_file_string(const std::string &path) {
 }
 
 UnixSocket::UnixSocket(const std::string &path) : _path{path} {
-    // fmt::print(stderr, "UnixSocket(\"{}\")\n", _path);
+    fmt::print(stderr, "UnixSocket(\"{}\")\n", _path);
 
     // setup path in address
-    const auto psz     = path.size();
+    const auto psz     = _path.size();
     const auto psz_nul = psz + 1;
     assert(psz_nul <= sizeof(_addr.sun_path));
     _addr = {.sun_family = AF_UNIX};

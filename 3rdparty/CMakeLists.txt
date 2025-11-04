@@ -30,3 +30,5 @@ add_subdirectory(flags EXCLUDE_FROM_ALL)
 find_package(Boost REQUIRED COMPONENTS headers CONFIG GLOBAL)
 # TODO: figure out what this is supposed to do
 set_target_properties(Boost::headers PROPERTIES IMPORTED_GLOBAL ON)
+
+add_subdirectory(leaf EXCLUDE_FROM_ALL)

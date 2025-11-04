@@ -92,6 +92,7 @@ set(LIBUNFMTNG_PUBLIC_LIBS
     strong_type
     Boost::headers
     effolkronium_random
+    boost_leaf
 )
 
 set(LIBUNFMTNG_PRIVATE_LIBS
