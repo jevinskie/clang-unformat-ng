@@ -54,10 +54,17 @@ void RPCServerConnection::rpc_thread_func(std::stop_token stok) {
             return {};
         },
         [&](leaf::match<sock_et, sock_et::recv_dead, sock_et::send_dead>) -> void {
-            fmt::print(stderr, "RPCServerConnection::rpc_thread_func sock dead\n");
+            fmt::print(stderr, "RPCServerConnection::rpc_thread_func sock recv_dead\n");
             const auto sdr = _s.shutdown();
             if (!sdr) {
-                fmt::print(stderr, "RPCServerConnection::rpc_thread_func sock dead close fail\n");
+                fmt::print(stderr, "RPCServerConnection::rpc_thread_func sock recv_dead shutdown fail\n");
+            }
+        },
+        [&](leaf::match<sock_et, sock_et::send_dead>) -> void {
+            fmt::print(stderr, "RPCServerConnection::rpc_thread_func sock send_dead\n");
+            const auto sdr = _s.shutdown();
+            if (!sdr) {
+                fmt::print(stderr, "RPCServerConnection::rpc_thread_func sock send_dead shutdown fail\n");
             }
         },
         [](const sock_et &se, leaf::e_errno const *errn) -> void {
