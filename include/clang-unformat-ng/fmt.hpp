@@ -42,3 +42,11 @@ template <> struct fmt::formatter<struct sockaddr_un> : fmt::formatter<fmt::stri
         return ctx.out();
     }
 };
+
+template <> struct fmt::formatter<boost::leaf::e_errno> : fmt::formatter<fmt::string_view> {
+    constexpr auto format(const boost::leaf::e_errno &ee, fmt::format_context &ctx) const
+        -> fmt::format_context::iterator {
+        fmt::format_to(ctx.out(), "e_errno{{ .errno = {:d} }}", ee.value);
+        return ctx.out();
+    }
+};

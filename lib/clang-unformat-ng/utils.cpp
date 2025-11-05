@@ -1,4 +1,4 @@
-#include "clang-unformat-ng/utils.hpp"
+#include <clang-unformat-ng/utils.hpp>
 
 #include "common-internal.hpp"
 
@@ -15,6 +15,8 @@
 #include <sys/un.h>
 #include <unistd.h>
 #include <vector>
+
+#include <enchantum/enchantum.hpp>
 
 namespace unformat {
 

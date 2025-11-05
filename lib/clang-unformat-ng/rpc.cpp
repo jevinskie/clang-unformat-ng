@@ -11,6 +11,7 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 
+#include <enchantum/enchantum.hpp>
 #include <fmt/format.h>
 
 using namespace std::literals;
@@ -44,15 +45,18 @@ void RPCServerConnection::rpc_thread_func(std::stop_token stok) {
                 BOOST_LEAF_AUTO(in_msg, LengthPrefixProtocol<>::read_str(_s));
                 fmt::print(stderr, "in_msg sz: {} buf: \"{:s}\"\n", in_msg.size(), in_msg);
                 BOOST_LEAF_CHECK(LengthPrefixProtocol<>::write_str(_s, resp));
-                // BOOST_LEAF_AUTO(in_msg_buf, LengthPrefixProtocol<>::read(_s));
-                // fmt::print(stderr, "in_msg_buf sz: {}\n", in_msg_buf.size());
-                // fmt::print(stderr, "in_msg_buf cstr: {:s}\n", reinterpret_cast<char *>(in_msg_buf.data()));
-                // BOOST_LEAF_CHECK(
-                //     LengthPrefixProtocol<>::write(_s, {reinterpret_cast<const uint8_t *>(resp.data()),
-                //     resp.size()}));
             }
             fmt::print(stderr, "RPCServerConnection::rpc_thread_func exit\n");
             return {};
+        },
+        [](const sock_et &se, leaf::e_errno const *errn) {
+            if (errn) {
+                fmt::print(stderr, "RPCServerConnection::rpc_thread_func sock error: {} errno: nil\n",
+                           enchantum::to_string(se));
+            } else {
+                fmt::print(stderr, "RPCServerConnection::rpc_thread_func sock error: {} errno: {}\n",
+                           enchantum::to_string(se), *errn);
+            }
         },
         []() -> void {
             fmt::print(stderr, "RPCServerConnection::rpc_thread_func other error\n");
