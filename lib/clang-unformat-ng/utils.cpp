@@ -1,5 +1,6 @@
 #include <clang-unformat-ng/utils.hpp>
 
+#include "boost/leaf/error.hpp"
 #include "common-internal.hpp"
 
 #include <clang-unformat-ng/fmt.hpp>
@@ -8,6 +9,8 @@
 #include <cstddef>
 #include <cstdint>
 #include <cstdio>
+#include <cstdlib>
+#include <sys/_types/_ssize_t.h>
 #include <sys/fcntl.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
@@ -111,10 +114,17 @@ result<void> UnixSocket::shutdown() {
 }
 
 result<void> UnixSocket::read(std::span<uint8_t> buf) {
-    if (::recv(_fd, buf.data(), static_cast<ssize_t>(buf.size_bytes()), 0) != static_cast<ssize_t>(buf.size_bytes())) {
+    const auto ssz = static_cast<ssize_t>(buf.size_bytes());
+    const auto res = ::recv(_fd, buf.data(), ssz, 0);
+    if (res == ssz) {
+        return {};
+    } else if (res == 0) {
+        return leaf::new_error(sock_et::recv_dead);
+    } else if (res == -1) {
         return leaf::new_error(sock_et::recv, leaf::e_errno{errno});
+    } else {
+        return leaf::new_error(sock_et::recv_sz);
     }
-    return {};
 }
 
 result<std::vector<uint8_t>> UnixSocket::read(size_t size) {
@@ -124,10 +134,17 @@ result<std::vector<uint8_t>> UnixSocket::read(size_t size) {
 }
 
 result<void> UnixSocket::write(std::span<const uint8_t> buf) {
-    if (static_cast<size_t>(::send(_fd, buf.data(), buf.size_bytes(), 0)) != buf.size_bytes()) {
+    const auto ssz = static_cast<ssize_t>(buf.size_bytes());
+    const auto res = ::send(_fd, buf.data(), ssz, 0);
+    if (res == ssz) {
+        return {};
+    } else if (res == 0) {
+        return leaf::new_error(sock_et::send_dead);
+    } else if (res == -1) {
         return leaf::new_error(sock_et::send, leaf::e_errno{errno});
+    } else {
+        return leaf::new_error(sock_et::send_sz);
     }
-    return {};
 }
 
 result<std::string> UnixSocket::read_str(size_t size) {

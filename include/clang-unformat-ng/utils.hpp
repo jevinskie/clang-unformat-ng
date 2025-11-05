@@ -31,7 +31,11 @@ enum class sock_et {
     accept,
     connect,
     recv,
+    recv_sz,
+    recv_dead,
     send,
+    send_sz,
+    send_dead,
     shutdown,
 };
 

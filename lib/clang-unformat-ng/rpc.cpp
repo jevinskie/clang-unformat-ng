@@ -30,7 +30,8 @@ void RPCServerConnection::rpc_thread_func(std::stop_token stok) {
                 fmt::print(stderr, "RPCServerConnection::rpc_thread_func stop callback\n");
                 leaf::try_handle_all(
                     [&]() -> result<void> {
-                        BOOST_LEAF_CHECK(_s.shutdown());
+                        // BOOST_LEAF_CHECK(_s.shutdown());
+                        (void)this;
                         return {};
                     },
                     []() -> void {
@@ -50,7 +51,7 @@ void RPCServerConnection::rpc_thread_func(std::stop_token stok) {
             return {};
         },
         [](const sock_et &se, leaf::e_errno const *errn) {
-            if (errn) {
+            if (!errn) {
                 fmt::print(stderr, "RPCServerConnection::rpc_thread_func sock error: {} errno: nil\n",
                            enchantum::to_string(se));
             } else {
