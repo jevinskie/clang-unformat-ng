@@ -24,21 +24,20 @@ RPCServerConnection::RPCServerConnection(int sock) : _s{sock} {
 }
 
 void RPCServerConnection::rpc_thread_func(std::stop_token stok) {
+    std::stop_callback callback(stok, [this] {
+        fmt::print(stderr, "RPCServerConnection::rpc_thread_func stop callback\n");
+        leaf::try_handle_all(
+            [&]() -> result<void> {
+                BOOST_LEAF_CHECK(_s.shutdown());
+                // (void)this;
+                return {};
+            },
+            []() -> void {
+                fmt::print(stderr, "RPCServerConnection::rpc_thread_func stop CB error\n");
+            });
+    });
     leaf::try_handle_all(
         [&]() -> result<void> {
-            std::stop_callback callback(stok, [this] {
-                fmt::print(stderr, "RPCServerConnection::rpc_thread_func stop callback\n");
-                leaf::try_handle_all(
-                    [&]() -> result<void> {
-                        // BOOST_LEAF_CHECK(_s.shutdown());
-                        (void)this;
-                        return {};
-                    },
-                    []() -> void {
-                        fmt::print(stderr, "RPCServerConnection::rpc_thread_func stop CB error\n");
-                    });
-            });
-
             fmt::print(stderr, "RPCServerConnection::rpc_thread_func entry\n");
             while (!stok.stop_requested()) {
                 fmt::print(stderr, "RPCServerConnection::rpc_thread_func loop\n");

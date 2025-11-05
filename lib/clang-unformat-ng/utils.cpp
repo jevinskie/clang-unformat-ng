@@ -1,6 +1,5 @@
 #include <clang-unformat-ng/utils.hpp>
 
-#include "boost/leaf/error.hpp"
 #include "common-internal.hpp"
 
 #include <clang-unformat-ng/fmt.hpp>
