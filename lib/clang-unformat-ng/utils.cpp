@@ -18,26 +18,28 @@
 
 namespace unformat {
 
-std::string slurp_file_string(const std::string &path) {
+result<std::string> slurp_file_string(const std::string &path) {
     const auto fd = ::open(path.c_str(), O_RDONLY);
     if (fd < 0) {
-        ::abort();
+        return leaf::new_error(slurp_et::open, leaf::e_errno{errno});
     }
     struct stat st;
     if (::fstat(fd, &st)) {
-        ::abort();
+        return leaf::new_error(slurp_et::stat, leaf::e_errno{errno});
     }
     const auto sz = static_cast<size_t>(st.st_size);
     if (!sz) {
-        ::close(fd);
-        ::abort();
+        if (::close(fd)) {
+            return leaf::new_error(slurp_et::close, leaf::e_errno{errno});
+        }
+        return {};
     }
     auto res = std::string(sz, '\0');
     if (static_cast<ssize_t>(sz) != ::read(fd, res.data(), res.size())) {
-        ::abort();
+        return leaf::new_error(slurp_et::read, leaf::e_errno{errno});
     }
     if (::close(fd)) {
-        ::abort();
+        return leaf::new_error(slurp_et::close, leaf::e_errno{errno});
     }
     return res;
 }
@@ -78,14 +80,15 @@ UnixSocket::~UnixSocket() {
     }
 }
 
-void UnixSocket::connect() {
+result<void> UnixSocket::connect() {
     if (::connect(_fd, reinterpret_cast<struct sockaddr *>(&_addr), sizeof(_addr))) {
         ::perror("connect");
         std::exit(1);
     }
+    return {};
 }
 
-void UnixSocket::listen() {
+result<void> UnixSocket::listen() {
     ::unlink(_path.c_str());
     if (::bind(_fd, reinterpret_cast<struct sockaddr *>(&_addr), sizeof(_addr))) {
         ::perror("listen - bind");
@@ -95,40 +98,51 @@ void UnixSocket::listen() {
         ::perror("listen - listen");
         std::exit(1);
     }
+    return {};
 }
 
-void UnixSocket::shutdown() {
+result<void> UnixSocket::shutdown() {
     if (::shutdown(_fd, SHUT_RDWR)) {
-        ::perror("shutdown");
-        std::exit(1);
+        return leaf::new_error(sock_et::shutdown, leaf::e_errno{errno});
     }
+    return {};
 }
 
-void UnixSocket::read(std::span<uint8_t> buf) {
+result<void> UnixSocket::read(std::span<uint8_t> buf) {
     if (::recv(_fd, buf.data(), static_cast<ssize_t>(buf.size_bytes()), 0) != static_cast<ssize_t>(buf.size_bytes())) {
-        ::perror("recv");
-        std::exit(1);
+        return leaf::new_error(sock_et::recv, leaf::e_errno{errno});
     }
+    return {};
 }
 
-std::vector<uint8_t> UnixSocket::read(size_t size) {
+result<std::vector<uint8_t>> UnixSocket::read(size_t size) {
     std::vector<uint8_t> buf(size);
-    read(buf);
+    BOOST_LEAF_CHECK(read(buf));
     return buf;
 }
 
-void UnixSocket::write(std::span<const uint8_t> buf) {
+result<void> UnixSocket::write(std::span<const uint8_t> buf) {
     if (static_cast<size_t>(::send(_fd, buf.data(), buf.size_bytes(), 0)) != buf.size_bytes()) {
-        ::perror("send");
-        std::exit(1);
+        return leaf::new_error(sock_et::send, leaf::e_errno{errno});
     }
+    return {};
+}
+
+result<std::string> UnixSocket::read_str(size_t size) {
+    std::string buf(size, '\0');
+    BOOST_LEAF_CHECK(read({reinterpret_cast<uint8_t *>(buf.data()), buf.size()}));
+    return buf;
+}
+
+result<void> UnixSocket::write_str(const std::string_view str) {
+    return write({reinterpret_cast<const uint8_t *>(str.data()), str.size()});
 }
 
 size_t UnixSocket::hash() const noexcept {
     return std::hash<decltype(_fd)>{}(_fd);
 }
 
-UnixSocket::accept_res_t UnixSocket::accept() {
+result<UnixSocket::accept_res_t> UnixSocket::accept() {
     struct sockaddr_un remote_addr{};
     socklen_t slen{sizeof(remote_addr)};
     int conn_fd = ::accept(_fd, reinterpret_cast<struct sockaddr *>(&remote_addr), &slen);

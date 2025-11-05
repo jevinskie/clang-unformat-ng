@@ -23,21 +23,40 @@ RPCServerConnection::RPCServerConnection(int sock) : _s{sock} {
 }
 
 void RPCServerConnection::rpc_thread_func(std::stop_token stok) {
-    std::stop_callback callback(stok, [this] {
-        fmt::print(stderr, "RPCServerConnection::rpc_thread_func stop callback\n");
-        _s.shutdown();
-    });
+    leaf::try_handle_all(
+        [&]() -> result<void> {
+            std::stop_callback callback(stok, [this] {
+                fmt::print(stderr, "RPCServerConnection::rpc_thread_func stop callback\n");
+                leaf::try_handle_all(
+                    [&]() -> result<void> {
+                        BOOST_LEAF_CHECK(_s.shutdown());
+                        return {};
+                    },
+                    []() -> void {
+                        fmt::print(stderr, "RPCServerConnection::rpc_thread_func stop CB error\n");
+                    });
+            });
 
-    fmt::print(stderr, "RPCServerConnection::rpc_thread_func entry\n");
-    while (!stok.stop_requested()) {
-        fmt::print(stderr, "RPCServerConnection::rpc_thread_func loop\n");
-        auto in_msg_buf = LengthPrefixProtocol<>::read(_s);
-        fmt::print(stderr, "in_msg_buf sz: {}\n", in_msg_buf.size());
-        fmt::print(stderr, "in_msg_buf cstr: {:s}\n", reinterpret_cast<char *>(in_msg_buf.data()));
-        const auto resp = "{\"resp\": 200}"s;
-        LengthPrefixProtocol<>::write(_s, {reinterpret_cast<const uint8_t *>(resp.data()), resp.size()});
-    }
-    fmt::print(stderr, "RPCServerConnection::rpc_thread_func exit\n");
+            fmt::print(stderr, "RPCServerConnection::rpc_thread_func entry\n");
+            while (!stok.stop_requested()) {
+                fmt::print(stderr, "RPCServerConnection::rpc_thread_func loop\n");
+                const auto resp = "{\"resp\": 200}"s;
+                BOOST_LEAF_AUTO(in_msg, LengthPrefixProtocol<>::read_str(_s));
+                fmt::print(stderr, "in_msg sz: {} buf: \"{:s}\"\n", in_msg.size(), in_msg);
+                BOOST_LEAF_CHECK(LengthPrefixProtocol<>::write_str(_s, resp));
+                // BOOST_LEAF_AUTO(in_msg_buf, LengthPrefixProtocol<>::read(_s));
+                // fmt::print(stderr, "in_msg_buf sz: {}\n", in_msg_buf.size());
+                // fmt::print(stderr, "in_msg_buf cstr: {:s}\n", reinterpret_cast<char *>(in_msg_buf.data()));
+                // BOOST_LEAF_CHECK(
+                //     LengthPrefixProtocol<>::write(_s, {reinterpret_cast<const uint8_t *>(resp.data()),
+                //     resp.size()}));
+            }
+            fmt::print(stderr, "RPCServerConnection::rpc_thread_func exit\n");
+            return {};
+        },
+        []() -> void {
+            fmt::print(stderr, "RPCServerConnection::rpc_thread_func other error\n");
+        });
 }
 
 std::stop_source RPCServerConnection::run() {
@@ -72,34 +91,43 @@ RPCServer::RPCServer(const std::string &socket_path) : _s{socket_path} {
 }
 
 void RPCServer::accept_thread_func(std::stop_token stok) {
-    fmt::print(stderr, "RPCServer::accept_thread_func entry\n");
+    leaf::try_handle_all(
+        [&]() -> result<void> {
+            fmt::print(stderr, "RPCServer::accept_thread_func entry\n");
 
-    std::stop_callback callback(stok, [this] {
-        fmt::print(stderr, "RPCServer::accept_thread_func stop callback\n");
-        // _s.shutdown();
-        (void)this;
-    });
-
-    _s.listen();
-    while (!stok.stop_requested()) {
-        fmt::print(stderr, "RPCServer::accept_thread_func loop\n");
-        auto [new_sock, remote_addr, remote_addr_len] = _s.accept();
-        fmt::print(stderr, "accept: new_sock: {} raddr: {} raddr_sz: {}\n", new_sock, remote_addr, remote_addr_len);
-        auto conn = std::make_unique<RPCServerConnection>(new_sock);
-        fmt::print(stderr, "RPCServer::accept_thread_func loop RPCServerConnection created\n");
-        auto [it, added] = _connections.emplace(std::move(conn));
-        assert(added);
-        if (*it) {
-            (*it)->run();
-            auto conn_stok = (*it)->run();
-            std::stop_callback conn_cb(conn_stok.get_token(), [this] {
-                fmt::print(stderr, "RPCServer::accept_thread_func conn_cb callback\n");
-                // _connections.erase(conn);
+            std::stop_callback callback(stok, [this] {
+                fmt::print(stderr, "RPCServer::accept_thread_func stop callback\n");
+                // _s.shutdown();
                 (void)this;
             });
-        }
-    }
-    fmt::print(stderr, "RPCServer::accept_thread_func exit\n");
+
+            BOOST_LEAF_CHECK(_s.listen());
+            while (!stok.stop_requested()) {
+                fmt::print(stderr, "RPCServer::accept_thread_func loop\n");
+                BOOST_LEAF_AUTO(accept_res, _s.accept());
+                auto [new_sock, remote_addr, remote_addr_len] = accept_res;
+                fmt::print(stderr, "accept: new_sock: {} raddr: {} raddr_sz: {}\n", new_sock, remote_addr,
+                           remote_addr_len);
+                auto conn = std::make_unique<RPCServerConnection>(new_sock);
+                fmt::print(stderr, "RPCServer::accept_thread_func loop RPCServerConnection created\n");
+                auto [it, added] = _connections.emplace(std::move(conn));
+                assert(added);
+                if (*it) {
+                    (*it)->run();
+                    auto conn_stok = (*it)->run();
+                    std::stop_callback conn_cb(conn_stok.get_token(), [this] {
+                        fmt::print(stderr, "RPCServer::accept_thread_func conn_cb callback\n");
+                        // _connections.erase(conn);
+                        (void)this;
+                    });
+                }
+            }
+            fmt::print(stderr, "RPCServer::accept_thread_func exit\n");
+            return {};
+        },
+        []() -> void {
+            fmt::print(stderr, "RPCServer::accept_thread_func other error\n");
+        });
 }
 
 std::stop_source RPCServer::run() {

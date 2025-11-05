@@ -25,10 +25,10 @@ namespace unformat {
 using namespace llvm;
 using namespace clang;
 
-vfs_t construct_vfs(const std::vector<string_t> &fnames) {
+result<vfs_t> construct_vfs(const std::vector<string_t> &fnames) {
     vfs_t fs;
     for (const auto &fname : fnames) {
-        const auto src = slurp_file_string(fname);
+        BOOST_LEAF_ASSIGN(const auto src, slurp_file_string(fname));
         fs.insert_or_assign(fname, file_buf_t{fname, src});
     }
     return fs;

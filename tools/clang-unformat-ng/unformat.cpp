@@ -71,12 +71,12 @@ static void priv_main_parse_args(int argc, char **argv) {
 }
 #endif
 
-static void sandbox() {
+static result<void> sandbox() {
     std::vector<std::string> fnames(FileNames.begin(), FileNames.end());
     for (const auto &f : fnames) {
         fmt::print("file: {}\n", f);
     }
-    auto vfs = construct_vfs(fnames);
+    BOOST_LEAF_AUTO(vfs, construct_vfs(fnames));
     fmt::print("vfs:\n{}\n", vfs);
     const auto style = random_style_enum();
     fmt::print("style: {}\n", style_name(style));
@@ -116,25 +116,33 @@ static void sandbox() {
     const auto h_resp = rpc_cmd::get_style_resp{true, "{\"como esta\"}"};
     fmt::print("h_resp: json: {}\n", rfl::json::write(h_resp));
     fmt::print("var_resp<h_resp>: json: {}\n", rfl::json::write<rfl::AddTagsToVariants>(rpc_cmd::response_t{h_resp}));
+    return {};
 }
 
 static int priv_main() {
-    if (Etc) {
-        sandbox();
-    } else if (!Serve.empty()) {
-        // UnixSocket s{Serve.getValue()};
-        auto server      = RPCServer(Serve.getValue());
-        auto stop_source = server.run();
-        fmt::print(stderr, "priv_main server running\n");
-        // for (int i = 0; i < 4; ++i) {
-        while (!stop_source.stop_requested()) {
-            // fmt::print(stderr, "main loop inner\n");
-            std::this_thread::sleep_for(std::chrono::milliseconds{50});
-        }
-        fmt::print(stderr, "main request stop\n");
-        stop_source.request_stop();
-        fmt::print(stderr, "main end serve\n");
-    }
+    leaf::try_handle_all(
+        []() -> leaf::result<void> {
+            if (Etc) {
+                (void)BOOST_LEAF_CHECK(sandbox());
+            } else if (!Serve.empty()) {
+                // UnixSocket s{Serve.getValue()};
+                auto server      = RPCServer(Serve.getValue());
+                auto stop_source = server.run();
+                fmt::print(stderr, "priv_main server running\n");
+                // for (int i = 0; i < 4; ++i) {
+                while (!stop_source.stop_requested()) {
+                    // fmt::print(stderr, "main loop inner\n");
+                    std::this_thread::sleep_for(std::chrono::milliseconds{50});
+                }
+                fmt::print(stderr, "main request stop\n");
+                stop_source.request_stop();
+                fmt::print(stderr, "main end serve\n");
+            }
+            return {};
+        },
+        []() -> void {
+            fmt::print(stderr, "unformat-ng priv_main other error\n");
+        });
     return 0;
 }
 } // namespace priv

@@ -31,6 +31,7 @@ set(UNFMTNG_WARNING_FLAGS
     -Wpedantic
     -Wno-unused-parameter
     -Wno-missing-field-initializers
+    -Wno-gnu-statement-expression-from-macro-expansion
 )
 
 add_compile_options(${JEV_COLOR_DIAGS})

@@ -36,7 +36,7 @@ struct file_replacements_t {
 using vfs_t              = std::map<std::string, file_buf_t>;
 using vfs_replacements_t = std::map<std::string, file_replacements_t>;
 
-vfs_t construct_vfs(const std::vector<std::string> &fnames);
+result<vfs_t> construct_vfs(const std::vector<std::string> &fnames);
 file_replacements_t reformat_file_buf(const file_buf_t &fbuf, builtin_style_t style);
 vfs_replacements_t reformat_vfs(const vfs_t &vfs, builtin_style_t style);
 

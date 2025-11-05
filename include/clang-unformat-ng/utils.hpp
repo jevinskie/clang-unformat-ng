@@ -8,13 +8,32 @@
 #include <limits>
 #include <span>
 #include <string>
+#include <string_view>
 #include <sys/socket.h>
 #include <sys/un.h>
 #include <vector>
 
 namespace unformat {
 
-std::string slurp_file_string(const std::string &path);
+enum class slurp_et {
+    open,
+    stat,
+    read,
+    close
+};
+
+result<std::string> slurp_file_string(const std::string &path);
+
+enum class sock_et {
+    sock,
+    bind,
+    listen,
+    accept,
+    connect,
+    recv,
+    send,
+    shutdown,
+};
 
 class UnixSocket {
 public:
@@ -29,22 +48,25 @@ public:
     UnixSocket(UnixSocket &&other) = default;
     ~UnixSocket();
 
-    std::vector<uint8_t> read(size_t size);
-    void read(std::span<uint8_t> buf);
-    void write(std::span<const uint8_t> buf);
-    template <POD T> T read() {
+    result<std::vector<uint8_t>> read(size_t size);
+    result<void> read(std::span<uint8_t> buf);
+    result<void> write(std::span<const uint8_t> buf);
+    template <POD T> result<T> read() {
         T res{};
-        read({reinterpret_cast<uint8_t *>(&res), sizeof(T)});
+        BOOST_LEAF_CHECK(read({reinterpret_cast<uint8_t *>(&res), sizeof(T)}));
         return res;
     }
-    template <POD T> void write(const T &value) {
-        write({reinterpret_cast<uint8_t const *>(&value), sizeof(T)});
+    template <POD T> result<void> write(const T &value) {
+        BOOST_LEAF_CHECK(write({reinterpret_cast<uint8_t const *>(&value), sizeof(T)}));
+        return {};
     }
+    result<std::string> read_str(size_t size);
+    result<void> write_str(const std::string_view str);
 
-    void connect();
-    void listen();
-    accept_res_t accept();
-    void shutdown();
+    result<void> connect();
+    result<void> listen();
+    result<accept_res_t> accept();
+    result<void> shutdown();
 
     const std::string &path() const noexcept {
         return _path;
@@ -87,19 +109,17 @@ template <> struct fmt::formatter<unformat::UnixSocket> : fmt::formatter<fmt::st
 namespace unformat {
 
 template <typename T>
-concept read_func_t = requires(T rf) {
-    { rf(std::span<uint8_t>{}) } -> std::same_as<void>;
-};
-
-template <typename T>
-concept write_func_t = requires(T wf) {
-    { wf(std::span<const uint8_t>{}) } -> std::same_as<void>;
-};
-
-template <typename T>
 concept ReaderWriter = requires(T t) {
     { t.read(std::span<uint8_t>{}) } -> std::same_as<void>;
     { t.write(std::span<const uint8_t>{}) } -> std::same_as<void>;
+};
+
+template <typename T>
+concept ReaderWriterLEAF = requires(T t) {
+    { t.read(std::span<uint8_t>{}) } -> std::same_as<result<void>>;
+    { t.write(std::span<const uint8_t>{}) } -> std::same_as<result<void>>;
+    { t.read_str(size_t{}) } -> std::same_as<result<std::string>>;
+    { t.write_str(std::string_view{}) } -> std::same_as<result<void>>;
 };
 
 // UB-ahoy I presume
@@ -124,6 +144,37 @@ template <typename sz_t = uint32_t> struct LengthPrefixProtocol {
         static_assert(sz <= std::numeric_limits<sz_t>::max(), "msg sz is >= UINT32_MAX");
         rw.template write<sz_t>(sz);
         rw.template write<T>(value);
+    }
+
+    // LEAF
+    static result<std::vector<uint8_t>> read(ReaderWriterLEAF auto &rw) {
+        BOOST_LEAF_ASSIGN(const auto sz_val, rw.template read<sz_t>());
+        return rw.read(sz_val);
+    }
+    static result<void> write(ReaderWriterLEAF auto &rw, std::span<const uint8_t> buf) {
+        BOOST_LEAF_CHECK(rw.template write<sz_t>(buf.size_bytes()));
+        return rw.write(buf);
+    }
+    template <POD T> static result<T> read(ReaderWriterLEAF auto &rw) {
+        constexpr auto sz = sizeof(T);
+        static_assert(sz <= std::numeric_limits<sz_t>::max(), "msg sz is >= UINT32_MAX");
+        BOOST_LEAF_ASSIGN(const auto sz_val, rw.template read<sz_t>());
+        assert(sz_val == sz);
+        return rw.template read<T>();
+    }
+    template <POD T> static result<void> write(ReaderWriterLEAF auto &rw, const T &value) {
+        constexpr auto sz = sizeof(T);
+        static_assert(sz <= std::numeric_limits<sz_t>::max(), "msg sz is >= UINT32_MAX");
+        BOOST_LEAF_CHECK(rw.template write<sz_t>(sz));
+        return rw.template write<T>(value);
+    }
+    static result<std::string> read_str(ReaderWriterLEAF auto &rw) {
+        BOOST_LEAF_ASSIGN(const auto sz_val, rw.template read<sz_t>());
+        return rw.read_str(sz_val);
+    }
+    static result<void> write_str(ReaderWriterLEAF auto &rw, const std::string_view buf) {
+        BOOST_LEAF_CHECK(rw.template write<sz_t>(buf.size()));
+        return rw.write_str(buf);
     }
 };
 
