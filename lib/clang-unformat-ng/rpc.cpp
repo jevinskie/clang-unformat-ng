@@ -1,5 +1,7 @@
 #include <clang-unformat-ng/rpc.hpp>
 
+#include "boost/leaf/handle_errors.hpp"
+#include "clang-unformat-ng/common.hpp"
 #include "common-internal.hpp"
 
 #include <clang-unformat-ng/fmt.hpp>
@@ -22,6 +24,8 @@ namespace unformat {
 RPCServerConnection::RPCServerConnection(int sock) : _s{sock} {
     fmt::print(stderr, "RPCServerConnection({})\n", "fixme");
 }
+
+// [&]() -> result<void> { return {}; }, []() -> void {}
 
 void RPCServerConnection::rpc_thread_func(std::stop_token stok) {
     std::stop_callback callback(stok, [this] {
@@ -49,7 +53,14 @@ void RPCServerConnection::rpc_thread_func(std::stop_token stok) {
             fmt::print(stderr, "RPCServerConnection::rpc_thread_func exit\n");
             return {};
         },
-        [](const sock_et &se, leaf::e_errno const *errn) {
+        [&](leaf::match<sock_et, sock_et::recv_dead, sock_et::send_dead>) -> void {
+            fmt::print(stderr, "RPCServerConnection::rpc_thread_func sock dead\n");
+            const auto sdr = _s.shutdown();
+            if (!sdr) {
+                fmt::print(stderr, "RPCServerConnection::rpc_thread_func sock dead close fail\n");
+            }
+        },
+        [](const sock_et &se, leaf::e_errno const *errn) -> void {
             if (!errn) {
                 fmt::print(stderr, "RPCServerConnection::rpc_thread_func sock error: {} errno: nil\n",
                            enchantum::to_string(se));
