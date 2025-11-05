@@ -28,6 +28,7 @@ RPCServerConnection::RPCServerConnection(int sock) : _s{sock} {
 // [&]() -> result<void> { return {}; }, []() -> void {}
 
 void RPCServerConnection::rpc_thread_func(std::stop_token stok) {
+    fmt::print(stderr, "RPCServerConnection::rpc_thread_func entry\n");
     std::stop_callback callback(stok, [this] {
         fmt::print(stderr, "RPCServerConnection::rpc_thread_func stop callback\n");
         leaf::try_handle_all(
@@ -42,7 +43,7 @@ void RPCServerConnection::rpc_thread_func(std::stop_token stok) {
     });
     leaf::try_handle_all(
         [&]() -> result<void> {
-            fmt::print(stderr, "RPCServerConnection::rpc_thread_func entry\n");
+            fmt::print(stderr, "RPCServerConnection::rpc_thread_func try_block entry\n");
             while (!stok.stop_requested()) {
                 fmt::print(stderr, "RPCServerConnection::rpc_thread_func loop\n");
                 const auto resp = "{\"resp\": 200}"s;
@@ -50,7 +51,7 @@ void RPCServerConnection::rpc_thread_func(std::stop_token stok) {
                 fmt::print(stderr, "in_msg sz: {} buf: \"{:s}\"\n", in_msg.size(), in_msg);
                 BOOST_LEAF_CHECK(LengthPrefixProtocol<>::write_str(_s, resp));
             }
-            fmt::print(stderr, "RPCServerConnection::rpc_thread_func exit\n");
+            fmt::print(stderr, "RPCServerConnection::rpc_thread_func try_block clean exit\n");
             return {};
         },
         [&](leaf::match<sock_et, sock_et::recv_dead, sock_et::send_dead>) -> void {
@@ -79,6 +80,7 @@ void RPCServerConnection::rpc_thread_func(std::stop_token stok) {
         []() -> void {
             fmt::print(stderr, "RPCServerConnection::rpc_thread_func other error\n");
         });
+    fmt::print(stderr, "RPCServerConnection::rpc_thread_func exit\n");
 }
 
 std::stop_source RPCServerConnection::run() {
