@@ -57,8 +57,7 @@ public:
         return res;
     }
     template <POD T> result<void> write(const T &value) {
-        BOOST_LEAF_CHECK(write({reinterpret_cast<uint8_t const *>(&value), sizeof(T)}));
-        return {};
+        return write({reinterpret_cast<uint8_t const *>(&value), sizeof(T)});
     }
     result<std::string> read_str(size_t size);
     result<void> write_str(const std::string_view str);
